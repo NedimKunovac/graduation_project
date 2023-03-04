@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "300553708386",
+    "project_id": "volunteer-app-17d09",
+    "storage_bucket": "volunteer-app-17d09.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:300553708386:android:9c82fe87a2806cde28823b",
+        "android_client_info": {
+          "package_name": "com.example.graduation_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "300553708386-nsn9f1cop4i1s8u289jiklfofl5irk9f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChX8JT2o9f1VuoI9CXO2hf6uZpI8v9ERA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "300553708386-nsn9f1cop4i1s8u289jiklfofl5irk9f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
