@@ -83,24 +83,25 @@ class LoginPage extends StatelessWidget {
                             }),
                       ),
 
-                    )
-
-
+                    ),
+                    Flexible(
+                      child: Container(
+                        padding: EdgeInsets.only(top: 100),
+                        height:200,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/permission.png'),
+                              fit: BoxFit.fitHeight
+                          ),
+                        ),
+                      ),
+                    ),
 
                   ]),
 
               ),
 
-              Container(
-                padding: EdgeInsets.only(top: 100),
-                height:200,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/permission.png'),
-                      fit: BoxFit.fitHeight
-                  ),
-                ),
-              ),
+
             ],
           )),
     );
