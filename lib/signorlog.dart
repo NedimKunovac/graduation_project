@@ -44,7 +44,7 @@ class _SignOrLogState extends State<SignOrLog> {
             Container(
               height: MediaQuery.of(context as BuildContext).size.height / 3,
               decoration: const BoxDecoration(
-                  image: DecorationImage(image: AssetImage("assets/introduction.png"))
+                  image: DecorationImage(image: AssetImage('assets/permission.png'))
               ),
             ),
             Column(
