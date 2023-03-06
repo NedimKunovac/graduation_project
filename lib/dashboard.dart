@@ -22,9 +22,11 @@ Unique signature, totally not copied from random website
 ⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁⠀
 */
 //Import statements
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'advertisementWidget.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 generateAds() {
   List<Widget> genAds = [];
@@ -90,31 +92,39 @@ class _DashboardState extends State<Dashboard> {
     ),
     Center(child: Text('Imagine you can see some messages')),
     Center(child: Text('Imagine you can see a profile')),
-    Center(child: Text('Imagine you can see some settings')),
+    Column(
+      children: [
+        Center(
+            child: ElevatedButton(
+                onPressed: () => FirebaseAuth.instance.signOut(),
+                child: Text('Sign out')))
+      ],
+    ),
   ];
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: EasySearchBar(
-          backgroundColor: Colors.white,
-          elevation: 0.0,
-          foregroundColor: Colors.blue,
-          title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            Expanded(
-              flex: 1,
-              child: Image(
-                image: AssetImage('assetsTesting/flutterLogo.jpg'),
-                height: 35,
-                width: 35,
-              ),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        foregroundColor: Colors.blue,
+        title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Expanded(
+            flex: 1,
+            child: Image(
+              image: AssetImage('assetsTesting/flutterLogo.jpg'),
+              height: 35,
+              width: 35,
             ),
-            Expanded(
-              flex: 10,
-              child: Center(child: Text('Imagine there is a title here')),
-            ),
-          ]),
-          onSearch: (value) => setState(() => searchValue = value),
-          suggestions: _suggestions),
+          ),
+          Expanded(
+            flex: 10,
+            child: Center(
+                child: Text(
+                    'Welcome ${FirebaseAuth.instance.currentUser?.email}')),
+          ),
+        ]),
+      ),
       body: Container(child: _widgetOptions.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
