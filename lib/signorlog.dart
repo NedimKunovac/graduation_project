@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/signUpRouter.dart';
 import 'login.dart';
 import 'signup.dart';
 
@@ -44,7 +45,7 @@ class _SignOrLogState extends State<SignOrLog> {
             Container(
               height: MediaQuery.of(context as BuildContext).size.height / 3,
               decoration: const BoxDecoration(
-                  image: DecorationImage(image: AssetImage('assets/permission.png'))
+                  image: DecorationImage(image: AssetImage("assets/introduction.png"))
               ),
             ),
             Column(
@@ -77,7 +78,7 @@ class _SignOrLogState extends State<SignOrLog> {
                   minWidth: double.infinity,
                   height: 60,
                   onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder:(context)=>SignUpPage()));
+                    Navigator.push(context, MaterialPageRoute(builder:(context)=>SignUpRouter()));
                   },
                   color: Colors.red.shade400,
                   shape: RoundedRectangleBorder(
@@ -98,6 +99,6 @@ class _SignOrLogState extends State<SignOrLog> {
       ),
       ),
 
-    );;
+    );
   }
 }

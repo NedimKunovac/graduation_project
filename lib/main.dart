@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project/signUpRouter.dart';
+import 'package:graduation_project/signup.dart';
 import 'signorlog.dart';
 import 'fbTest/fbLoginTest.dart';
 
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TestSignupLogin(navigatorKey: navigatorKey);
+    return SignOrLog();
   }
 }
 

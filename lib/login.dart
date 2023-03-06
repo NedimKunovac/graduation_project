@@ -1,6 +1,6 @@
+import 'Dashboard.dart';
+import 'signUpRouter.dart';
 import 'package:flutter/material.dart';
-import 'dashboard.dart';
-
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -8,7 +8,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+     resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       //return button in the app bar
       appBar: AppBar(
@@ -18,94 +18,93 @@ class LoginPage extends StatelessWidget {
         leading: IconButton(onPressed: (){
           Navigator.pop(context);
         },
-            icon: Icon(Icons.arrow_back_ios,
-              size: 20,
-              color: Colors.black,)
+          icon: Icon(Icons.arrow_back_ios,
+          size: 20,
+          color: Colors.black,)
 
         ),
       ),
       body: Container(
-          height: MediaQuery.of(context).size.height,
-          width:double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Expanded(child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        height: MediaQuery.of(context).size.height,
+        width:double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Column(
                   children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Text('Login',
-                          style: TextStyle(fontSize:30,
-                              fontWeight:FontWeight.bold),),
-                        SizedBox(height: 20,),
-                        Text('Login to your account',
-                          style: TextStyle(
-                              fontSize:14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey
-                          ),)
-                      ],
+                    Text('Login',
+                    style: TextStyle(fontSize:30,
+                      fontWeight:FontWeight.bold),),
+                    SizedBox(height: 20,),
+                    Text('Login to your account',
+                    style: TextStyle(
+                      fontSize:14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey
+                    ),)
+                  ],
+                ),
+                Padding(padding: EdgeInsets.symmetric(horizontal:40),
+                child:Column(
+                  children: <Widget>[
+                    inputFile(label: 'Email'),
+                    inputFile(label: 'password',obscureText: true)
+                  ],
+                )
+                ),
+                Padding(padding: EdgeInsets.symmetric(
+                  horizontal: 40),
+                  child:Container(
+                    padding: EdgeInsets.only(top:70,left: 3),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+
                     ),
-                    Padding(padding: EdgeInsets.symmetric(horizontal:40),
-                        child:Column(
-                          children: <Widget>[
-                            inputFile(label: 'Email'),
-                            inputFile(label: 'password',obscureText: true)
-                          ],
-                        )
-                    ),
-                    Padding(padding: EdgeInsets.symmetric(
-                        horizontal: 40),
-                      child:Container(
-                        padding: EdgeInsets.only(top:70,left: 3),
-                        decoration: BoxDecoration(
+                    child: MaterialButton(
+                        minWidth: double.infinity,
+                        height: 60,
+                        color: Colors.red.shade400,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),
 
                         ),
-                        child: MaterialButton(
-                            minWidth: double.infinity,
-                            height: 60,
-                            color: Colors.red.shade400,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-
-                            ),
-                            child: Text('Login',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                                color: Colors.white,
-                              ),
-                            ),
-                            onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder:(context)=>Dashboard()));
-                            }),
-                      ),
-
-                    ),
-                    Flexible(
-                      child: Container(
-                        padding: EdgeInsets.only(top: 100),
-                        height:200,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/permission.png'),
-                              fit: BoxFit.fitHeight
+                        child: Text('Login',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                            color: Colors.white,
                           ),
                         ),
-                      ),
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder:(context)=>Dashboard()));
+                        }),
+                ),
+
+    )
+
+
+
+                ]),
+
+                 ),
+
+                  Container(
+                    padding: EdgeInsets.only(top: 100),
+                    height:200,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/permission.png'),
+                        fit: BoxFit.fitHeight
                     ),
-
-                  ]),
-
-              ),
-
-
-            ],
-          )),
-    );
+                  ),
+                  ),
+                  ],
+              )),
+            );
 
 
 
@@ -138,7 +137,7 @@ Widget inputFile({label,obscureText=false}){
           ),
           border: OutlineInputBorder(
             borderSide: BorderSide(
-                color: Colors.grey.shade400
+              color: Colors.grey.shade400
             ),
           ),
         ),
