@@ -5,13 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:graduation_project/main.dart';
 
 class fbLoginTestWidget extends StatefulWidget {
-  final VoidCallback onClickedSignUp;
 
-  const fbLoginTestWidget({
-    Key? key,
-    navigatorKey,
-    required this.onClickedSignUp,
-}): super(key: key);
+  const fbLoginTestWidget({Key? key, navigatorKey}): super(key: key);
 
 
   @override
@@ -85,8 +80,6 @@ class _fbLoginTestWidgetState extends State<fbLoginTestWidget> {
                 text: 'No account?',
                 children: [
                   TextSpan(
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = widget.onClickedSignUp,
                     text: ' Sign Up',
                     style: TextStyle(
                       decoration: TextDecoration.underline,

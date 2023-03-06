@@ -16,7 +16,7 @@ class _TestSignupLoginState extends State<TestSignupLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[700],
+      backgroundColor: Colors.white,
       body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
@@ -27,7 +27,7 @@ class _TestSignupLoginState extends State<TestSignupLogin> {
           } else if(snapshot.hasData){
            return sampleHomePage();
          } else {
-           return fbLoginTestWidget(navigatorKey: navigatorKey);//TODO: Fix navigator
+           return fbLoginTestWidget();
          }
         }
       ),
