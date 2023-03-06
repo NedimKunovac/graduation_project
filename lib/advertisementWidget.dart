@@ -33,8 +33,12 @@ class Advertisement extends StatefulWidget {
   String description;
   Image adImage;
 
-  Advertisement({Key? key, required this.title, required this.description,
-    required this.adImage}) : super(key: key);
+  Advertisement(
+      {Key? key,
+      required this.title,
+      required this.description,
+      required this.adImage})
+      : super(key: key);
 
   @override
   State<Advertisement> createState() => _AdvertisementState();
@@ -103,13 +107,12 @@ class _AdvertisementState extends State<Advertisement> {
                       children: [
                         Flexible(
                             child: Padding(
-                              padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                              child: Text(
-                              widget.description,
-                                textAlign: TextAlign.justify,
-                                ),
-                            )
-                        )
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                          child: Text(
+                            widget.description,
+                            textAlign: TextAlign.justify,
+                          ),
+                        ))
                       ],
                     ),
                   ],
@@ -120,6 +123,5 @@ class _AdvertisementState extends State<Advertisement> {
         ),
       ],
     );
-
   }
 }
