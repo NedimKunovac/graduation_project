@@ -40,7 +40,7 @@ class _fbLoginTestWidgetState extends State<fbLoginTestWidget> {
       print(e);
     }
 
-   navigatorKey.currentState!.popUntil((route) => route.isFirst);
+   //navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
   @override

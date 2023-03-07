@@ -1,8 +1,6 @@
 import 'Dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'main.dart';
 
 class CompanySignup extends StatefulWidget {
   const CompanySignup({Key? key}) : super(key: key);
@@ -23,15 +21,6 @@ class _CompanySignupState extends State<CompanySignup> {
   }
 
   Future createAccount() async {
-    //TODO: Fix loading bar thingy, or add a loading bar
-    /*
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => Center(child: CircularProgressIndicator())
-    );
-    */
-
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text.trim(),
@@ -40,8 +29,6 @@ class _CompanySignupState extends State<CompanySignup> {
     } on FirebaseAuthException catch (e) {
       print(e);
     }
-
-    //navigatorKey.currentState!.popUntil((route) => route.hasActiveRouteBelow);
   }
 
   @override
@@ -74,47 +61,38 @@ class _CompanySignupState extends State<CompanySignup> {
             } else if (snapshot.hasData) {
               return Dashboard();
             } else {
-              return SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 40),
-                  height: MediaQuery.of(context).size.height - 50,
-                  width: double.infinity,
+              return Container(
+                padding: EdgeInsets.symmetric(horizontal: 40),
+                height: MediaQuery.of(context).size.height - 50,
+                width: double.infinity,
+                child: SingleChildScrollView(
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                            Text(
-                              'Sign up',
-                              style: TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              'Create your account.',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                            )
-                          ],
+                        Text(
+                          'Sign up',
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
                         ),
-                        Column(
-                          children: <Widget>[
-                            inputFile(label: 'Name of the company:'),
-                            inputFile(label: 'Representative of the company:'),
-                            inputFile(label: 'VAT number:'),
-                            inputFile(label: 'Company image:'),
-                            inputFile(
-                                label: 'Email:', controller: emailController),
-                            inputFile(
-                                label: 'Password:',
-                                obscureText: true,
-                                controller: passwordController)
-                          ],
+                        SizedBox(
+                          height: 20,
                         ),
+                        Text(
+                          'Create your account.',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey),
+                        ),
+                        inputFile(label: 'Name of the company:'),
+                        inputFile(label: 'Representative of the company:'),
+                        inputFile(label: 'VAT number:'),
+                        inputFile(label: 'Company image:'),
+                        inputFile(label: 'Email:', controller: emailController),
+                        inputFile(
+                            label: 'Password:',
+                            obscureText: true,
+                            controller: passwordController),
                         Container(
                           padding: EdgeInsets.only(top: 3, left: 3),
                           decoration: BoxDecoration(
