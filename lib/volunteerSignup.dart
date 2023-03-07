@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 class VolunteerSignup extends StatefulWidget {
   const VolunteerSignup({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class VolunteerSignup extends StatefulWidget {
 }
 
 class _VolunteerSignupState extends State<VolunteerSignup> {
+  final fullNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -22,14 +24,33 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
     super.dispose();
   }
 
-  Future createAccount() async {
+  addLoginInfo() async{
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      return true;
     } on FirebaseAuthException catch (e) {
       print(e);
+    }
+    return false;
+  }
+  Future createAccount() async {
+    if(await addLoginInfo()){
+     try {
+       String? userReference = FirebaseAuth.instance.currentUser?.uid;
+       userReference.toString();
+       FirebaseFirestore usersCollection = FirebaseFirestore.instance;
+       await usersCollection
+           .collection('Users')
+           .doc(userReference!)
+           .set({'name': fullNameController.text.trim(),
+       'type':2,});
+
+     } on FirebaseException catch (e) {
+       print(e);
+     }
     }
   }
 
@@ -39,20 +60,19 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        brightness: Brightness.light,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: 20,
-            color: Colors.black,
-          ),
-        ),
-      ),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          brightness: Brightness.light,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: Colors.black,
+            ),
+          )),
       body: StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
@@ -92,7 +112,9 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                         ),
                         Column(
                           children: <Widget>[
-                            inputFile(label: 'Name and Surname:'),
+                            inputFile(
+                                label: 'Name and Surname:',
+                                controller: fullNameController),
                             inputFile(label: 'Date of birth:'),
                             inputFile(label: 'Skills:'),
                             inputFile(
@@ -109,22 +131,23 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                             borderRadius: BorderRadius.circular(50),
                           ),
                           child: MaterialButton(
-                              minWidth: double.infinity,
-                              height: 60,
-                              color: Colors.red.shade400,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
+                            minWidth: double.infinity,
+                            height: 60,
+                            color: Colors.red.shade400,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Text(
+                              'Sign Up',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18,
+                                color: Colors.white,
                               ),
-                              child: Text(
-                                'Login',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              onPressed: createAccount),
+                            ),
+                            onPressed: createAccount,
+                          ),
                         ),
                       ]),
                 ),

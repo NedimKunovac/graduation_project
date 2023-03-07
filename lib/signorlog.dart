@@ -13,7 +13,7 @@ class _SignOrLogState extends State<SignOrLog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Container(
           width: double.infinity,
           //double infinity makes it as big as the parent allows

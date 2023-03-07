@@ -2,7 +2,6 @@ import 'Dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -14,7 +13,7 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void dispose(){
+  void dispose() {
     emailController.dispose();
     passwordController.dispose();
 
@@ -22,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future signIn() async {
-    try{
+    try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
@@ -31,7 +30,6 @@ class _LoginPageState extends State<LoginPage> {
       print(e);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -54,105 +52,107 @@ class _LoginPageState extends State<LoginPage> {
             )),
       ),
       body: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if(snapshot.connectionState== ConnectionState.waiting){
-            return Center(child: CircularProgressIndicator());
-          } else if(snapshot.hasError){
-          return Center(child: Text('Sum Ting Wong'));
-          } else if(snapshot.hasData){
-            return Dashboard();
-          } else{
-            return SingleChildScrollView(
-              child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: double.infinity,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Column(
-                                children: <Widget>[
-                                  Text(
-                                    'Login',
-                                    style: TextStyle(
-                                        fontSize: 30, fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    'Login to your account',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey),
-                                  )
-                                ],
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 40),
-                                  child: Column(
-                                    children: <Widget>[
-                                      inputFile(label: 'Email', controller: emailController),
-                                      inputFile(label: 'Password', obscureText: true, controller: passwordController)
-                                    ],
-                                  )),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 40),
-                                child: Container(
-                                  padding: EdgeInsets.only(top: 70, left: 3),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: MaterialButton(
-                                      minWidth: double.infinity,
-                                      height: 60,
-                                      color: Colors.red.shade400,
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(50),
-                                      ),
-                                      child: Text(
-                                        'Login',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 18,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      onPressed: signIn
-                                  ),
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Sum Ting Wong'));
+            } else if (snapshot.hasData) {
+              return Dashboard();
+            } else {
+              return SingleChildScrollView(
+                child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    Text(
+                                      'Login',
+                                      style: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text(
+                                      'Login to your account',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey),
+                                    )
+                                  ],
                                 ),
-                              )
-                            ]),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 100),
-                        height: 200,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/permission.png'),
-                              fit: BoxFit.fitHeight),
+                                Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 40),
+                                    child: Column(
+                                      children: <Widget>[
+                                        inputFile(
+                                            label: 'Email',
+                                            controller: emailController),
+                                        inputFile(
+                                            label: 'Password',
+                                            obscureText: true,
+                                            controller: passwordController)
+                                      ],
+                                    )),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 40),
+                                  child: Container(
+                                    padding: EdgeInsets.only(top: 70, left: 3),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: MaterialButton(
+                                        minWidth: double.infinity,
+                                        height: 60,
+                                        color: Colors.red.shade400,
+                                        elevation: 0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                        ),
+                                        child: Text(
+                                          'Login',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        onPressed: signIn),
+                                  ),
+                                )
+                              ]),
                         ),
-                      ),
-                    ],
-                  )),
-            );
-          };
-        }
-      ),
+                        Container(
+                          padding: EdgeInsets.only(top: 100),
+                          height: 200,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('assets/permission.png'),
+                                fit: BoxFit.fitHeight),
+                          ),
+                        ),
+                      ],
+                    )),
+              );
+            }
+            ;
+          }),
     );
   }
 }
-
-
-
-
-
 
 //Widget for text fields
 Widget inputFile({label, obscureText = false, controller}) {

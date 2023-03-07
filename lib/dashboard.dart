@@ -25,7 +25,6 @@ Unique signature, totally not copied from random website
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'advertisementWidget.dart';
-import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 generateAds() {
@@ -33,7 +32,7 @@ generateAds() {
 }
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key}) : super(key: key);
+  const Dashboard({Key? key, context}) : super(key: key);
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -41,9 +40,6 @@ class Dashboard extends StatefulWidget {
 
 //Main part, navigation and all
 class _DashboardState extends State<Dashboard> {
-  String searchValue = '';
-  List<String> _suggestions = ['Ad1', 'Ad2', 'Ad3'];
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -91,47 +87,19 @@ class _DashboardState extends State<Dashboard> {
       ),
     ),
     Center(child: Text('Imagine you can see some messages')),
-    Center(child: Text('Imagine you can see a profile')),
-    Column(
-      children: [
-        Center(
-            child: ElevatedButton(
-                onPressed: () => FirebaseAuth.instance.signOut(),
-                child: Text('Sign out')))
-      ],
-    ),
+    Center(child: Text('Imagine you can see a profile'))
   ];
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-        foregroundColor: Colors.blue,
-        title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Expanded(
-            flex: 1,
-            child: Image(
-              image: AssetImage('assetsTesting/flutterLogo.jpg'),
-              height: 35,
-              width: 35,
-            ),
-          ),
-          Expanded(
-            flex: 10,
-            child: Center(
-                child: Text(
-                    'Welcome ${FirebaseAuth.instance.currentUser?.email}')),
-          ),
-        ]),
-      ),
       body: Container(child: _widgetOptions.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.blue,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.message),
@@ -143,36 +111,17 @@ class _DashboardState extends State<Dashboard> {
             label: 'Profile',
             backgroundColor: Colors.blue,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-            backgroundColor: Colors.blue,
-          ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.white,
         onTap: _onItemTapped,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => showDialog<String>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            title: const Text('Can you not?'),
-            content: const Text('I really don\'t like you pressing buttons'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.pop(context, 'Okay'),
-                child: const Text('Okay'),
-              ),
-              TextButton(
-                onPressed: () => Navigator.pop(context, 'Fine'),
-                child: const Text('Fine'),
-              ),
-            ],
-          ),
-        ),
+        onPressed: () {
+          FirebaseAuth.instance.signOut();
+        },
         child: Icon(
-          Icons.add,
+          Icons.phone_disabled,
         ),
       ),
     );

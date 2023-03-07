@@ -56,10 +56,10 @@ class _CompanySignupState extends State<CompanySignup> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Sum Ting Wong'));
             } else if (snapshot.hasData) {
               return Dashboard();
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Sum Ting Wong'));
             } else {
               return Container(
                 padding: EdgeInsets.symmetric(horizontal: 40),
