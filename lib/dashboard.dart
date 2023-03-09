@@ -22,6 +22,7 @@ Unique signature, totally not copied from random website
 ⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁⠀
 */
 //Import statements
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'advertisementWidget.dart';
@@ -87,11 +88,15 @@ class _DashboardState extends State<Dashboard> {
       ),
     ),
     Center(child: Text('Imagine you can see some messages')),
-    Center(child: Text('Imagine you can see a profile'))
+    Center(child: Text('Imagine you see a profile picture here, or something'))
   ];
 
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text('Welcome!'),
+      ),
       body: Container(child: _widgetOptions.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.blue,
@@ -117,6 +122,7 @@ class _DashboardState extends State<Dashboard> {
         onTap: _onItemTapped,
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.red,
         onPressed: () {
           FirebaseAuth.instance.signOut();
         },

@@ -63,6 +63,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
           backgroundColor: Colors.white,
           elevation: 0,
           brightness: Brightness.light,
+          automaticallyImplyLeading: false,
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
