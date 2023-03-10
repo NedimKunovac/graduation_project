@@ -32,12 +32,14 @@ class Advertisement extends StatefulWidget {
   String title;
   String description;
   Image adImage;
+  bool accepted;
 
   Advertisement(
       {Key? key,
       required this.title,
       required this.description,
-      required this.adImage})
+      required this.adImage,
+      required this.accepted})
       : super(key: key);
 
   @override
@@ -55,6 +57,16 @@ class _AdvertisementState extends State<Advertisement> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15.0),
               child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.resolveWith((states) {
+                    // If the button is pressed, return green, otherwise blue
+                    if (widget.accepted == true) {
+                      return Colors.green;
+                    } else {
+                      return Colors.blue;
+                    }
+                  }),
+                ),
                 onPressed: () => showDialog<String>(
                   context: context,
                   builder: (BuildContext context) => AlertDialog(
