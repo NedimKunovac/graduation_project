@@ -80,8 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                         Form(
                           key: formKey,
                           child: Column(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 Column(
                                   children: <Widget>[
@@ -130,8 +129,8 @@ class _LoginPageState extends State<LoginPage> {
                                                   AutovalidateMode.disabled,
                                               validator: (email) => email !=
                                                           null &&
-                                                      !EmailValidator
-                                                          .validate(email)
+                                                      !EmailValidator.validate(
+                                                          email)
                                                   ? 'Please enter a valid email'
                                                   : null,
                                               decoration: InputDecoration(
@@ -142,14 +141,13 @@ class _LoginPageState extends State<LoginPage> {
                                                 enabledBorder:
                                                     OutlineInputBorder(
                                                   borderSide: BorderSide(
-                                                    color:
-                                                        Colors.grey.shade400,
+                                                    color: Colors.grey.shade400,
                                                   ),
                                                 ),
                                                 border: OutlineInputBorder(
                                                   borderSide: BorderSide(
-                                                      color: Colors
-                                                          .grey.shade400),
+                                                      color:
+                                                          Colors.grey.shade400),
                                                 ),
                                               ),
                                             ),
@@ -191,14 +189,13 @@ class _LoginPageState extends State<LoginPage> {
                                                 enabledBorder:
                                                     OutlineInputBorder(
                                                   borderSide: BorderSide(
-                                                    color:
-                                                        Colors.grey.shade400,
+                                                    color: Colors.grey.shade400,
                                                   ),
                                                 ),
                                                 border: OutlineInputBorder(
                                                   borderSide: BorderSide(
-                                                      color: Colors
-                                                          .grey.shade400),
+                                                      color:
+                                                          Colors.grey.shade400),
                                                 ),
                                               ),
                                             ),
@@ -210,11 +207,9 @@ class _LoginPageState extends State<LoginPage> {
                                       ],
                                     )),
                                 Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 40),
+                                  padding: EdgeInsets.symmetric(horizontal: 40),
                                   child: Container(
-                                    padding:
-                                        EdgeInsets.only(top: 70, left: 3),
+                                    padding: EdgeInsets.only(top: 70, left: 3),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(50),
                                     ),
