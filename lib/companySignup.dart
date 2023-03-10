@@ -1,6 +1,9 @@
 import 'Dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'flashBar.dart';
+import 'package:email_validator/email_validator.dart';
 
 class CompanySignup extends StatefulWidget {
   const CompanySignup({Key? key}) : super(key: key);
@@ -10,47 +13,81 @@ class CompanySignup extends StatefulWidget {
 }
 
 class _CompanySignupState extends State<CompanySignup> {
+  final formKey = GlobalKey<FormState>();
+  final compNameController = TextEditingController();
+  final repNameController = TextEditingController();
+  final vatNumController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-
-    super.dispose();
+  void clearControllers() {
+    compNameController.clear();
+    repNameController.clear();
+    vatNumController.clear();
+    emailController.clear();
+    passwordController.clear();
   }
 
-  Future createAccount() async {
+  addLoginInfo() async {
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) return;
+
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      return true;
     } on FirebaseAuthException catch (e) {
       print(e);
+
+      flashBar.showBasicsFlash(
+          duration: Duration(seconds: 3), context: context, message: e.message);
+    }
+    return false;
+  }
+
+  Future createAccount() async {
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) return;
+
+    if (await addLoginInfo()) {
+      try {
+        String? userReference = FirebaseAuth.instance.currentUser?.uid;
+        userReference.toString();
+        FirebaseFirestore usersCollection = FirebaseFirestore.instance;
+        await usersCollection.collection('Users').doc(userReference!).set({
+          'name': compNameController.text.trim(),
+          'rep': repNameController.text.trim(),
+          'type': 1,
+          'vatNum': vatNumController.text.trim(),
+        });
+
+        clearControllers();
+      } on FirebaseException catch (e) {
+        print(e);
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        brightness: Brightness.light,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: 20,
-            color: Colors.black,
-          ),
-        ),
-      ),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          brightness: Brightness.light,
+          automaticallyImplyLeading: false,
+          title: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: Colors.black,
+            ),
+          )),
       body: StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
@@ -84,15 +121,228 @@ class _CompanySignupState extends State<CompanySignup> {
                               fontWeight: FontWeight.bold,
                               color: Colors.grey),
                         ),
-                        inputFile(label: 'Name of the company:'),
-                        inputFile(label: 'Representative of the company:'),
-                        inputFile(label: 'VAT number:'),
-                        inputFile(label: 'Company image:'),
-                        inputFile(label: 'Email:', controller: emailController),
-                        inputFile(
-                            label: 'Password:',
-                            obscureText: true,
-                            controller: passwordController),
+                        Form(
+                          key: formKey,
+                          child: Column(
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    'Company title:',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  TextFormField(
+                                    obscureText: false,
+                                    controller: compNameController,
+                                    autovalidateMode: AutovalidateMode.disabled,
+                                    validator: (value) => value != null &&
+                                            value.length < 3
+                                        ? 'Please enter your company\'s name'
+                                        : null,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 0, horizontal: 10),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey.shade400,
+                                        ),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey.shade400),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  )
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    'Company representative\'s name:',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  TextFormField(
+                                    obscureText: false,
+                                    controller: repNameController,
+                                    autovalidateMode: AutovalidateMode.disabled,
+                                    validator: (value) => value != null &&
+                                            value.length < 3
+                                        ? 'Please enter your company representative\'s name'
+                                        : null,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 0, horizontal: 10),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey.shade400,
+                                        ),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey.shade400),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  )
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    'Company VAT Number:',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  TextFormField(
+                                    obscureText: false,
+                                    keyboardType: TextInputType.number,
+                                    controller: vatNumController,
+                                    autovalidateMode: AutovalidateMode.disabled,
+                                    validator: (value) => value != null &&
+                                            value.length != 12
+                                        ? 'Please enter a proper VAT Number \nA VAT Number containts 12 numbers'
+                                        : null,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 0, horizontal: 10),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey.shade400,
+                                        ),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey.shade400),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  )
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    'Email:',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  TextFormField(
+                                    obscureText: false,
+                                    controller: emailController,
+                                    autovalidateMode: AutovalidateMode.disabled,
+                                    validator: (email) => email != null &&
+                                            !EmailValidator.validate(email)
+                                        ? 'Please enter a valid email'
+                                        : null,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 0, horizontal: 10),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey.shade400,
+                                        ),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey.shade400),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  )
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    'Password:',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  TextFormField(
+                                    obscureText: true,
+                                    controller: passwordController,
+                                    autovalidateMode: AutovalidateMode.disabled,
+                                    validator: (value) => value != null &&
+                                            value.length < 6
+                                        ? 'Please enter at least 6 characters'
+                                        : null,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 0, horizontal: 10),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey.shade400,
+                                        ),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey.shade400),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                         Container(
                           padding: EdgeInsets.only(top: 3, left: 3),
                           decoration: BoxDecoration(
@@ -123,41 +373,4 @@ class _CompanySignupState extends State<CompanySignup> {
           }),
     );
   }
-}
-
-Widget inputFile({label, obscureText = false, controller}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Text(
-        label,
-        style: TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w400,
-          color: Colors.black,
-        ),
-      ),
-      SizedBox(
-        height: 5,
-      ),
-      TextField(
-        obscureText: obscureText,
-        controller: controller,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.grey.shade400,
-            ),
-          ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey.shade400),
-          ),
-        ),
-      ),
-      SizedBox(
-        height: 10,
-      )
-    ],
-  );
 }

@@ -92,11 +92,68 @@ class _DashboardState extends State<Dashboard> {
   ];
 
   Widget build(BuildContext context) {
+    CollectionReference users = FirebaseFirestore.instance.collection('Users');
+
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text('Welcome!'),
-      ),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          brightness: Brightness.light,
+          automaticallyImplyLeading: false,
+          title: FutureBuilder<DocumentSnapshot>(
+            future:
+                users.doc('${FirebaseAuth.instance.currentUser?.uid}').get(),
+            builder: (BuildContext context,
+                AsyncSnapshot<DocumentSnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return Text("Something went wrong");
+              }
+
+              if (snapshot.hasData && !snapshot.data!.exists) {
+                return Text("Document does not exist");
+              }
+
+              if (snapshot.connectionState == ConnectionState.done) {
+                Map<String, dynamic> data =
+                    snapshot.data!.data() as Map<String, dynamic>;
+                return Text(
+                  "Welcome ${data['name']}!",
+                  style: TextStyle(
+                    color: Colors.blue,
+                  ),
+                );
+              }
+
+              return Text("loading");
+            },
+          ),
+          leading: IconButton(
+            onPressed: () => showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: const Text('Sign out'),
+                content: const Text('Are you sure you want to sign out?'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Yes'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'No'),
+                    child: const Text('No'),
+                  ),
+                ],
+              ),
+            ),
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: Colors.black,
+            ),
+          )),
       body: Container(child: _widgetOptions.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.blue,
@@ -120,15 +177,6 @@ class _DashboardState extends State<Dashboard> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.white,
         onTap: _onItemTapped,
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.red,
-        onPressed: () {
-          FirebaseAuth.instance.signOut();
-        },
-        child: Icon(
-          Icons.phone_disabled,
-        ),
       ),
     );
   }

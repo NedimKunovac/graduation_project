@@ -17,11 +17,8 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-
-    super.dispose();
+  void clearControllers() {
+    passwordController.clear();
   }
 
   Future signIn() async {
@@ -33,10 +30,12 @@ class _LoginPageState extends State<LoginPage> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      clearControllers();
     } on FirebaseAuthException catch (e) {
       print(e);
 
-     flashBar.showBasicsFlash(duration: Duration(seconds: 3),context: context, message: e.message);
+      flashBar.showBasicsFlash(
+          duration: Duration(seconds: 3), context: context, message: e.message);
     }
   }
 
@@ -115,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                                                 CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Text(
-                                                'Email',
+                                                'Email:',
                                                 style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.w400,
@@ -165,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                                                 CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Text(
-                                                'Password',
+                                                'Password:',
                                                 style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.w400,
