@@ -17,14 +17,18 @@ class VolunteerSignup extends StatefulWidget {
 class _VolunteerSignupState extends State<VolunteerSignup> {
   final formKey = GlobalKey<FormState>();
   final fullNameController = TextEditingController();
+  final dateinputController = TextEditingController();
+  DateTime? pickedDate;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   void clearControllers() {
     fullNameController.clear();
+    dateinputController.clear();
     emailController.clear();
     passwordController.clear();
   }
+
 
   addLoginInfo() async {
     final isValid = formKey.currentState!.validate();
@@ -57,6 +61,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
         await usersCollection.collection('Users').doc(userReference!).set({
           'name': fullNameController.text.trim(),
           'type': 2,
+          'dateOfBirth': Timestamp.fromDate(pickedDate!),
         });
 
         clearControllers();
@@ -170,6 +175,68 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
+                                    'Date of Birth:',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  TextFormField(
+                                    obscureText: false,
+                                    controller: dateinputController,
+                                    readOnly: true,
+                                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      onTap: () async {
+                                        pickedDate = await showDatePicker(
+                                            context: context, initialDate: DateTime.now().subtract(const Duration(days: 6575)),
+                                            firstDate: DateTime.now().subtract(const Duration(days: 20075)), //DateTime.now() - not to allow to choose before today.
+                                            lastDate: DateTime.now().subtract(const Duration(days: 6575)),
+                                        );
+
+                                        if(pickedDate != null ){
+                                          print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
+                                          String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate!);
+                                          print(formattedDate); //formatted date output using intl package =>  2021-03-16
+                                          //you can implement different kind of Date Format here according to your requirement
+
+                                          setState(() {
+                                            dateinputController.text = formattedDate; //set output date to TextField value.
+                                          });
+                                        }else{
+                                          print("Date is not selected");
+                                        }
+                                      },
+                                    validator: (value) =>
+                                    value != null && value.isEmpty
+                                        ? 'Please enter your date of birth'
+                                        : null,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 0, horizontal: 10),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey.shade400,
+                                        ),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey.shade400),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  )
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
                                     'Email:',
                                     style: TextStyle(
                                       fontSize: 15,
@@ -251,28 +318,30 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                             ],
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.only(top: 3, left: 3),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: MaterialButton(
-                            minWidth: double.infinity,
-                            height: 60,
-                            color: Colors.red.shade400,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
+                        Flexible(
+                          child: Container(
+                            padding: EdgeInsets.only(top: 3, left: 3),
+                            decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(50),
                             ),
-                            child: Text(
-                              'Sign Up',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                                color: Colors.white,
+                            child: MaterialButton(
+                              minWidth: double.infinity,
+                              height: 60,
+                              color: Colors.red.shade400,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
                               ),
+                              child: Text(
+                                'Sign Up',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              onPressed: createAccount,
                             ),
-                            onPressed: createAccount,
                           ),
                         ),
                       ]),
