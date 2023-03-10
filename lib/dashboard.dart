@@ -27,6 +27,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'advertisementWidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 generateAds() {
   List<Widget> genAds = [];
@@ -41,6 +43,9 @@ class Dashboard extends StatefulWidget {
 
 //Main part, navigation and all
 class _DashboardState extends State<Dashboard> {
+  static CollectionReference users =
+      FirebaseFirestore.instance.collection('Users');
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -88,45 +93,61 @@ class _DashboardState extends State<Dashboard> {
       ),
     ),
     Center(child: Text('Imagine you can see some messages')),
-    Center(child: Text('Imagine you see a profile picture here, or something'))
+    SingleChildScrollView(
+      child: FutureBuilder<DocumentSnapshot>(
+        future: users.doc('${FirebaseAuth.instance.currentUser?.uid}').get(),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text("Something went wrong",
+                style: TextStyle(color: Colors.blue));
+          }
+
+          if (snapshot.hasData && !snapshot.data!.exists) {
+            return Text("Document does not exist",
+                style: TextStyle(color: Colors.blue));
+          }
+
+          if (snapshot.connectionState == ConnectionState.done) {
+            Map<String, dynamic> data =
+                snapshot.data!.data() as Map<String, dynamic>;
+            return Column(children: <Widget>[
+              //TODO: Create profile generator here
+              Row(
+                children: <Widget>[
+                  CircleAvatar(
+                    radius: 100,
+                    backgroundImage:
+                        Image.network('${data['profilePhotoUrl']}').image,
+                  ),
+                  Text(
+                    "Welcome ${data['name']}!",
+                    style: TextStyle(
+                      color: Colors.blue,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [Text('Name - ${data['name']}')],
+              )
+            ]);
+          }
+
+          return Text("loading", style: TextStyle(color: Colors.blue));
+        },
+      ),
+    ),
   ];
 
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('Users');
-
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
           brightness: Brightness.light,
           automaticallyImplyLeading: false,
-          title: FutureBuilder<DocumentSnapshot>(
-            future:
-                users.doc('${FirebaseAuth.instance.currentUser?.uid}').get(),
-            builder: (BuildContext context,
-                AsyncSnapshot<DocumentSnapshot> snapshot) {
-              if (snapshot.hasError) {
-                return Text("Something went wrong");
-              }
-
-              if (snapshot.hasData && !snapshot.data!.exists) {
-                return Text("Document does not exist");
-              }
-
-              if (snapshot.connectionState == ConnectionState.done) {
-                Map<String, dynamic> data =
-                    snapshot.data!.data() as Map<String, dynamic>;
-                return Text(
-                  "Welcome ${data['name']}!",
-                  style: TextStyle(
-                    color: Colors.blue,
-                  ),
-                );
-              }
-
-              return Text("loading");
-            },
-          ),
+          title: Text('Welcome!'),
           leading: IconButton(
             onPressed: () => showDialog<String>(
               context: context,

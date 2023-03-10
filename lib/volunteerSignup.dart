@@ -9,6 +9,7 @@ import 'package:email_validator/email_validator.dart';
 import 'flashBar.dart';
 import 'imagePicker.dart';
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class VolunteerSignup extends StatefulWidget {
   const VolunteerSignup({Key? key}) : super(key: key);
@@ -62,11 +63,20 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
       try {
         String? userReference = FirebaseAuth.instance.currentUser?.uid;
         userReference.toString();
+
+        Reference referenceRoot = FirebaseStorage.instance.ref();
+        Reference referenceDirImages = referenceRoot.child('${userReference}');
+        Reference referenceImageToUpload =
+            referenceDirImages.child('profile_photo');
+        await referenceImageToUpload.putFile(File(pickedImage!.path));
+        var imageUrl = await referenceImageToUpload.getDownloadURL();
+
         FirebaseFirestore usersCollection = FirebaseFirestore.instance;
         await usersCollection.collection('Users').doc(userReference!).set({
           'name': fullNameController.text.trim(),
           'type': 2,
           'dateOfBirth': Timestamp.fromDate(pickedDate!),
+          'profilePhotoUrl': imageUrl
         });
 
         clearControllers();
