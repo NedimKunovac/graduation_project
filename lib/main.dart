@@ -4,7 +4,6 @@ import 'package:graduation_project/Dashboard.dart';
 import 'package:graduation_project/login.dart';
 import 'signorlog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'flashBar.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

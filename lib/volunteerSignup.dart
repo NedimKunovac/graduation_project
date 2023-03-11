@@ -114,311 +114,339 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                       color: Colors.black,
                     ),
                   )),
-              body: SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 40),
-                  height: MediaQuery.of(context).size.height - 50,
-                  width: double.infinity,
+              body: Container(
+                padding: EdgeInsets.symmetric(horizontal: 40),
+                height: MediaQuery.of(context).size.height - 50,
+                width: double.infinity,
+                child: SingleChildScrollView(
                   child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Form(
-                          key: formKey,
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                'Sign up',
-                                style: TextStyle(
-                                    fontSize: 30, fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'Create your account.',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    'Full Name:',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  TextFormField(
-                                    obscureText: false,
-                                    controller: fullNameController,
-                                    autovalidateMode: AutovalidateMode.disabled,
-                                    validator: (value) =>
-                                        value != null && value.length < 3
-                                            ? 'Please enter your full name'
-                                            : null,
-                                    decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 0, horizontal: 10),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.grey.shade400,
-                                        ),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors.grey.shade400),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  )
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    'Your profile photo:',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  TextFormField(
-                                    obscureText: false,
-                                    controller: imageController,
-                                    readOnly: true,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    onTap: () {
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((_) async {
-                                        pickedImage = await imagePicker
-                                            .imgPickDialog(context);
-                                        imageController.text =
-                                            pickedImage!.name;
-                                      });
-                                    },
-                                    validator: (value) =>
-                                        value != null && value.isEmpty
-                                            ? 'Please select a profile picture'
-                                            : null,
-                                    decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 0, horizontal: 10),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.grey.shade400,
-                                        ),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors.grey.shade400),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  )
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    'Date of Birth:',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  TextFormField(
-                                    obscureText: false,
-                                    controller: dateinputController,
-                                    readOnly: true,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    onTap: () async {
-                                      pickedDate = await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now().subtract(
-                                            const Duration(days: 6575)),
-                                        firstDate: DateTime.now().subtract(
-                                            const Duration(days: 20075)),
-                                        //DateTime.now() - not to allow to choose before today.
-                                        lastDate: DateTime.now().subtract(
-                                            const Duration(days: 6575)),
-                                      );
-
-                                      if (pickedDate != null) {
-                                        print(
-                                            pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                                        String formattedDate =
-                                            DateFormat('yyyy-MM-dd')
-                                                .format(pickedDate!);
-                                        print(
-                                            formattedDate); //formatted date output using intl package =>  2021-03-16
-                                        //you can implement different kind of Date Format here according to your requirement
-
-                                        setState(() {
-                                          dateinputController.text =
-                                              formattedDate; //set output date to TextField value.
-                                        });
-                                      } else {
-                                        print("Date is not selected");
-                                      }
-                                    },
-                                    validator: (value) =>
-                                        value != null && value.isEmpty
-                                            ? 'Please enter your date of birth'
-                                            : null,
-                                    decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 0, horizontal: 10),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.grey.shade400,
-                                        ),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors.grey.shade400),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  )
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    'Email:',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  TextFormField(
-                                    obscureText: false,
-                                    controller: emailController,
-                                    autovalidateMode: AutovalidateMode.disabled,
-                                    validator: (email) => email != null &&
-                                            !EmailValidator.validate(email)
-                                        ? 'Please enter a valid email'
-                                        : null,
-                                    decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 0, horizontal: 10),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.grey.shade400,
-                                        ),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors.grey.shade400),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  )
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    'Password:',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  TextFormField(
-                                    obscureText: true,
-                                    controller: passwordController,
-                                    autovalidateMode: AutovalidateMode.disabled,
-                                    validator: (value) => value != null &&
-                                            value.length < 6
-                                        ? 'Please enter at least 6 characters'
-                                        : null,
-                                    decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 0, horizontal: 10),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.grey.shade400,
-                                        ),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors.grey.shade400),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  )
-                                ],
-                              ),
-                            ],
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Column(
+                        children: [
+                          ///SIGN UP TEXT
+                          Text(
+                            'Sign up',
+                            style: TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        Flexible(
-                          child: Container(
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            'Create your account.',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+
+                          ///FORM DATA
+                          Form(
+                            key: formKey,
+                            child: Column(
+                              children: <Widget>[
+                                ///FULL NAME FORM
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      'Full Name:',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    TextFormField(
+                                      obscureText: false,
+                                      controller: fullNameController,
+                                      autovalidateMode:
+                                          AutovalidateMode.disabled,
+                                      validator: (value) =>
+                                          value != null && value.length < 3
+                                              ? 'Please enter your full name'
+                                              : null,
+                                      decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 0, horizontal: 10),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.grey.shade400,
+                                          ),
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.grey.shade400),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    )
+                                  ],
+                                ),
+
+                                ///PROFILE PHOTO FORM
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      'Your profile photo:',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    TextFormField(
+                                      obscureText: false,
+                                      controller: imageController,
+                                      readOnly: true,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      onTap: () {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((_) async {
+                                          pickedImage = await imagePicker
+                                              .imgPickDialog(context);
+                                          imageController.text =
+                                              pickedImage!.name;
+                                        });
+                                      },
+                                      validator: (value) => value != null &&
+                                              value.isEmpty
+                                          ? 'Please select a profile picture'
+                                          : null,
+                                      decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 0, horizontal: 10),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.grey.shade400,
+                                          ),
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.grey.shade400),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    )
+                                  ],
+                                ),
+
+                                ///ENTER DATE FORM
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      'Date of Birth:',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    TextFormField(
+                                      obscureText: false,
+                                      controller: dateinputController,
+                                      readOnly: true,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      onTap: () async {
+                                        pickedDate = await showDatePicker(
+                                          context: context,
+                                          initialDate: DateTime.now().subtract(
+                                              const Duration(days: 6575)),
+                                          firstDate: DateTime.now().subtract(
+                                              const Duration(days: 20075)),
+                                          //DateTime.now() - not to allow to choose before today.
+                                          lastDate: DateTime.now().subtract(
+                                              const Duration(days: 6575)),
+                                        );
+
+                                        if (pickedDate != null) {
+                                          print(
+                                              pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                          String formattedDate =
+                                              DateFormat('yyyy-MM-dd')
+                                                  .format(pickedDate!);
+                                          print(
+                                              formattedDate); //formatted date output using intl package =>  2021-03-16
+                                          //you can implement different kind of Date Format here according to your requirement
+
+                                          setState(() {
+                                            dateinputController.text =
+                                                formattedDate; //set output date to TextField value.
+                                          });
+                                        } else {
+                                          print("Date is not selected");
+                                        }
+                                      },
+                                      validator: (value) => value != null &&
+                                              value.isEmpty
+                                          ? 'Please enter your date of birth'
+                                          : null,
+                                      decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 0, horizontal: 10),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.grey.shade400,
+                                          ),
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.grey.shade400),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    )
+                                  ],
+                                ),
+
+                                ///EMAIL FORM
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      'Email:',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    TextFormField(
+                                      obscureText: false,
+                                      controller: emailController,
+                                      autovalidateMode:
+                                          AutovalidateMode.disabled,
+                                      validator: (email) => email != null &&
+                                              !EmailValidator.validate(email)
+                                          ? 'Please enter a valid email'
+                                          : null,
+                                      decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 0, horizontal: 10),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.grey.shade400,
+                                          ),
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.grey.shade400),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    )
+                                  ],
+                                ),
+
+                                ///PASSWORD FORM
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      'Password:',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    TextFormField(
+                                      obscureText: true,
+                                      controller: passwordController,
+                                      autovalidateMode:
+                                          AutovalidateMode.disabled,
+                                      validator: (value) => value != null &&
+                                              value.length < 6
+                                          ? 'Please enter at least 6 characters'
+                                          : null,
+                                      decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 0, horizontal: 10),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.grey.shade400,
+                                          ),
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.grey.shade400),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+
+                          ///SIGN UP BUTTON
+                          Container(
                             padding: EdgeInsets.only(top: 3, left: 3),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(50),
                             ),
                             child: MaterialButton(
-                              minWidth: double.infinity,
-                              height: 60,
-                              color: Colors.red.shade400,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              child: Text(
-                                'Sign Up',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 18,
-                                  color: Colors.white,
+                                minWidth: double.infinity,
+                                height: 60,
+                                color: Colors.red.shade400,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
                                 ),
-                              ),
-                              onPressed: createAccount,
-                            ),
+                                child: Text(
+                                  'Sign up',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                onPressed: createAccount),
                           ),
-                        ),
-                      ]),
+                          SizedBox(
+                            height: 15,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

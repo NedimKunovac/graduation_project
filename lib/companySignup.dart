@@ -122,13 +122,14 @@ class _CompanySignupState extends State<CompanySignup> {
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
+                        ///SIGN UP TEXT
                         Text(
                           'Sign up',
                           style: TextStyle(
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 15,
                         ),
                         Text(
                           'Create your account.',
@@ -137,10 +138,16 @@ class _CompanySignupState extends State<CompanySignup> {
                               fontWeight: FontWeight.bold,
                               color: Colors.grey),
                         ),
+                        SizedBox(
+                          height: 15,
+                        ),
+
+                        ///FORM DATA
                         Form(
                           key: formKey,
                           child: Column(
                             children: <Widget>[
+                              ///COMPANY TITLE FORM
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -185,6 +192,8 @@ class _CompanySignupState extends State<CompanySignup> {
                                   )
                                 ],
                               ),
+
+                              ///COMPANY REPRESENTATIVE FORM
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -229,6 +238,8 @@ class _CompanySignupState extends State<CompanySignup> {
                                   )
                                 ],
                               ),
+
+                              ///PROFILE PHOTO FORM
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -281,6 +292,8 @@ class _CompanySignupState extends State<CompanySignup> {
                                   )
                                 ],
                               ),
+
+                              ///COMPANY VAT NUMBER FORM
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -326,6 +339,8 @@ class _CompanySignupState extends State<CompanySignup> {
                                   )
                                 ],
                               ),
+
+                              ///EMAIL
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -367,6 +382,8 @@ class _CompanySignupState extends State<CompanySignup> {
                                   )
                                 ],
                               ),
+
+                              ///PASSWORD
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -411,6 +428,11 @@ class _CompanySignupState extends State<CompanySignup> {
                             ],
                           ),
                         ),
+                        SizedBox(
+                          height: 15,
+                        ),
+
+                        ///SIGN UP BUTTON
                         Container(
                           padding: EdgeInsets.only(top: 3, left: 3),
                           decoration: BoxDecoration(
@@ -433,6 +455,9 @@ class _CompanySignupState extends State<CompanySignup> {
                                 ),
                               ),
                               onPressed: createAccount),
+                        ),
+                        SizedBox(
+                          height: 15,
                         ),
                       ]),
                 ),
