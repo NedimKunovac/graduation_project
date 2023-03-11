@@ -1,3 +1,5 @@
+import 'package:graduation_project/login.dart';
+
 import 'Dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -48,7 +50,7 @@ class _CompanySignupState extends State<CompanySignup> {
     } on FirebaseAuthException catch (e) {
       print(e);
 
-      flashBar.showBasicsFlash(
+      flashBar.showBasicsFlashFailed(
           duration: Duration(seconds: 3), context: context, message: e.message);
     }
     return false;
@@ -78,6 +80,7 @@ class _CompanySignupState extends State<CompanySignup> {
           'vatNum': vatNumController.text.trim(),
           'profilePhotoUrl': imageUrl
         });
+
 
         clearControllers();
       } on FirebaseException catch (e) {

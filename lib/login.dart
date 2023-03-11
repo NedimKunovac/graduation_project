@@ -6,7 +6,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'flashBar.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  String passedEmail;
+  bool newAccount;
+
+  LoginPage({Key? key, required this.passedEmail, required this.newAccount}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -34,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
     } on FirebaseAuthException catch (e) {
       print(e);
 
-      flashBar.showBasicsFlash(
+      flashBar.showBasicsFlashFailed(
           duration: Duration(seconds: 3), context: context, message: e.message);
     }
   }
@@ -51,6 +54,7 @@ class _LoginPageState extends State<LoginPage> {
           } else if (snapshot.hasData) {
             return Dashboard();
           } else {
+            emailController.text=widget.passedEmail;
             return Scaffold(
               backgroundColor: Colors.white,
               //return button in the app bar
