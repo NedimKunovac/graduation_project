@@ -27,6 +27,7 @@ It requires three parameters, a title, a short description and a image
 */
 //Import statements
 import 'package:flutter/material.dart';
+import 'package:graduation_project/advertisementDetailed.dart';
 
 class Advertisement extends StatefulWidget {
   String title;
@@ -78,7 +79,7 @@ class _AdvertisementState extends State<Advertisement> {
                         child: const Text('Okay'),
                       ),
                       TextButton(
-                        onPressed: () => Navigator.pop(context, 'Fine'),
+                        onPressed:()=>Navigator.push(context, MaterialPageRoute(builder:(context)=>AdvertisementDetailed())),
                         child: const Text('Fine'),
                       ),
                     ],
