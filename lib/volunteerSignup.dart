@@ -80,7 +80,11 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
           'profilePhotoUrl': imageUrl
         });
         await FirebaseAuth.instance.signOut();
-        await Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(passedEmail: emailController.text, newAccount: true)));
+        await Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => LoginPage(
+                    passedEmail: emailController.text, newAccount: true)));
 
         clearControllers();
       } on FirebaseException catch (e) {
@@ -120,8 +124,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                   ///SIGN UP TEXT
                   Text(
                     'Sign up',
-                    style: TextStyle(
-                        fontSize: 30, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 15,
@@ -160,12 +163,11 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                             TextFormField(
                               obscureText: false,
                               controller: fullNameController,
-                              autovalidateMode:
-                              AutovalidateMode.disabled,
+                              autovalidateMode: AutovalidateMode.disabled,
                               validator: (value) =>
-                              value != null && value.length < 3
-                                  ? 'Please enter your full name'
-                                  : null,
+                                  value != null && value.length < 3
+                                      ? 'Please enter your full name'
+                                      : null,
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 0, horizontal: 10),
@@ -175,8 +177,8 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                                   ),
                                 ),
                                 border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.grey.shade400),
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade400),
                                 ),
                               ),
                             ),
@@ -206,20 +208,19 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                               controller: imageController,
                               readOnly: true,
                               autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.onUserInteraction,
                               onTap: () {
                                 WidgetsBinding.instance
                                     .addPostFrameCallback((_) async {
-                                  pickedImage = await imagePicker
-                                      .imgPickDialog(context);
-                                  imageController.text =
-                                      pickedImage!.name;
+                                  pickedImage =
+                                      await imagePicker.imgPickDialog(context);
+                                  imageController.text = pickedImage!.name;
                                 });
                               },
-                              validator: (value) => value != null &&
-                                  value.isEmpty
-                                  ? 'Please select a profile picture'
-                                  : null,
+                              validator: (value) =>
+                                  value != null && value.isEmpty
+                                      ? 'Please select a profile picture'
+                                      : null,
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 0, horizontal: 10),
@@ -229,8 +230,8 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                                   ),
                                 ),
                                 border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.grey.shade400),
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade400),
                                 ),
                               ),
                             ),
@@ -260,25 +261,25 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                               controller: dateinputController,
                               readOnly: true,
                               autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.onUserInteraction,
                               onTap: () async {
                                 pickedDate = await showDatePicker(
                                   context: context,
-                                  initialDate: DateTime.now().subtract(
-                                      const Duration(days: 6575)),
-                                  firstDate: DateTime.now().subtract(
-                                      const Duration(days: 20075)),
+                                  initialDate: DateTime.now()
+                                      .subtract(const Duration(days: 6575)),
+                                  firstDate: DateTime.now()
+                                      .subtract(const Duration(days: 20075)),
                                   //DateTime.now() - not to allow to choose before today.
-                                  lastDate: DateTime.now().subtract(
-                                      const Duration(days: 6575)),
+                                  lastDate: DateTime.now()
+                                      .subtract(const Duration(days: 6575)),
                                 );
 
                                 if (pickedDate != null) {
                                   print(
                                       pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
                                   String formattedDate =
-                                  DateFormat('yyyy-MM-dd')
-                                      .format(pickedDate!);
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(pickedDate!);
                                   print(
                                       formattedDate); //formatted date output using intl package =>  2021-03-16
                                   //you can implement different kind of Date Format here according to your requirement
@@ -291,10 +292,10 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                                   print("Date is not selected");
                                 }
                               },
-                              validator: (value) => value != null &&
-                                  value.isEmpty
-                                  ? 'Please enter your date of birth'
-                                  : null,
+                              validator: (value) =>
+                                  value != null && value.isEmpty
+                                      ? 'Please enter your date of birth'
+                                      : null,
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 0, horizontal: 10),
@@ -304,8 +305,8 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                                   ),
                                 ),
                                 border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.grey.shade400),
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade400),
                                 ),
                               ),
                             ),
@@ -333,10 +334,9 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                             TextFormField(
                               obscureText: false,
                               controller: emailController,
-                              autovalidateMode:
-                              AutovalidateMode.disabled,
+                              autovalidateMode: AutovalidateMode.disabled,
                               validator: (email) => email != null &&
-                                  !EmailValidator.validate(email)
+                                      !EmailValidator.validate(email)
                                   ? 'Please enter a valid email'
                                   : null,
                               decoration: InputDecoration(
@@ -348,8 +348,8 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                                   ),
                                 ),
                                 border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.grey.shade400),
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade400),
                                 ),
                               ),
                             ),
@@ -377,12 +377,11 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                             TextFormField(
                               obscureText: true,
                               controller: passwordController,
-                              autovalidateMode:
-                              AutovalidateMode.disabled,
-                              validator: (value) => value != null &&
-                                  value.length < 6
-                                  ? 'Please enter at least 6 characters'
-                                  : null,
+                              autovalidateMode: AutovalidateMode.disabled,
+                              validator: (value) =>
+                                  value != null && value.length < 6
+                                      ? 'Please enter at least 6 characters'
+                                      : null,
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 0, horizontal: 10),
@@ -392,8 +391,8 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                                   ),
                                 ),
                                 border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.grey.shade400),
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade400),
                                 ),
                               ),
                             ),

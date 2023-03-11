@@ -61,8 +61,11 @@ class _SignOrLogState extends State<SignOrLog> {
                     minWidth: double.infinity,
                     height: 60,
                     onPressed: () {
-                      Navigator.push(context as BuildContext,
-                          MaterialPageRoute(builder: (context) => LoginPage(passedEmail: '', newAccount: false)));
+                      Navigator.push(
+                          context as BuildContext,
+                          MaterialPageRoute(
+                              builder: (context) => LoginPage(
+                                  passedEmail: '', newAccount: false)));
                     },
                     shape: RoundedRectangleBorder(
                         side: const BorderSide(color: Colors.white70),

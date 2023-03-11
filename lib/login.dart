@@ -9,7 +9,8 @@ class LoginPage extends StatefulWidget {
   String passedEmail;
   bool newAccount;
 
-  LoginPage({Key? key, required this.passedEmail, required this.newAccount}) : super(key: key);
+  LoginPage({Key? key, required this.passedEmail, required this.newAccount})
+      : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -19,6 +20,18 @@ class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      if (widget.newAccount == true)
+        flashBar.showBasicsFlashSuccessful(
+          duration: Duration(seconds: 3),
+          context: context,
+          message: 'Your account was successfully created! You may now log in!',
+        );
+    });
+  }
 
   void clearControllers() {
     passwordController.clear();
@@ -33,6 +46,7 @@ class _LoginPageState extends State<LoginPage> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      widget.passedEmail = emailController.text;
       clearControllers();
     } on FirebaseAuthException catch (e) {
       print(e);
@@ -54,7 +68,10 @@ class _LoginPageState extends State<LoginPage> {
           } else if (snapshot.hasData) {
             return Dashboard();
           } else {
-            emailController.text=widget.passedEmail;
+            if (widget.passedEmail != '') {
+              emailController.text = widget.passedEmail;
+            }
+            ;
             return Scaffold(
               backgroundColor: Colors.white,
               //return button in the app bar

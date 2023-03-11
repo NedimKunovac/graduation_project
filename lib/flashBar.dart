@@ -4,9 +4,9 @@ import 'package:flash/flash.dart';
 class flashBar {
   static showBasicsFlashFailed(
       {Duration? duration,
-        flashStyle = FlashBehavior.floating,
-        context,
-        String? message}) {
+      flashStyle = FlashBehavior.floating,
+      context,
+      String? message}) {
     showFlash(
       context: context,
       duration: duration,
@@ -30,11 +30,12 @@ class flashBar {
       },
     );
   }
+
   static showBasicsFlashSuccessful(
       {Duration? duration,
-        flashStyle = FlashBehavior.floating,
-        context,
-        String? message}) {
+      flashStyle = FlashBehavior.floating,
+      context,
+      String? message}) {
     showFlash(
       context: context,
       duration: duration,
