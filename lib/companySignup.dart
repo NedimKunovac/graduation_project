@@ -242,7 +242,7 @@ class _CompanySignupState extends State<CompanySignup> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'Your profile photo:',
+                                'Logo of your company:',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
@@ -314,8 +314,8 @@ class _CompanySignupState extends State<CompanySignup> {
                             autovalidateMode: AutovalidateMode.disabled,
                             validator: (value) => value != null &&
                                     value.length != 12
-                                ? 'Please enter a proper VAT Number \nA VAT Number containts 12 numbers'
-                                : null,
+                                    ? 'Please enter a proper VAT Number \nA VAT Number contains 12 numbers'
+                                    : null,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 0, horizontal: 10),
