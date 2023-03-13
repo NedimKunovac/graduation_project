@@ -233,7 +233,7 @@ class _CompanySignupState extends State<CompanySignup> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    'Your profile photo:',
+                                    'Logo of your company:',
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w400,
