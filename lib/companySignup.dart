@@ -68,7 +68,7 @@ class _CompanySignupState extends State<CompanySignup> {
         Reference referenceRoot = FirebaseStorage.instance.ref();
         Reference referenceDirImages = referenceRoot.child('${userReference}');
         Reference referenceImageToUpload =
-          referenceDirImages.child('profile_photo');
+            referenceDirImages.child('profile_photo');
         await referenceImageToUpload.putFile(File(pickedImage!.path));
         var imageUrl = await referenceImageToUpload.getDownloadURL();
 
@@ -168,9 +168,9 @@ class _CompanySignupState extends State<CompanySignup> {
                             controller: compNameController,
                             autovalidateMode: AutovalidateMode.disabled,
                             validator: (value) =>
-                              value != null && value.length < 3
-                                  ? 'Please enter your company\'s name'
-                                  : null,
+                                value != null && value.length < 3
+                                    ? 'Please enter your company\'s name'
+                                    : null,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 0, horizontal: 10),
@@ -181,7 +181,7 @@ class _CompanySignupState extends State<CompanySignup> {
                               ),
                               border: OutlineInputBorder(
                                 borderSide:
-                                  BorderSide(color: Colors.grey.shade400),
+                                    BorderSide(color: Colors.grey.shade400),
                               ),
                             ),
                           ),
@@ -214,7 +214,7 @@ class _CompanySignupState extends State<CompanySignup> {
                             controller: repNameController,
                             autovalidateMode: AutovalidateMode.disabled,
                             validator: (value) => value != null &&
-                                  value.length < 3
+                                    value.length < 3
                                 ? 'Please enter your company representative\'s name'
                                 : null,
                             decoration: InputDecoration(
@@ -227,7 +227,7 @@ class _CompanySignupState extends State<CompanySignup> {
                               ),
                               border: OutlineInputBorder(
                                 borderSide:
-                                  BorderSide(color: Colors.grey.shade400),
+                                    BorderSide(color: Colors.grey.shade400),
                               ),
                             ),
                           ),
@@ -242,7 +242,7 @@ class _CompanySignupState extends State<CompanySignup> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                              'Logo of your company:',
+                                'Logo of your company:',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
@@ -257,12 +257,12 @@ class _CompanySignupState extends State<CompanySignup> {
                             controller: imageController,
                             readOnly: true,
                             autovalidateMode:
-                              AutovalidateMode.onUserInteraction,
+                                AutovalidateMode.onUserInteraction,
                             onTap: () {
                               WidgetsBinding.instance
                                   .addPostFrameCallback((_) async {
                                 pickedImage =
-                                  await imagePicker.imgPickDialog(context);
+                                    await imagePicker.imgPickDialog(context);
                                 imageController.text = pickedImage!.name;
                               });
                             },
@@ -279,7 +279,7 @@ class _CompanySignupState extends State<CompanySignup> {
                               ),
                               border: OutlineInputBorder(
                                 borderSide:
-                                  BorderSide(color: Colors.grey.shade400),
+                                    BorderSide(color: Colors.grey.shade400),
                               ),
                             ),
                           ),
@@ -313,9 +313,9 @@ class _CompanySignupState extends State<CompanySignup> {
                             controller: vatNumController,
                             autovalidateMode: AutovalidateMode.disabled,
                             validator: (value) => value != null &&
-                                  value.length != 12
-                                  ? 'Please enter a proper VAT Number \nA VAT Number contains 12 numbers'
-                                : null,
+                                    value.length != 12
+                                    ? 'Please enter a proper VAT Number \nA VAT Number contains 12 numbers'
+                                    : null,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 0, horizontal: 10),
@@ -326,7 +326,7 @@ class _CompanySignupState extends State<CompanySignup> {
                               ),
                               border: OutlineInputBorder(
                                 borderSide:
-                                  BorderSide(color: Colors.grey.shade400),
+                                    BorderSide(color: Colors.grey.shade400),
                               ),
                             ),
                           ),
@@ -356,9 +356,9 @@ class _CompanySignupState extends State<CompanySignup> {
                             controller: emailController,
                             autovalidateMode: AutovalidateMode.disabled,
                             validator: (email) =>
-                              email != null && !EmailValidator.validate(email)
-                                  ? 'Please enter a valid email'
-                                  : null,
+                                email != null && !EmailValidator.validate(email)
+                                    ? 'Please enter a valid email'
+                                    : null,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 0, horizontal: 10),
@@ -369,7 +369,7 @@ class _CompanySignupState extends State<CompanySignup> {
                               ),
                               border: OutlineInputBorder(
                                 borderSide:
-                                  BorderSide(color: Colors.grey.shade400),
+                                    BorderSide(color: Colors.grey.shade400),
                               ),
                             ),
                           ),
@@ -399,9 +399,9 @@ class _CompanySignupState extends State<CompanySignup> {
                             controller: passwordController,
                             autovalidateMode: AutovalidateMode.disabled,
                             validator: (value) =>
-                              value != null && value.length < 6
-                                  ? 'Please enter at least 6 characters'
-                                  : null,
+                                value != null && value.length < 6
+                                    ? 'Please enter at least 6 characters'
+                                    : null,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 0, horizontal: 10),
@@ -412,7 +412,7 @@ class _CompanySignupState extends State<CompanySignup> {
                               ),
                               border: OutlineInputBorder(
                                 borderSide:
-                                  BorderSide(color: Colors.grey.shade400),
+                                    BorderSide(color: Colors.grey.shade400),
                               ),
                             ),
                           ),
