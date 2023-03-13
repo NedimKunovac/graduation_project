@@ -47,18 +47,16 @@ class _DashboardState extends State<Dashboard> {
                   color: Colors.grey),
             ),
             Advertisement(
-                title: 'Lorem ipsum dolor sit amet',
+                title: 'OSCE',
                 description:
-                    'Tincidunt fermentum imperdiet. Fusce semper lectus id metus tincidunt, '
-                    'sit amet pellentesque tellus consectetur.',
+                    'The OSCE stands for the Organization for Security and Co-operation in Europe.',
                 adImage:
                     Image(image: AssetImage('assetsTesting/guySmiling.jpg')),
                 accepted: true),
             Advertisement(
-                title: 'Duis dignissim diam quis sodales efficitur.',
+                title: 'The United Nations (UN)',
                 description:
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia nulla eget mollis sollicitudin. '
-                    'Donec aliquam lorem et varius fringilla. ',
+                    'The United Nations (UN) is an intergovernmental organization whose stated purposes are to maintain international peace and security, develop friendly relations among nations, achieve international cooperation, and be a centre for harmonizing the actions of nations.',
                 adImage: Image(
                     image:
                         AssetImage('assetsTesting/advertisementIconTest.jpg')),
@@ -72,34 +70,23 @@ class _DashboardState extends State<Dashboard> {
             ),
             Advertisement(
                 title:
-                    'Etiam auctor semper arcu, vel consequat arcu feugiat at.',
+                    'Red Cross',
                 description:
-                    'Nulla mi nibh, dapibus sed bibendum vulputate, posuere sed massa. '
-                    'Integer justo lorem, ultricies quis enim eu, lobortis elementum velit. ',
+                    'The International Committee of the Red Cross (ICRC) ensuring humanitarian protection and assistance for victims of war and other situations of violence.',
                 adImage:
                     Image(image: AssetImage('assetsTesting/flutterLogo.jpg')),
                 accepted: false),
             Advertisement(
-                title: 'Sed porttitor justo quis enim bibendum auctor.',
+                title: 'AIESEC',
                 description:
-                    'Fusce vulputate dolor vitae sapien mollis, quis dapibus eros semper. '
-                    'Donec sollicitudin metus odio, et pulvinar enim vestibulum non.',
+                    'AIESEC is an international youth-run and led, non-governmental and not-for-profit organization that provides young people with leadership development, cross-cultural internships, and global volunteer exchange experiences.',
                 adImage:
                     Image(image: AssetImage('assetsTesting/flutterBird.png')),
                 accepted: false),
             Advertisement(
-                title: 'Lorem ipsum dolor sit amet',
+                title: 'Sarajevo Film Festival',
                 description:
-                    'Tincidunt fermentum imperdiet. Fusce semper lectus id metus tincidunt, '
-                    'sit amet pellentesque tellus consectetur.',
-                adImage:
-                    Image(image: AssetImage('assetsTesting/guySmiling.jpg')),
-                accepted: false),
-            Advertisement(
-                title: 'Duis dignissim diam quis sodales efficitur.',
-                description:
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia nulla eget mollis sollicitudin. '
-                    'Donec aliquam lorem et varius fringilla. ',
+                    'The Sarajevo Film Festival is the premier and largest film festival in Southeast Europe, and is one of the largest film festivals in Europe.',
                 adImage: Image(
                     image:
                         AssetImage('assetsTesting/advertisementIconTest.jpg')),
