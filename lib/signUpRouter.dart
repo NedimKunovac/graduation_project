@@ -49,7 +49,7 @@ class SignUpRouter extends StatelessWidget {
                       children: <Widget>[
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => CompanySignup()));
@@ -67,7 +67,7 @@ class SignUpRouter extends StatelessWidget {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => VolunteerSignup()));

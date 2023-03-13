@@ -1,10 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Dashboard.dart';
 import 'package:graduation_project/login.dart';
 import 'signorlog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'flashBar.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +22,7 @@ class MyApp extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return LoginPage();
+          return LoginPage(passedEmail: '', newAccount: false);
         } else
           return SignOrLog();
       },

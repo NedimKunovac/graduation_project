@@ -52,7 +52,10 @@ class _AdvertisementState extends State<Advertisement> {
                         child: const Text('Okay'),
                       ),
                       TextButton(
-                        onPressed:()=>Navigator.push(context, MaterialPageRoute(builder:(context)=>AdvertisementDetailed())),
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AdvertisementDetailed())),
                         child: const Text('Fine'),
                       ),
                     ],

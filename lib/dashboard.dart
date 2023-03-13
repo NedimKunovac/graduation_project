@@ -20,11 +20,7 @@ class _DashboardState extends State<Dashboard> {
   static CollectionReference users =
       FirebaseFirestore.instance.collection('Users');
 
-
   static Future<DocumentSnapshot<Object?>>? fetchDoc() async {
-    await Future.delayed(Duration(seconds: 2), () {
-      return true;
-    });
     return await users.doc('${FirebaseAuth.instance.currentUser?.uid}').get();
   }
 
@@ -118,9 +114,8 @@ class _DashboardState extends State<Dashboard> {
           if (snapshot.hasError) {
             return SizedBox.shrink();
           } else if (snapshot.hasData && !snapshot.data!.exists) {
-            Future.delayed(Duration(seconds: 2), () {
-              users.doc('${FirebaseAuth.instance.currentUser?.uid}').get();
-            });
+            users.doc('${FirebaseAuth.instance.currentUser?.uid}').get();
+
             return SizedBox.shrink();
           } else if (snapshot.connectionState == ConnectionState.done) {
             Map<String, dynamic> data =
@@ -172,10 +167,6 @@ class _DashboardState extends State<Dashboard> {
           }
 
           if (snapshot.hasData && !snapshot.data!.exists) {
-            Future.delayed(Duration(seconds: 1), () {
-              fetchDoc();
-            });
-
             return Text("Document does not exist",
                 style: TextStyle(color: Colors.blue));
           }
@@ -228,10 +219,6 @@ class _DashboardState extends State<Dashboard> {
               }
 
               if (snapshot.hasData && !snapshot.data!.exists) {
-                Future.delayed(Duration(seconds: 1), () {
-                  fetchDoc();
-                });
-
                 return SizedBox.shrink();
               }
 
