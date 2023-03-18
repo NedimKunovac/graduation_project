@@ -52,7 +52,10 @@ class _AdvertisementState extends State<Advertisement> {
                     content: const Text('You can move on'),
                     actions: <Widget>[
                       TextButton(
-                        onPressed: () => Navigator.pop(context, 'Okay'),
+                        onPressed: () =>  Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AdvertisementDetailed())),
                         child: const Text('Okay'),
                       ),
                       TextButton(

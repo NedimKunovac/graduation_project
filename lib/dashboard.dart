@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project/advertisementForm.dart';
 import 'advertisementWidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -120,15 +121,21 @@ class _DashboardState extends State<Dashboard> {
                   onPressed: () => showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Yeah Imagine this works'),
+                      title: const Text(' Imagine this works'),
                       content: const Text('You can move on'),
                       actions: <Widget>[
                         TextButton(
-                          onPressed: () => Navigator.pop(context, 'Okay'),
+                          onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AdvertisementForm())),
                           child: const Text('Okay'),
                         ),
                         TextButton(
-                          onPressed: () => Navigator.pop(context, 'Fine'),
+                          onPressed: () =>  Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AdvertisementForm())),
                           child: const Text('Fine'),
                         ),
                       ],
