@@ -132,10 +132,7 @@ class _DashboardState extends State<Dashboard> {
                           child: const Text('Yes'),
                         ),
                         TextButton(
-                          onPressed: () =>  Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Dashboard())),
+                          onPressed: () =>  Navigator.pop(context, 'Cancel'),
                           child: const Text('Cancel'),
                         ),
                       ],
