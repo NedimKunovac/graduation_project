@@ -125,7 +125,7 @@ class _DashboardState extends State<Dashboard> {
                       content: const Text('You will be redirected to the post creation page.'),
                       actions: <Widget>[
                         TextButton(
-                          onPressed: () => Navigator.push(
+                          onPressed: () => Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => AdvertisementForm())),
