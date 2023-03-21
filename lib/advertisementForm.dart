@@ -198,17 +198,6 @@ class AdvertisementForm extends StatelessWidget {
                                       ),),),),]),
 
                         ]),
-
-
-
-
-
-
-
-
-
-
-
                   ),
                 ]),),
           bottomNavigationBar: BottomAppBar(
@@ -230,10 +219,6 @@ class AdvertisementForm extends StatelessWidget {
               ),
             ),
           ),
-
-
-
-
         ));
   }}
 
