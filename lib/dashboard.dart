@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project/advertisementForm.dart';
 import 'advertisementWidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -120,17 +121,22 @@ class _DashboardState extends State<Dashboard> {
                   onPressed: () => showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Yeah Imagine this works'),
-                      content: const Text('You can move on'),
+                      title: const Text('Are you sure you want to add a post?'),
+                      content: const Text('You will be redirected to the post creation page.'),
                       actions: <Widget>[
                         TextButton(
-                          onPressed: () => Navigator.pop(context, 'Okay'),
-                          child: const Text('Okay'),
+                        onPressed: () => Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AdvertisementForm())),
+                          child: const Text('Yes'),
                         ),
                         TextButton(
-                          onPressed: () => Navigator.pop(context, 'Fine'),
-                          child: const Text('Fine'),
-                        ),
+                            onPressed: () =>  Navigator.pop(context, 'Cancel'),
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Dashboard())),
+                          child: const Text('Cancel'),
                       ],
                     ),
                   ),
