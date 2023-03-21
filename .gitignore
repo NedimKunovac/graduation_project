@@ -22,3 +22,4 @@ doc/api/
 .idea/
 .flutter-plugins
 .flutter-plugins-dependencies
+.metadata

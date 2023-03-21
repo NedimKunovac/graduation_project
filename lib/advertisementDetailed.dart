@@ -20,7 +20,8 @@ class AdvertisementDetailed extends StatelessWidget {
                 color: Colors.black,
               )),
         ),
-        body: Column(
+        body: SingleChildScrollView(
+    child:Column(
           children: [
             Container(
               height: MediaQuery.of(context).size.height * 0.3,
@@ -173,7 +174,7 @@ class AdvertisementDetailed extends StatelessWidget {
                       Expanded(
                         flex: 2,
                         child: Text(
-                          'Opportunities:',
+                          'Requirements:',
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.white,
@@ -198,7 +199,7 @@ class AdvertisementDetailed extends StatelessWidget {
                       Expanded(
                         flex: 2,
                         child: Text(
-                          'Requirements:',
+                          'Opportunities:',
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.white,
@@ -221,25 +222,24 @@ class AdvertisementDetailed extends StatelessWidget {
               ),
             ),
           ],
-        ),
+        ),),
         bottomNavigationBar: BottomAppBar(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: Icon(
-                          Icons.check_circle,
-                          color: Colors.green.shade400,
-                          size: 30,
-                        ),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white),
-                      )))
-            ],
+          child: Container(
+            height: 50.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    // handle button press
+                  },
+                  icon: Icon(Icons.check_circle),
+                  color: Colors.red,
+                  iconSize: 35.0,
+                ),
+                // add additional icons here as needed
+              ],
+            ),
           ),
         ),
       ),
