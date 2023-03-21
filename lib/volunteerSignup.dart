@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:graduation_project/login.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +11,11 @@ import 'imagePicker.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 
+///TODO: ADD SKILLS FOR VOLUNTEERS
+///Volunteer sign up page
+///Page made for volunteers to sign up, basically one big form
+///Doesn't take any arguments, routes to login page
+
 class VolunteerSignup extends StatefulWidget {
   const VolunteerSignup({Key? key}) : super(key: key);
 
@@ -20,6 +24,7 @@ class VolunteerSignup extends StatefulWidget {
 }
 
 class _VolunteerSignupState extends State<VolunteerSignup> {
+  ///Controllers
   final formKey = GlobalKey<FormState>();
   final fullNameController = TextEditingController();
   final dateinputController = TextEditingController();
@@ -29,6 +34,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  ///Clear all controllers
   void clearControllers() {
     fullNameController.clear();
     dateinputController.clear();
@@ -37,6 +43,8 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
     passwordController.clear();
   }
 
+  ///Function that adds the login info to Firebase Auth
+  ///Displays flash card if failed for any reason
   addLoginInfo() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
@@ -56,6 +64,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
     return false;
   }
 
+  ///Function that adds rest of the account info after adding the the account to auth
   Future createAccount() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
@@ -95,6 +104,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
 
   @override
   Widget build(BuildContext context) {
+    ///Actual page
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.white,
@@ -210,6 +220,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               onTap: () {
+                                ///Image picker
                                 WidgetsBinding.instance
                                     .addPostFrameCallback((_) async {
                                   pickedImage =
@@ -263,6 +274,9 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               onTap: () async {
+                                ///Entire date selection logic
+                                ///Wanted to wrap in external func, too much hassle
+                                ///Age limit can be edited here
                                 pickedDate = await showDatePicker(
                                   context: context,
                                   initialDate: DateTime.now()
@@ -274,6 +288,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                                       .subtract(const Duration(days: 6575)),
                                 );
 
+                                ///Logic so controller displays the selected date
                                 if (pickedDate != null) {
                                   print(
                                       pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000

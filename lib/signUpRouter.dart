@@ -2,11 +2,15 @@ import 'companySignup.dart';
 import 'volunteerSignup.dart';
 import 'package:flutter/material.dart';
 
+///Page made so user can select if he is a company or a volunteer
+///Legit just a router, just redirects user to other pages
+
 class SignUpRouter extends StatelessWidget {
   const SignUpRouter({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ///Actual Page
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -35,6 +39,7 @@ class SignUpRouter extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
+                  ///Text
                   Column(children: <Widget>[
                     Text(
                       '  Which one are you?',
@@ -47,6 +52,7 @@ class SignUpRouter extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
+                        ///Company button
                         ElevatedButton(
                           onPressed: () {
                             Navigator.pushReplacement(
@@ -65,6 +71,8 @@ class SignUpRouter extends StatelessWidget {
                             padding: EdgeInsets.all(65),
                           ),
                         ),
+
+                        ///Volunteer button
                         ElevatedButton(
                           onPressed: () {
                             Navigator.pushReplacement(
