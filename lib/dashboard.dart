@@ -1,12 +1,15 @@
-//Import statements
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'advertisementWidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
+import 'viewAdvertisements.dart';
+import 'dart:developer';
+
+///Dashboard, main page of the app
+///Make sure hide code for easier view
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key, context}) : super(key: key);
@@ -15,216 +18,119 @@ class Dashboard extends StatefulWidget {
   State<Dashboard> createState() => _DashboardState();
 }
 
-//Main part, navigation and all
 class _DashboardState extends State<Dashboard> {
+  ///Userdata
+  var userName='';
+  var userType=0;
+
   static CollectionReference users =
       FirebaseFirestore.instance.collection('Users');
 
+
+  ///Fetch user data
   static Future<DocumentSnapshot<Object?>>? fetchDoc() async {
     return await users.doc('${FirebaseAuth.instance.currentUser?.uid}').get();
   }
 
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+       users.doc('${FirebaseAuth.instance.currentUser?.uid}').get().then((
+           (DocumentSnapshot documentSnapshot){
+             if (documentSnapshot.exists) {
+               userName = documentSnapshot['name'];
+               userType = documentSnapshot['type'];
+             } else {
+               print('Document does not exist on the database');
+             }
+           }
+       ));
+    });
+  }
+
+
+  ///Bottom navbar logic
+  ///Set navbar page to tapped icon
+  @override
+  int _selectedIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
 
-  @override
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  ///List of pages for botton navbar
+  ///N pages must be equal to n buttons
   List<Widget> _widgetOptions = <Widget>[
-    Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Text(
-              'Your currently active volunteering opportunities:',
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey),
-            ),
-            Advertisement(
-                title: 'OSCE',
-                description:
-                    'The OSCE stands for the Organization for Security and Co-operation in Europe.',
-                adImage:
-                    Image(image: AssetImage('assetsTesting/guySmiling.jpg')),
-                accepted: true),
-            Advertisement(
-                title: 'The United Nations (UN)',
-                description:
-                    'The United Nations (UN) is an intergovernmental organization whose stated purposes are to maintain international peace and security, develop friendly relations among nations, achieve international cooperation, and be a centre for harmonizing the actions of nations.',
-                adImage: Image(
-                    image:
-                        AssetImage('assetsTesting/advertisementIconTest.jpg')),
-                accepted: true),
-            Text(
-              'Currently available volunteering opportunities:',
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey),
-            ),
-            Advertisement(
-                title:
-                    'Red Cross',
-                description:
-                    'The International Committee of the Red Cross (ICRC) ensuring humanitarian protection and assistance for victims of war and other situations of violence.',
-                adImage:
-                    Image(image: AssetImage('assetsTesting/flutterLogo.jpg')),
-                accepted: false),
-            Advertisement(
-                title: 'AIESEC',
-                description:
-                    'AIESEC is an international youth-run and led, non-governmental and not-for-profit organization that provides young people with leadership development, cross-cultural internships, and global volunteer exchange experiences.',
-                adImage:
-                    Image(image: AssetImage('assetsTesting/flutterBird.png')),
-                accepted: false),
-            Advertisement(
-                title: 'Sarajevo Film Festival',
-                description:
-                    'The Sarajevo Film Festival is the premier and largest film festival in Southeast Europe, and is one of the largest film festivals in Europe.',
-                adImage: Image(
-                    image:
-                        AssetImage('assetsTesting/advertisementIconTest.jpg')),
-                accepted: false),
-          ],
-        ),
-      ),
-      floatingActionButton: FutureBuilder<DocumentSnapshot>(
-        future: fetchDoc(),
-        builder:
-            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return SizedBox.shrink();
-          } else if (snapshot.hasData && !snapshot.data!.exists) {
-            users.doc('${FirebaseAuth.instance.currentUser?.uid}').get();
+    /// VIEW ADVERTISEMENTS PAGE
+    ViewAdvertisements(),
 
-            return SizedBox.shrink();
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            Map<String, dynamic> data =
-                snapshot.data!.data() as Map<String, dynamic>;
-            if (data['type'] == 0 || data['type'] == 1)
-              return FadeIn(
-                duration: Duration(milliseconds: 1000),
-                curve: Curves.easeIn,
-                child: FloatingActionButton(
-                  backgroundColor: Colors.green,
-                  child: Icon(
-                    Icons.add,
-                    size: 40,
-                  ),
-                  onPressed: () => showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Yeah Imagine this works'),
-                      content: const Text('You can move on'),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 'Okay'),
-                          child: const Text('Okay'),
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 'Fine'),
-                          child: const Text('Fine'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-          }
+    ///TODO: VIEW MESSAGES PAGE
+    Placeholder(),
 
-          return SizedBox.shrink();
-        },
-      ),
-    ),
-    Center(child: Text('Imagine you can see some messages')),
-    SingleChildScrollView(
-      child: FutureBuilder<DocumentSnapshot>(
-        future: fetchDoc(),
-        builder:
-            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text("Something went wrong",
-                style: TextStyle(color: Colors.blue));
-          }
-
-          if (snapshot.hasData && !snapshot.data!.exists) {
-            return Text("Document does not exist",
-                style: TextStyle(color: Colors.blue));
-          }
-
-          if (snapshot.connectionState == ConnectionState.done) {
-            Map<String, dynamic> data =
-                snapshot.data!.data() as Map<String, dynamic>;
-            return Column(children: <Widget>[
-              //TODO: Create profile generator here
-              Row(
-                children: <Widget>[
-                  CircleAvatar(
-                    radius: 100,
-                    backgroundImage:
-                        Image.network('${data['profilePhotoUrl']}').image,
-                  ),
-                  Text(
-                    "Welcome ${data['name']}!",
-                    style: TextStyle(
-                      color: Colors.blue,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [Text('Name - ${data['name']}')],
-              )
-            ]);
-          }
-
-          return Text("loading", style: TextStyle(color: Colors.blue));
-        },
-      ),
-    ),
+    ///TODO: VIEW PROFILE PAGE
+    Placeholder(),
   ];
 
-  Widget build(BuildContext context) {
+  ///Dynamically changes AppBar title based on page that is opened
+  AppBarBulder() {
+    if (_selectedIndex == 1) {
+      return Text('Messages', style: TextStyle(color: Colors.blue));
+    } else if (_selectedIndex == 2) {
+      return Text('Profile', style: TextStyle(color: Colors.blue));
+    } else {
+      return Text(
+        'Welcome ${userName}!',
+        style: TextStyle(color: Colors.blue),
+      );
+    }
+  }
+  FloatingActionButtonBuilder(){
+   if(_selectedIndex==0 && (userType==1 || userType==2)) {
+      return FadeIn(
+        duration: Duration(milliseconds: 1000),
+        curve: Curves.easeIn,
+        child: FloatingActionButton(
+          backgroundColor: Colors.green,
+          child: Icon(
+            Icons.add,
+            size: 40,
+          ),
+          onPressed: () => showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              title: const Text('Yeah Imagine this works'),
+              content: const Text('You can move on'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Okay'),
+                  child: const Text('Okay'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Fine'),
+                  child: const Text('Fine'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+  }
+  ///Structure itself
+  Widget build(BuildContext context){
+
+
     return Scaffold(
+      ///Appbar made to change based on page loaded
       appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
           brightness: Brightness.light,
           automaticallyImplyLeading: false,
-          title: FutureBuilder<DocumentSnapshot>(
-            future: fetchDoc(),
-            builder: (BuildContext context,
-                AsyncSnapshot<DocumentSnapshot> snapshot) {
-              if (snapshot.hasError) {
-                return SizedBox.shrink();
-              }
-
-              if (snapshot.hasData && !snapshot.data!.exists) {
-                return SizedBox.shrink();
-              }
-
-              if (snapshot.connectionState == ConnectionState.done) {
-                Map<String, dynamic> data =
-                    snapshot.data!.data() as Map<String, dynamic>;
-                return FadeIn(
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.easeIn,
-                  child: Text(
-                    'Welcome ${data['name']}!',
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                );
-              }
-
-              return SizedBox.shrink();
-            },
-          ),
+          title: AppBarBulder(),
+          ///BACK BUTTON
+          ///TODO: REMOVE THIS BUTTON, ADD LOGOUT TO PROFILE PAGE
           leading: IconButton(
             onPressed: () => showDialog<String>(
               context: context,
@@ -252,7 +158,11 @@ class _DashboardState extends State<Dashboard> {
               color: Colors.black,
             ),
           )),
+      ///Body openes selected page/widget based on list above
       body: Container(child: _widgetOptions.elementAt(_selectedIndex)),
+      ///Button that routes to create new advertisement page, doesn't load if volunteer is logged in
+      floatingActionButton: FloatingActionButtonBuilder(),
+      ///Bottom navbar, tapped icons set index of page, aka call _onItemTapped()
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.blue,
         items: const <BottomNavigationBarItem>[
