@@ -22,15 +22,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Streambuilder routes user to dashboard if he is already logged in
+    ///Streambuilder routes user to dashboard if he is already logged in
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          //Login page has routing to dashboard if user is already logged in
+          ///Login page has routing to dashboard if user is already logged in
           return LoginPage(passedEmail: '', newAccount: false);
         } else
-          //Routes to first page
+          ///Routes to first page
           return SignOrLog();
       },
     );

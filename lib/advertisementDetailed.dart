@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class AdvertisementDetailed extends StatelessWidget {
   const AdvertisementDetailed({Key? key}) : super(key: key);
 

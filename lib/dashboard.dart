@@ -19,45 +19,9 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  ///Userdata
-  var userName='';
-  var userType=0;
-
-  static CollectionReference users =
-      FirebaseFirestore.instance.collection('Users');
-
-
-  ///Fetch user data
-  static Future<DocumentSnapshot<Object?>>? fetchDoc() async {
-    return await users.doc('${FirebaseAuth.instance.currentUser?.uid}').get();
-  }
-
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-       users.doc('${FirebaseAuth.instance.currentUser?.uid}').get().then((
-           (DocumentSnapshot documentSnapshot){
-             if (documentSnapshot.exists) {
-               userName = documentSnapshot['name'];
-               userType = documentSnapshot['type'];
-             } else {
-               print('Document does not exist on the database');
-             }
-           }
-       ));
-    });
-  }
-
-
-  ///Bottom navbar logic
-  ///Set navbar page to tapped icon
-  @override
-  int _selectedIndex = 0;
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  ///Userdata saved for future use
+  var userName = '';
+  var userType = 0;
 
   ///List of pages for botton navbar
   ///N pages must be equal to n buttons
@@ -72,6 +36,39 @@ class _DashboardState extends State<Dashboard> {
     Placeholder(),
   ];
 
+  static CollectionReference users =
+      FirebaseFirestore.instance.collection('Users');
+
+  ///Pass all relevant fetched userdata to widgets after load
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      users
+          .doc('${FirebaseAuth.instance.currentUser?.uid}')
+          .get()
+          .then(((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          userName = documentSnapshot['name'];
+          userType = documentSnapshot['type'];
+          setState(() {});
+        } else {
+          print('Document does not exist on the database');
+        }
+      }));
+    });
+  }
+
+  ///Bottom navbar logic
+  ///Set navbar page to tapped icon
+  @override
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   ///Dynamically changes AppBar title based on page that is opened
   AppBarBulder() {
     if (_selectedIndex == 1) {
@@ -85,8 +82,10 @@ class _DashboardState extends State<Dashboard> {
       );
     }
   }
-  FloatingActionButtonBuilder(){
-   if(_selectedIndex==0 && (userType==1 || userType==2)) {
+
+  ///Adds Floating Action Button logic
+  FloatingActionButtonBuilder() {
+    if (_selectedIndex == 0 && (userType == 0 || userType == 1)) {
       return FadeIn(
         duration: Duration(milliseconds: 1000),
         curve: Curves.easeIn,
@@ -117,10 +116,9 @@ class _DashboardState extends State<Dashboard> {
       );
     }
   }
+
   ///Structure itself
-  Widget build(BuildContext context){
-
-
+  Widget build(BuildContext context) {
     return Scaffold(
       ///Appbar made to change based on page loaded
       appBar: AppBar(
@@ -129,6 +127,7 @@ class _DashboardState extends State<Dashboard> {
           brightness: Brightness.light,
           automaticallyImplyLeading: false,
           title: AppBarBulder(),
+
           ///BACK BUTTON
           ///TODO: REMOVE THIS BUTTON, ADD LOGOUT TO PROFILE PAGE
           leading: IconButton(
@@ -158,33 +157,49 @@ class _DashboardState extends State<Dashboard> {
               color: Colors.black,
             ),
           )),
+
       ///Body openes selected page/widget based on list above
       body: Container(child: _widgetOptions.elementAt(_selectedIndex)),
+
       ///Button that routes to create new advertisement page, doesn't load if volunteer is logged in
       floatingActionButton: FloatingActionButtonBuilder(),
+
       ///Bottom navbar, tapped icons set index of page, aka call _onItemTapped()
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blue,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: Colors.white,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-            label: 'Messages',
-            backgroundColor: Colors.blue,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Profile',
-            backgroundColor: Colors.blue,
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.white,
-        onTap: _onItemTapped,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.black38,
+              blurRadius: 5,
+            )
+          ]
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.blue,
+          items: const <BottomNavigationBarItem>[
+            ///HOME PAGE ICON
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+              backgroundColor: Colors.white,
+            ),
+            ///MESSAGES ICON
+            BottomNavigationBarItem(
+              icon: Icon(Icons.message),
+              label: 'Messages',
+              backgroundColor: Colors.blue,
+            ),
+            ///PROFILE ICON
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle),
+              label: 'Profile',
+              backgroundColor: Colors.blue,
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.white,
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }
