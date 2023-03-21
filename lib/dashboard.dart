@@ -121,19 +121,22 @@ class _DashboardState extends State<Dashboard> {
                   onPressed: () => showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Are you sure you want to add a post?'),
-                      content: const Text('You will be redirected to the post creation page.'),
+                      title: const Text(' Imagine this works'),
+                      content: const Text('You can move on'),
                       actions: <Widget>[
                         TextButton(
-                          onPressed: () => Navigator.pushReplacement(
+                          onPressed: () => Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => AdvertisementForm())),
-                          child: const Text('Yes'),
+                          child: const Text('Okay'),
                         ),
                         TextButton(
-                          onPressed: () =>  Navigator.pop(context, 'Cancel'),
-                          child: const Text('Cancel'),
+                          onPressed: () =>  Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AdvertisementForm())),
+                          child: const Text('Fine'),
                         ),
                       ],
                     ),
