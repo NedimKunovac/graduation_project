@@ -4,7 +4,7 @@ class AdvertisementDetailed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return  MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -19,7 +19,7 @@ class AdvertisementDetailed extends StatelessWidget {
                 color: Colors.black,
               )),
         ),
-        body: Column(
+        body: SingleChildScrollView(child:Column(
           children: [
             Container(
               height: MediaQuery.of(context).size.height * 0.3,
@@ -220,7 +220,7 @@ class AdvertisementDetailed extends StatelessWidget {
               ),
             ),
           ],
-        ),
+        ),),
         bottomNavigationBar: BottomAppBar(
           child: Container(
             height: 50.0,
@@ -244,3 +244,4 @@ class AdvertisementDetailed extends StatelessWidget {
     );
   }
 }
+
