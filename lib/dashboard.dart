@@ -6,7 +6,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'viewAdvertisements.dart';
-import 'dart:developer';
 
 ///Dashboard, main page of the app
 ///Make sure hide code for easier view
@@ -98,17 +97,24 @@ class _DashboardState extends State<Dashboard> {
           onPressed: () => showDialog<String>(
             context: context,
             builder: (BuildContext context) => AlertDialog(
-              title: const Text('Yeah Imagine this works'),
-              content: const Text('You can move on'),
+              title: const Text('Are you sure you want to add a post?'),
+              content: const Text('You will be redirected to the post creation page.'),
               actions: <Widget>[
                 TextButton(
-                  onPressed: () => Navigator.pop(context, 'Okay'),
-                  child: const Text('Okay'),
+                  onPressed: () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SizedBox.shrink())),
+                  child: const Text('Yes'),
                 ),
                 TextButton(
-                  onPressed: () => Navigator.pop(context, 'Fine'),
-                  child: const Text('Fine'),
+                  onPressed: () => Navigator.pop(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Dashboard())),
+                  child: const Text('Yes'),
                 ),
+
               ],
             ),
           ),
