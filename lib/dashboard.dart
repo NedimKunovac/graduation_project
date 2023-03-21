@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'viewAdvertisements.dart';
+import 'advertisementForm.dart';
 
 ///Dashboard, main page of the app
 ///Make sure hide code for easier view
@@ -104,15 +105,12 @@ class _DashboardState extends State<Dashboard> {
                   onPressed: () => Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SizedBox.shrink())),
+                          builder: (context) => AdvertisementForm())),
                   child: const Text('Yes'),
                 ),
                 TextButton(
-                  onPressed: () => Navigator.pop(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Dashboard())),
-                  child: const Text('Yes'),
+                  onPressed: () => Navigator.pop(context, 'No'),
+                  child: const Text('No'),
                 ),
 
               ],
