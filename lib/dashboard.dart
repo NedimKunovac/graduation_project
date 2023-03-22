@@ -21,6 +21,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   ///Userdata saved for future use
   var userName = '';
+  String? userID;
   var userType = 0;
 
   ///List of pages for botton navbar
@@ -49,6 +50,7 @@ class _DashboardState extends State<Dashboard> {
           .then(((DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           userName = documentSnapshot['name'];
+          userID = FirebaseAuth.instance.currentUser?.uid;
           userType = documentSnapshot['type'];
           setState(() {});
         } else {
@@ -105,7 +107,7 @@ class _DashboardState extends State<Dashboard> {
                   onPressed: () => Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AdvertisementForm())),
+                          builder: (context) => AdvertisementForm(userID: userID,))),
                   child: const Text('Yes'),
                 ),
                 TextButton(

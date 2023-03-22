@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
-class AdvertisementForm extends StatelessWidget {
-  const AdvertisementForm({Key? key}) : super(key: key);
 
+///Create a post form, accessed after pressing little plus on bottom of screen
+///
+
+class AdvertisementForm extends StatefulWidget {
+  String? userID;
+  AdvertisementForm({Key? key, required this.userID}) : super(key: key);
+
+  @override
+  State<AdvertisementForm> createState() => _AdvertisementFormState();
+}
+
+class _AdvertisementFormState extends State<AdvertisementForm> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
