@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Dashboard.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'flashbar.dart';
 
 ///Create a post form, accessed after pressing little plus on bottom of screen
 ///Requires userID so it can be passed to post details
@@ -40,9 +41,10 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
     opportunitiesController.clear();
   }
 
-  submitForm() async{
+  Future submitForm() async {
     final isValid = formKey.currentState!.validate();
-    if (!isValid) print('Form invalid');
+    if (!isValid) return;
+
     try {
       FirebaseFirestore usersCollection = FirebaseFirestore.instance;
       await usersCollection.collection('Posts').doc().set({
@@ -55,9 +57,13 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
         'requirements': requirementsController.text.trim(),
         'opportunities': opportunitiesController.text.trim()
       });
-      Navigator.pop(context);
-
       clearControllers();
+      await flashBar.showBasicsFlashSuccessful(
+        duration: Duration(seconds: 5),
+        context: context,
+        message: 'Your post was created!',
+      );
+      Navigator.pop(context);
     } on FirebaseException catch (e) {
       print(e);
     }
@@ -181,6 +187,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                     ),
                   ],
                 ),
+
                 ///JOB START DATE FIELD
                 SizedBox(height: 10),
                 Row(
@@ -203,19 +210,26 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                         readOnly: true,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         onTap: () async {
+                          DateTime? possibleLastDate;
+                          if (pickedEndDate != null) {
+                            possibleLastDate = pickedEndDate;
+                          } else
+                            possibleLastDate =
+                                DateTime.now().add(const Duration(days: 730));
+
                           pickedStartDate = await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
                               firstDate: DateTime.now(),
                               //DateTime.now() - not to allow to choose before today.
-                              lastDate: DateTime.now()
-                                  .add(const Duration(days: 730)));
+                              lastDate:
+                                  DateTime.parse(possibleLastDate.toString()));
 
                           if (pickedStartDate != null) {
                             print(
                                 pickedStartDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                            String formattedDate =
-                            DateFormat('yyyy-MM-dd').format(pickedStartDate!);
+                            String formattedDate = DateFormat('yyyy-MM-dd')
+                                .format(pickedStartDate!);
                             print(
                                 formattedDate); //formatted date output using intl package =>  2021-03-16
                             //you can implement different kind of Date Format here according to your requirement
@@ -224,7 +238,9 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                               startDateController.text =
                                   formattedDate; //set output date to TextField value.
                             });
+                            setState(() {});
                           } else {
+                            pickedStartDate = DateTime.now();
                             print("Date is not selected");
                           }
                         },
@@ -254,6 +270,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                     ),
                   ],
                 ),
+
                 ///JOB END DATE FIELD
                 SizedBox(height: 10),
                 Row(
@@ -278,19 +295,22 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                         onTap: () async {
                           pickedEndDate = await showDatePicker(
                               context: context,
-                              initialDate: DateTime.parse(pickedStartDate.toString())
-                                  .add(const Duration(days: 1)),
-                              firstDate: DateTime.parse(pickedStartDate.toString())
-                                  .add(const Duration(days: 1)),
+                              initialDate:
+                                  DateTime.parse(pickedStartDate.toString())
+                                      .add(const Duration(days: 1)),
+                              firstDate:
+                                  DateTime.parse(pickedStartDate.toString())
+                                      .add(const Duration(days: 1)),
                               //DateTime.now() - not to allow to choose before today.
-                              lastDate: DateTime.parse(pickedStartDate.toString())
-                                  .add(const Duration(days: 730)));
+                              lastDate:
+                                  DateTime.parse(pickedStartDate.toString())
+                                      .add(const Duration(days: 730)));
 
                           if (pickedEndDate != null) {
                             print(
                                 pickedEndDate); //pickedDate output format => 2021-03-10 00:00:00.000
                             String formattedDate =
-                            DateFormat('yyyy-MM-dd').format(pickedEndDate!);
+                                DateFormat('yyyy-MM-dd').format(pickedEndDate!);
                             print(
                                 formattedDate); //formatted date output using intl package =>  2021-03-16
                             //you can implement different kind of Date Format here according to your requirement
@@ -329,6 +349,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                     ),
                   ],
                 ),
+
                 ///NUMBER OF APPLICANTS FIELD
                 SizedBox(height: 10),
                 Row(
@@ -351,9 +372,9 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                           controller: numberOfPeopleController,
                           autovalidateMode: AutovalidateMode.disabled,
                           validator: (value) =>
-                          value == null || value == '' || value == '0'
-                              ? 'Invalid number of applicants'
-                              : null,
+                              value == null || value == '' || value == '0'
+                                  ? 'Invalid number of applicants'
+                                  : null,
                           decoration: InputDecoration(
                             errorStyle: TextStyle(
                               color: Colors.white,
@@ -362,10 +383,21 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                             hintStyle: TextStyle(
                               color: Colors.white,
                             ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
                           ),
                         ),
                       ),
                     ]),
+
                 ///WORK DESCRIPTION FILED
                 SizedBox(height: 10),
                 Row(
@@ -387,9 +419,9 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                           controller: workDescriptionController,
                           autovalidateMode: AutovalidateMode.disabled,
                           validator: (value) =>
-                          value != null && value.length < 10
-                              ? 'Please enter a long description \n'
-                              : null,
+                              value != null && value.length < 10
+                                  ? 'Please enter a long description \n'
+                                  : null,
                           decoration: InputDecoration(
                             errorStyle: TextStyle(
                               color: Colors.white,
@@ -398,10 +430,21 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                             hintStyle: TextStyle(
                               color: Colors.white,
                             ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
                           ),
                         ),
                       ),
                     ]),
+
                 ///REQUIREMENTS FIELD
                 SizedBox(height: 10),
                 Row(
@@ -421,11 +464,11 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                         flex: 3,
                         child: TextFormField(
                           controller: requirementsController,
-                          autovalidateMode:AutovalidateMode.disabled,
+                          autovalidateMode: AutovalidateMode.disabled,
                           validator: (value) =>
-                          value != null && value.length < 10
-                              ? 'Please enter your requirements'
-                              : null,
+                              value != null && value.length < 10
+                                  ? 'Please enter your requirements'
+                                  : null,
                           decoration: InputDecoration(
                             errorStyle: TextStyle(
                               color: Colors.white,
@@ -434,10 +477,21 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                             hintStyle: TextStyle(
                               color: Colors.white,
                             ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
                           ),
                         ),
                       ),
                     ]),
+
                 ///OPPORTUNITIES FIELD
                 SizedBox(height: 10),
                 Row(
@@ -457,9 +511,9 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                         flex: 3,
                         child: TextFormField(
                           validator: (value) =>
-                          value != null && value.length < 3
-                              ? 'Please enter opportunities'
-                              : null,
+                              value != null && value.length < 3
+                                  ? 'Please enter opportunities'
+                                  : null,
                           controller: opportunitiesController,
                           decoration: InputDecoration(
                             errorStyle: TextStyle(
@@ -469,6 +523,16 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                             hintStyle: TextStyle(
                               color: Colors.white,
                             ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
                           ),
                         ),
                       ),
