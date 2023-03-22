@@ -1,12 +1,11 @@
-/*
-This section is a template for the advertisements on the dashboard
-It requires three parameters, a title, a short description and a image
-*/
-//Import statements
 import 'package:flutter/material.dart';
 import 'package:graduation_project/advertisementDetailed.dart';
 
+/// Advertisement Preview [Small box seen on dashboard]
+/// Requires title, description, image link and status[accepted or not]
+
 class Advertisement extends StatefulWidget {
+  ///Widget options
   String title;
   String description;
   Image adImage;
@@ -37,7 +36,7 @@ class _AdvertisementState extends State<Advertisement> {
               child: ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.resolveWith((states) {
-                    // If the button is pressed, return green, otherwise blue
+                    /// Widget background color logic
                     if (widget.accepted == true) {
                       return Colors.green;
                     } else {
@@ -45,29 +44,12 @@ class _AdvertisementState extends State<Advertisement> {
                     }
                   }),
                 ),
-                onPressed: () => showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text('Yeah Imagine this works'),
-                    content: const Text('You can move on'),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () =>  Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AdvertisementDetailed())),
-                        child: const Text('Okay'),
-                      ),
-                      TextButton(
-                        onPressed: () =>  Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AdvertisementDetailed())),
-                        child: const Text('Fine'),
-                      ),
-                    ],
-                  ),
-                ),
+
+                ///Navigation logic
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AdvertisementDetailed())),
                 child: Column(
                   children: [
                     Row(
@@ -77,6 +59,7 @@ class _AdvertisementState extends State<Advertisement> {
                           padding: EdgeInsets.fromLTRB(0, 13, 10, 10),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
+                            ///Image in corner of widget
                             child: Container(
                               height: 70.0,
                               width: 70.0,
@@ -84,6 +67,7 @@ class _AdvertisementState extends State<Advertisement> {
                             ),
                           ),
                         ),
+                        ///Title in widget
                         Flexible(
                           child: Padding(
                             padding: EdgeInsets.fromLTRB(0, 13, 10, 10),
@@ -99,6 +83,7 @@ class _AdvertisementState extends State<Advertisement> {
                         ),
                       ],
                     ),
+                    ///Description in widget
                     Row(
                       children: [
                         Flexible(

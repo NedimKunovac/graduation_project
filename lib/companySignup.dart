@@ -11,6 +11,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 
+///Company sign up page
+///Page made for companies to sign up, basically one big form
+///Doesn't take any arguments, routes to login page
+
 class CompanySignup extends StatefulWidget {
   const CompanySignup({Key? key}) : super(key: key);
 
@@ -19,6 +23,7 @@ class CompanySignup extends StatefulWidget {
 }
 
 class _CompanySignupState extends State<CompanySignup> {
+  ///Controllers
   final formKey = GlobalKey<FormState>();
   final compNameController = TextEditingController();
   final repNameController = TextEditingController();
@@ -28,6 +33,7 @@ class _CompanySignupState extends State<CompanySignup> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  ///Clear controllers
   void clearControllers() {
     compNameController.clear();
     repNameController.clear();
@@ -37,6 +43,8 @@ class _CompanySignupState extends State<CompanySignup> {
     passwordController.clear();
   }
 
+  ///Add sign up info to firebase auth
+  ///Displays flash card if failed for any reason
   addLoginInfo() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
@@ -56,6 +64,7 @@ class _CompanySignupState extends State<CompanySignup> {
     return false;
   }
 
+  ///Function that adds the login info to Firebase Auth
   Future createAccount() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
@@ -97,6 +106,7 @@ class _CompanySignupState extends State<CompanySignup> {
 
   @override
   Widget build(BuildContext context) {
+    ///Actual page
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.white,
@@ -242,7 +252,7 @@ class _CompanySignupState extends State<CompanySignup> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                                'Logo of your company:',
+                            'Logo of your company:',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
@@ -259,6 +269,7 @@ class _CompanySignupState extends State<CompanySignup> {
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             onTap: () {
+                              ///Image picker
                               WidgetsBinding.instance
                                   .addPostFrameCallback((_) async {
                                 pickedImage =
@@ -290,6 +301,7 @@ class _CompanySignupState extends State<CompanySignup> {
                       ),
 
                       ///COMPANY VAT NUMBER FORM
+                      ///Limited to 12 numbers
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -314,8 +326,8 @@ class _CompanySignupState extends State<CompanySignup> {
                             autovalidateMode: AutovalidateMode.disabled,
                             validator: (value) => value != null &&
                                     value.length != 12
-                                    ? 'Please enter a proper VAT Number \nA VAT Number contains 12 numbers'
-                                    : null,
+                                ? 'Please enter a proper VAT Number \nA VAT Number contains 12 numbers'
+                                : null,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 0, horizontal: 10),

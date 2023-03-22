@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+///Class that servers to allow user to pick an image
+
 class imagePicker {
   static imgPickDialog(context) async {
     XFile? image;

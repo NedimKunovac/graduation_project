@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flash/flash.dart';
 
+///Flashbar that pops up on the bottom of the page
+///Mostly used for errors
+///Two functions showBasicsFlashSuccessful[Green] and showBasicsFlashFailed showBasicsFlashFailed[Red]
+
 class flashBar {
   static showBasicsFlashFailed(
       {Duration? duration,

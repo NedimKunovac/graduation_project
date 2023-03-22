@@ -5,6 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'flashBar.dart';
 
+/// Login page, made so if change in authentication is detected, user is redirected
+/// Users already logged in will be redirected to dash
+/// Takes arguments String passedEmail and bool newAccount
+/// Passed email is the email that will be displayed in the email field
+/// newAccount bool toggles "User created" flash card on bottom,
+
 class LoginPage extends StatefulWidget {
   String passedEmail;
   bool newAccount;
@@ -17,10 +23,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  ///Controllers for form
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  ///Flash card toggleable using the newUser boolean
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback((_) {
@@ -33,10 +41,12 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+  ///Controller erase
   void clearControllers() {
     passwordController.clear();
   }
 
+  ///Sign in func
   Future signIn() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
@@ -58,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    ///Stream builder made to detect changes in auth
     return StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
@@ -66,12 +77,16 @@ class _LoginPageState extends State<LoginPage> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Sum Ting Wong'));
           } else if (snapshot.hasData) {
+            ///If user is logged in, goto dashboard
             return Dashboard();
           } else {
+            ///Pass given email so it appears in email field
             if (widget.passedEmail != '') {
               emailController.text = widget.passedEmail;
             }
             ;
+
+            ///Actual Login page
             return Scaffold(
               backgroundColor: Colors.white,
               //return button in the app bar
@@ -279,7 +294,6 @@ class _LoginPageState extends State<LoginPage> {
                   )),
             );
           }
-          ;
         });
   }
 }

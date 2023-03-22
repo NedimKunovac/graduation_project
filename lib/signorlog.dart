@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/signUpRouter.dart';
 import 'login.dart';
 
+///First page of the app, serves to allow user to navigate to login or sign-up pages
+///Hence the name Sign or Log
+
 class SignOrLog extends StatefulWidget {
   const SignOrLog({Key? key}) : super(key: key);
 
@@ -25,6 +28,7 @@ class _SignOrLogState extends State<SignOrLog> {
             //even distribution of space
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              //Text on top of page
               Column(
                 children: const <Widget>[
                   Text(
@@ -47,12 +51,14 @@ class _SignOrLogState extends State<SignOrLog> {
                   )
                 ],
               ),
+              //Picture on first page
               Container(
                 height: MediaQuery.of(context as BuildContext).size.height / 3,
                 decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("assets/introduction.png"))),
               ),
+              //Buttons that route to login or sign up
               Column(
                 children: <Widget>[
                   //Login button
