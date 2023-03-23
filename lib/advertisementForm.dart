@@ -9,8 +9,10 @@ import 'flashbar.dart';
 
 class AdvertisementForm extends StatefulWidget {
   String? userID;
+  String? userName;
+  String? userProfilePhoto;
 
-  AdvertisementForm({Key? key, required this.userID}) : super(key: key);
+  AdvertisementForm({Key? key, required this.userID,required this.userName ,required this.userProfilePhoto}) : super(key: key);
 
   @override
   State<AdvertisementForm> createState() => _AdvertisementFormState();
@@ -19,6 +21,7 @@ class AdvertisementForm extends StatefulWidget {
 class _AdvertisementFormState extends State<AdvertisementForm> {
   ///Controllers for form fileds
   final formKey = GlobalKey<FormState>();
+  final postTitleController = TextEditingController();
   final dueDateController = TextEditingController();
   DateTime? pickedDueDate;
   final startDateController = TextEditingController();
@@ -32,6 +35,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
 
   ///Clear all controllers
   void clearControllers() {
+    postTitleController.clear();
     dueDateController.clear();
     startDateController.clear();
     endDateController.clear();
@@ -48,7 +52,10 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
     try {
       FirebaseFirestore usersCollection = FirebaseFirestore.instance;
       await usersCollection.collection('Posts').doc().set({
-        'author': widget.userID,
+        'title': postTitleController.text.trim(),
+        'authorID': widget.userID,
+        'authorName': widget.userName,
+        'profilePhotoUrl': widget.userProfilePhoto,
         'dueDate': Timestamp.fromDate(pickedDueDate!),
         'startDate': Timestamp.fromDate(pickedStartDate!),
         'endDate': Timestamp.fromDate(pickedEndDate!),
@@ -63,7 +70,9 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
         context: context,
         message: 'Your post was created!',
       );
-      Navigator.pop(context);
+      setState(() {
+        Navigator.pop(context);
+      });
     } on FirebaseException catch (e) {
       print(e);
     }
@@ -115,6 +124,52 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
             child: Form(
               key: formKey,
               child: Column(children: [
+                ///POST TITLE FIELD
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          'Post Title:',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: TextFormField(
+                          controller: postTitleController,
+                          autovalidateMode: AutovalidateMode.disabled,
+                          validator: (value) =>
+                          value != null && value.length < 3
+                              ? 'Please enter a title \n'
+                              : null,
+                          decoration: InputDecoration(
+                            errorStyle: TextStyle(
+                              color: Colors.white,
+                            ),
+                            hintText: 'Enter post title',
+                            hintStyle: TextStyle(
+                              color: Colors.white,
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ]),
+
                 ///APPLICATION DEADLINE FIELD
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

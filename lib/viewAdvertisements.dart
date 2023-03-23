@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_fadein/flutter_fadein.dart';
 import 'advertisementWidget.dart';
 
 /// Widget that loads the list of advertisements available on the first page
 /// Called by dashboard
 
 class ViewAdvertisements extends StatefulWidget {
-  const ViewAdvertisements({Key? key}) : super(key: key);
+  ViewAdvertisements({Key? key}) : super(key: key);
 
   @override
   State<ViewAdvertisements> createState() => _ViewAdvertisementsState();
@@ -13,57 +16,90 @@ class ViewAdvertisements extends StatefulWidget {
 
 class _ViewAdvertisementsState extends State<ViewAdvertisements> {
   ///Widget list that contains advertisements
-  List<Widget> availableAdvertisements = <Widget>[
-    Text(
-      'Your currently available volunteering opportunities:',
-      style: TextStyle(
-          fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey),
-    ),
+  List<Widget> availableAdvertisements = <Widget>[];
 
-    ///TODO: REMOVE THIS PLACEHOLDER LIST, ADD GENERATOR FOR THIS
-    Advertisement(
-        title: 'OSCE',
-        description:
-            'The OSCE stands for the Organization for Security and Co-operation in Europe.',
-        adImage: Image(image: AssetImage('assetsTesting/guySmiling.jpg')),
-        accepted: false),
-    Advertisement(
-        title: 'The United Nations (UN)',
-        description:
-            'The United Nations (UN) is an intergovernmental organization whose stated purposes are to maintain international peace and security, develop friendly relations among nations, achieve international cooperation, and be a centre for harmonizing the actions of nations.',
-        adImage:
-            Image(image: AssetImage('assetsTesting/advertisementIconTest.jpg')),
-        accepted: false),
-    Advertisement(
-        title: 'Red Cross',
-        description:
-            'The International Committee of the Red Cross (ICRC) ensuring humanitarian protection and assistance for victims of war and other situations of violence.',
-        adImage: Image(image: AssetImage('assetsTesting/flutterLogo.jpg')),
-        accepted: false),
-    Advertisement(
-        title: 'AIESEC',
-        description:
-            'AIESEC is an international youth-run and led, non-governmental and not-for-profit organization that provides young people with leadership development, cross-cultural internships, and global volunteer exchange experiences.',
-        adImage: Image(image: AssetImage('assetsTesting/flutterBird.png')),
-        accepted: false),
-    Advertisement(
-        title: 'Sarajevo Film Festival',
-        description:
-            'The Sarajevo Film Festival is the premier and largest film festival in Southeast Europe, and is one of the largest film festivals in Europe.',
-        adImage:
-            Image(image: AssetImage('assetsTesting/advertisementIconTest.jpg')),
-        accepted: false),
-  ];
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      generator();
+    });
+  }
+
+  generator() async {
+    var currentUser = await FirebaseAuth.instance.currentUser?.uid;
+    var userData = await FirebaseFirestore.instance.collection('Users')
+        .doc(currentUser).get();
+    if(userData['type'] == 2){
+      availableAdvertisements.add(
+        Text(
+          'Your currently available volunteering opportunities:',
+          style: TextStyle(
+              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey),
+        ),
+      );
+      var postsReference = await FirebaseFirestore.instance.collection('Posts');
+      QuerySnapshot querySnapshot = await postsReference.get();
+      var postList = querySnapshot.docs.toList();
+      for(var i=0;i<postList.length;i++){
+        availableAdvertisements.add(
+            FadeIn(
+                duration: Duration(milliseconds: 1000),
+                curve: Curves.easeIn,
+                child: Advertisement(id: postList[i].id, accepted: false))
+        );
+      }
+      setState(() {});
+    } else {
+      availableAdvertisements.add(
+        Text(
+          'Your currently active posts:',
+          style: TextStyle(
+              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey),
+        ),
+      );
+      var postsReference = await FirebaseFirestore.instance.collection('Posts')
+      .where('authorID', isEqualTo: currentUser);
+      QuerySnapshot querySnapshot = await postsReference.get();
+      var postList = querySnapshot.docs.toList();
+      for(var i=0;i<postList.length;i++){
+        availableAdvertisements.add(
+            FadeIn(
+                duration: Duration(milliseconds: 1000),
+                curve: Curves.easeIn,
+                child: Advertisement(id: postList[i].id, accepted: false))
+        );
+      }
+      setState(() {});
+    }
+  }
+
+  final Stream<QuerySnapshot> _postsStream = FirebaseFirestore.instance.collection('Posts')
+      .snapshots();
 
   @override
-  ///Legit just a column widget
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: availableAdvertisements,
-        ),
-      ),
+    return StreamBuilder<QuerySnapshot>(
+      stream: _postsStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+
+        return ListView(
+          children: snapshot.data!.docs.map((DocumentSnapshot document) {
+            Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+
+            print(data.runtimeType);
+            return ListTile(
+              title: Text(data['authorID']),
+            );
+          }).toList(),
+        );
+      },
     );
   }
 }

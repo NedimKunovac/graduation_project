@@ -23,7 +23,8 @@ class _DashboardState extends State<Dashboard> {
   ///Userdata saved for future use
   var userName = '';
   String? userID;
-  var userType = 0;
+  var userType = 2;
+  var userProfilePhoto='';
 
   ///List of pages for botton navbar
   ///N pages must be equal to n buttons
@@ -53,6 +54,7 @@ class _DashboardState extends State<Dashboard> {
           userName = documentSnapshot['name'];
           userID = FirebaseAuth.instance.currentUser?.uid;
           userType = documentSnapshot['type'];
+          userProfilePhoto = documentSnapshot['profilePhotoUrl'];
           setState(() {});
         } else {
           print('Document does not exist on the database');
@@ -102,20 +104,22 @@ class _DashboardState extends State<Dashboard> {
             context: context,
             builder: (BuildContext context) => AlertDialog(
               title: const Text('Are you sure you want to add a post?'),
-              content: const Text('You will be redirected to the post creation page.'),
+              content: const Text(
+                  'You will be redirected to the post creation page.'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AdvertisementForm(userID: userID,))),
+                          builder: (context) => AdvertisementForm(
+                                userID: userID, userName: userName, userProfilePhoto: userProfilePhoto,
+                              ))),
                   child: const Text('Yes'),
                 ),
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'No'),
                   child: const Text('No'),
                 ),
-
               ],
             ),
           ),
@@ -173,14 +177,12 @@ class _DashboardState extends State<Dashboard> {
 
       ///Bottom navbar, tapped icons set index of page, aka call _onItemTapped()
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.black38,
-              blurRadius: 5,
-            )
-          ]
-        ),
+        decoration: BoxDecoration(boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.black38,
+            blurRadius: 5,
+          )
+        ]),
         child: BottomNavigationBar(
           backgroundColor: Colors.blue,
           items: const <BottomNavigationBarItem>[
@@ -190,12 +192,14 @@ class _DashboardState extends State<Dashboard> {
               label: 'Home',
               backgroundColor: Colors.white,
             ),
+
             ///MESSAGES ICON
             BottomNavigationBarItem(
               icon: Icon(Icons.message),
               label: 'Messages',
               backgroundColor: Colors.blue,
             ),
+
             ///PROFILE ICON
             BottomNavigationBarItem(
               icon: Icon(Icons.account_circle),
@@ -205,7 +209,7 @@ class _DashboardState extends State<Dashboard> {
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.white,
-           onTap:_onItemTapped,
+          onTap: _onItemTapped,
         ),
       ),
     );

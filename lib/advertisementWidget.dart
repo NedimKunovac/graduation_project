@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/advertisementDetailed.dart';
 
@@ -6,17 +7,14 @@ import 'package:graduation_project/advertisementDetailed.dart';
 
 class Advertisement extends StatefulWidget {
   ///Widget options
-  String title;
-  String description;
-  Image adImage;
+  String id;
   bool accepted;
+
 
   Advertisement(
       {Key? key,
-      required this.title,
-      required this.description,
-      required this.adImage,
-      required this.accepted})
+      required this.id,
+      required this.accepted,})
       : super(key: key);
 
   @override
@@ -24,6 +22,31 @@ class Advertisement extends StatefulWidget {
 }
 
 class _AdvertisementState extends State<Advertisement> {
+  var postTitle='';
+  var postAuthor ='';
+  var postDescription = '';
+  var postImage = '';
+  
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      loadPostData();
+    });
+  }
+  
+  loadPostData() async {
+    var postData = await FirebaseFirestore.instance.collection('Posts').doc(widget.id).get();
+    postTitle =  postData['title'];
+    postAuthor = postData['authorName'];
+    postDescription = postData['description'];
+    postImage = postData['profilePhotoUrl'];
+    setState(() {});
+  }
+
+  loadImage(){
+    if(postImage!='') return Image.network(postImage);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -63,7 +86,7 @@ class _AdvertisementState extends State<Advertisement> {
                             child: Container(
                               height: 70.0,
                               width: 70.0,
-                              child: widget.adImage,
+                              child: loadImage(),
                             ),
                           ),
                         ),
@@ -72,7 +95,7 @@ class _AdvertisementState extends State<Advertisement> {
                           child: Padding(
                             padding: EdgeInsets.fromLTRB(0, 13, 10, 10),
                             child: Text(
-                              widget.title,
+                              '${postTitle} by ${postAuthor}',
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -90,7 +113,7 @@ class _AdvertisementState extends State<Advertisement> {
                             child: Padding(
                           padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
                           child: Text(
-                            widget.description,
+                            postDescription,
                             textAlign: TextAlign.justify,
                           ),
                         ))
