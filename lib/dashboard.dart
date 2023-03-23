@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
+import 'package:graduation_project/profilePage.dart';
 import 'viewAdvertisements.dart';
 import 'advertisementForm.dart';
 
@@ -34,7 +35,7 @@ class _DashboardState extends State<Dashboard> {
     Placeholder(),
 
     ///TODO: VIEW PROFILE PAGE
-    Placeholder(),
+    ProfilePage(),
   ];
 
   static CollectionReference users =
@@ -204,7 +205,7 @@ class _DashboardState extends State<Dashboard> {
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.white,
-          onTap: _onItemTapped,
+           onTap:_onItemTapped,
         ),
       ),
     );
