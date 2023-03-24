@@ -66,12 +66,12 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
               }
               if(!toggle){
                 return ListBody(
-                  children: [Advertisement(data: data, accepted: false)],
+                  children: [Advertisement(data: data,userType: widget.userType, accepted: false)],
                 );
               }
             } else{
               return ListBody(
-                children: [Advertisement(data: data, accepted: false)],
+                children: [Advertisement(data: data,userType: widget.userType , accepted: false)],
               );
             }
 

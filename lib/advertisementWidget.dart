@@ -9,11 +9,13 @@ class Advertisement extends StatefulWidget {
   ///Widget data
   Map<String, dynamic> data;
   bool accepted;
+  var userType;
 
   Advertisement({
     Key? key,
     required this.data,
     required this.accepted,
+    required this.userType,
   }) : super(key: key);
 
   @override
@@ -58,7 +60,7 @@ class _AdvertisementState extends State<Advertisement> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            AdvertisementDetailed(data: widget.data))),
+                            AdvertisementDetailed(data: widget.data, userType: widget.userType))),
                 child: Column(
                   children: [
                     Row(

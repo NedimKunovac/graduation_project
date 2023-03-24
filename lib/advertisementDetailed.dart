@@ -9,8 +9,9 @@ import 'flashBar.dart';
 class AdvertisementDetailed extends StatefulWidget {
   ///User data
   Map<String, dynamic> data;
+  var userType;
 
-  AdvertisementDetailed({Key? key, required this.data}) : super(key: key);
+  AdvertisementDetailed({Key? key, required this.data,required this.userType}) : super(key: key);
 
   @override
   State<AdvertisementDetailed> createState() => _AdvertisementDetailedState();
@@ -37,9 +38,76 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
     Navigator.pop(context);
   }
 
+  deletePost() async{
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Are you sure you want to delete this post?'),
+        content: const Text(
+            'Deleted posts cannot be recovered, and you will lose all your applicants. Think twice before you do this.'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () async{
+              try{
+                await FirebaseFirestore.instance.collection('Posts').doc(widget.data['postID']).delete();
+                await flashBar.showBasicsFlashFailed(
+                  duration: Duration(seconds: 5),
+                  context: context,
+                  message: 'You just deleted your post! Maybe try adding a new one?',
+                );
+                Navigator.pop(context);
+              } catch(e){
+                await flashBar.showBasicsFlashFailed(
+                  duration: Duration(seconds: 5),
+                  context: context,
+                  message: e.toString(),
+                );
+              }
+              Navigator.pop(context);
+              },
+            child: const Text('I understand, delete this post',
+            style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.bold,
+            ),),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'No, I want to keep this post!'),
+            child: const Text('No, I want to keep this post',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),),
+          ),
+        ],
+      ),
+    );
+
+
+  }
   submitButtonGenerator(){
-    if(widget.data['authorID']==FirebaseAuth.instance.currentUser?.uid){
-      return SizedBox.shrink();
+    if(widget.data['authorID']==FirebaseAuth.instance.currentUser?.uid || widget.userType==0){
+      return BottomAppBar(
+        child: Container(
+          height: 50.0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(
+                onPressed: (){},
+                icon: Icon(Icons.edit_calendar),
+                color: Colors.red,
+                iconSize: 35.0,
+              ),
+              IconButton(
+                onPressed: deletePost,
+                icon: Icon(Icons.delete_forever),
+                color: Colors.red,
+                iconSize: 35.0,
+              ),
+            ],
+          ),
+        ),
+      );
     } else {
       return BottomAppBar(
         child: Container(
