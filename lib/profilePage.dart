@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  Map<String, dynamic> data;
+
+  ProfilePage({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +18,11 @@ class ProfilePage extends StatelessWidget {
             children: <Widget>[
               CircleAvatar(
                 radius: 60.0,
-                backgroundImage: AssetImage('assets/volunteer (1).png'),
+                backgroundImage: NetworkImage(data['profilePhotoUrl']),
               ),
               SizedBox(height: 16.0),
               Text(
-                'John Doe',
+                data['name'],
                 style: TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
@@ -27,14 +30,16 @@ class ProfilePage extends StatelessWidget {
               ),
               SizedBox(height: 16.0),
               Text(
-                'Age: 25',
+                //'Age: ${(DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(data['dateOfBirth'].seconds * 1000)).inDays/365).round()}',
+                'Age: TODO',
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
               ),
               SizedBox(height: 8.0),
               Text(
-                'Location: Sarajevo, Bosnia and Herzegovina',
+                //'Date of birth: ${DateFormat('dd.mm.yyyy.').format(DateTime.fromMillisecondsSinceEpoch(data['dateOfBirth'].seconds * 1000))}',
+                'Date of birth: TODO',
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
@@ -57,7 +62,7 @@ class ProfilePage extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: SingleChildScrollView(
                   child: Text(
-                    'Lorem ipsum doddddddddddddddddddddddddddddddddddddddddddddddddddddddlor sit amet, consectetur adipisciaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaang elit. Vestibulum congue dapibus risus, eget commodo nisi ultricies eget. Sed vitae pulvinar tellus, vel elementum augue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse eleifend est non est tincidunt dictum. Nullam non eros nec libero bibendum iaculis vel ac arcu. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam bibendum, urna euismod faucibus gravida, lorem enim vestibulum augue, eu blandit lectus nisl ut justo. Fusce sit amet consequat velit. Duis bibendum augue vel neque commodo lacinia. Donec porttitor vel augue quis auctor. Fusce rhoncus neque quis eros pretium, in egestas eros euismod. Sed id luctus augue, id commodo metus. Sed sed nunc mi.',
+                    'Hi, I\'m a free-spirited adventurer with a passion for exploring the great outdoors. I love hiking, camping, and discovering hidden gems off the beaten path. When I\'m not out exploring, you can find me indulging in my other love: cooking up a storm in the kitchen. I\'m always up for new experiences and meeting interesting people along the way!',
                     textAlign: TextAlign.justify,
                     style: TextStyle(color: Colors.white),
                   ),

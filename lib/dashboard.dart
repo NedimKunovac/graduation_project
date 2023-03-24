@@ -137,11 +137,12 @@ class _DashboardState extends State<Dashboard> {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
+          data["userID"] = FirebaseAuth.instance.currentUser?.uid;
           _widgetOptions.add(ViewAdvertisements(
-              userID: FirebaseAuth.instance.currentUser?.uid,
+              userID: data['userID'],
               userType: data['type']));
           _widgetOptions.add(Placeholder());
-          _widgetOptions.add(ProfilePage());
+          _widgetOptions.add(ProfilePage(data: data));
 
           return Scaffold(
             appBar: AppBar(
