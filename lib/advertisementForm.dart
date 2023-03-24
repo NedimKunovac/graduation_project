@@ -197,13 +197,20 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                         readOnly: true,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         onTap: () async {
+                          DateTime? possibleLastDate;
+                          if (pickedEndDate != null) {
+                            possibleLastDate = pickedEndDate;
+                          } else
+                            possibleLastDate =
+                                DateTime.now().add(const Duration(days: 730));
+
+
                           pickedDueDate = await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
                               firstDate: DateTime.now(),
                               //DateTime.now() - not to allow to choose before today.
-                              lastDate: DateTime.now()
-                                  .add(const Duration(days: 730)));
+                              lastDate: DateTime.parse(possibleLastDate.toString()));
 
                           if (pickedDueDate != null) {
                             print(
@@ -299,7 +306,6 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                               startDateController.text =
                                   formattedDate; //set output date to TextField value.
                             });
-                            setState(() {});
                           } else {
                             pickedStartDate = DateTime.now();
                             print("Date is not selected");
