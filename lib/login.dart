@@ -73,7 +73,11 @@ class _LoginPageState extends State<LoginPage> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Scaffold(
+              body: Center(
+                child: Text('Loading'),
+              ),
+            );
           } else if (snapshot.hasError) {
             return Center(child: Text('Sum Ting Wong'));
           } else if (snapshot.hasData) {
