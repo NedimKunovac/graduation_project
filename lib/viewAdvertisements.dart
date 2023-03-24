@@ -44,7 +44,11 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
+          return Scaffold(
+            body: Center(
+              child: Text('Loading'),
+            ),
+          );
         }
 
         return ListView(
