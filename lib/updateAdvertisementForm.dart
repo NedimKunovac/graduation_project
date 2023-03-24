@@ -70,9 +70,7 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
         context: context,
         message: 'Your post was updated!',
       );
-      setState(() {
         Navigator.pop(context);
-      });
     } on FirebaseException catch (e) {
       await flashBar.showBasicsFlashFailed(
         duration: Duration(seconds: 5),
@@ -486,7 +484,7 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                             errorStyle: TextStyle(
                               color: Colors.white,
                             ),
-                            hintText: 'How many will be acceoted',
+                            hintText: 'How many will be accepted',
                             hintStyle: TextStyle(
                               color: Colors.white,
                             ),

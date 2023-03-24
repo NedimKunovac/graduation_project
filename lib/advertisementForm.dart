@@ -89,6 +89,12 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(
+        title: Text(
+        'Create your post!',
+          style: TextStyle(
+            color: Colors.red,
+          ),
+        ),
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
@@ -446,7 +452,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                             errorStyle: TextStyle(
                               color: Colors.white,
                             ),
-                            hintText: 'How many will be acceoted',
+                            hintText: 'How many will be accepted',
                             hintStyle: TextStyle(
                               color: Colors.white,
                             ),

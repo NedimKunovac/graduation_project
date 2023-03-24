@@ -118,11 +118,14 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                           'Once you edit your post, you cannot revert your changes!'),
                       actions: <Widget>[
                         TextButton(
-                          onPressed: () => Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => updateAdvertisementForm(
-                                      data: widget.data))),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => updateAdvertisementForm(
+                                        data: widget.data)));
+                          },
                           child: const Text(
                             'I understand, I want to edit this post',
                             style: TextStyle(
