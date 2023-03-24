@@ -1,13 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'flashBar.dart';
 
 ///Page that displays detailed information about post
 
 
-class AdvertisementDetailed extends StatelessWidget {
+class AdvertisementDetailed extends StatefulWidget {
   ///User data
   Map<String, dynamic> data;
 
   AdvertisementDetailed({Key? key, required this.data}) : super(key: key);
+
+  @override
+  State<AdvertisementDetailed> createState() => _AdvertisementDetailedState();
+}
+
+class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
+
+  applyToPost()async{
+    try{
+      await FirebaseFirestore.instance.collection('Posts').doc(widget.data['postID'])
+          .update({"applicationSubmitted": FieldValue.arrayUnion([FirebaseAuth.instance.currentUser?.uid])});
+      await flashBar.showBasicsFlashSuccessful(
+        duration: Duration(seconds: 7),
+        context: context,
+        message: 'You just applied to ${widget.data['title']}! Great job! \nYou can find this again post under the profile section',
+      );
+    } catch(e){
+      await flashBar.showBasicsFlashFailed(
+        duration: Duration(seconds: 5),
+        context: context,
+        message: e.toString(),
+      );
+    }
+    Navigator.pop(context);
+  }
+
+  submitButtonGenerator(){
+    if(widget.data['authorID']==FirebaseAuth.instance.currentUser?.uid){
+      return SizedBox.shrink();
+    } else {
+      return BottomAppBar(
+        child: Container(
+          height: 50.0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(
+                onPressed: applyToPost,
+                icon: Icon(Icons.check_circle),
+                color: Colors.red,
+                iconSize: 35.0,
+              ),
+              // add additional icons here as needed
+            ],
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +87,7 @@ class AdvertisementDetailed extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.3,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(data['profilePhotoUrl']),
+                    image: NetworkImage(widget.data['profilePhotoUrl']),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -49,7 +101,7 @@ class AdvertisementDetailed extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(
-                      data['authorName'],
+                      widget.data['authorName'],
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -92,7 +144,7 @@ class AdvertisementDetailed extends StatelessWidget {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            "${DateTime.fromMillisecondsSinceEpoch(data['dueDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(data['dueDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(data['dueDate'].seconds * 1000).year}",
+                            "${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).year}",
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -119,7 +171,7 @@ class AdvertisementDetailed extends StatelessWidget {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            "${DateTime.fromMillisecondsSinceEpoch(data['startDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(data['startDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(data['startDate'].seconds * 1000).year}",
+                            "${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).year}",
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -146,7 +198,7 @@ class AdvertisementDetailed extends StatelessWidget {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            "${DateTime.fromMillisecondsSinceEpoch(data['endDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(data['endDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(data['endDate'].seconds * 1000).year}",
+                            "${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).year}",
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -173,7 +225,7 @@ class AdvertisementDetailed extends StatelessWidget {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            '${((data['endDate'].seconds - data['startDate'].seconds) / 86400).round()}',
+                            '${((widget.data['endDate'].seconds - widget.data['startDate'].seconds) / 86400).round()}',
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -200,7 +252,7 @@ class AdvertisementDetailed extends StatelessWidget {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            data['applicants'],
+                            widget.data['applicants'],
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -227,7 +279,7 @@ class AdvertisementDetailed extends StatelessWidget {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            data['description'],
+                            widget.data['description'],
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -254,7 +306,7 @@ class AdvertisementDetailed extends StatelessWidget {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            data['requirements'],
+                            widget.data['requirements'],
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -281,7 +333,7 @@ class AdvertisementDetailed extends StatelessWidget {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            data['opportunities'],
+                            widget.data['opportunities'],
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -297,25 +349,7 @@ class AdvertisementDetailed extends StatelessWidget {
           ),
         ),
         ///ACCEPT BUTTON
-        bottomNavigationBar: BottomAppBar(
-          child: Container(
-            height: 50.0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    // handle button press
-                  },
-                  icon: Icon(Icons.check_circle),
-                  color: Colors.red,
-                  iconSize: 35.0,
-                ),
-                // add additional icons here as needed
-              ],
-            ),
-          ),
-        ),
+        bottomNavigationBar: submitButtonGenerator(),
       ),
     );
   }
