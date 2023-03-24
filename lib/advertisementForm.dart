@@ -204,13 +204,13 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                             possibleLastDate =
                                 DateTime.now().add(const Duration(days: 730));
 
-
                           pickedDueDate = await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
                               firstDate: DateTime.now(),
                               //DateTime.now() - not to allow to choose before today.
-                              lastDate: DateTime.parse(possibleLastDate.toString()));
+                              lastDate:
+                                  DateTime.parse(possibleLastDate.toString()));
 
                           if (pickedDueDate != null) {
                             print(
