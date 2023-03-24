@@ -8,11 +8,17 @@ import 'flashbar.dart';
 ///Requires userID so it can be passed to post details
 
 class AdvertisementForm extends StatefulWidget {
+  ///Relevant user data
   String? userID;
   String? userName;
   String? userProfilePhoto;
 
-  AdvertisementForm({Key? key, required this.userID,required this.userName ,required this.userProfilePhoto}) : super(key: key);
+  AdvertisementForm(
+      {Key? key,
+      required this.userID,
+      required this.userName,
+      required this.userProfilePhoto})
+      : super(key: key);
 
   @override
   State<AdvertisementForm> createState() => _AdvertisementFormState();
@@ -144,9 +150,9 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                           controller: postTitleController,
                           autovalidateMode: AutovalidateMode.disabled,
                           validator: (value) =>
-                          value != null && value.length < 3
-                              ? 'Please enter a title \n'
-                              : null,
+                              value != null && value.length < 3
+                                  ? 'Please enter a title \n'
+                                  : null,
                           decoration: InputDecoration(
                             errorStyle: TextStyle(
                               color: Colors.white,
@@ -598,6 +604,8 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
           ),
         ]),
       ),
+
+      ///ADD POST BUTTON
       bottomNavigationBar: BottomAppBar(
         child: Container(
           height: 50.0,

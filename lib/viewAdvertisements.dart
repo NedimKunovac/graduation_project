@@ -1,83 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_fadein/flutter_fadein.dart';
 import 'advertisementWidget.dart';
 
 /// Widget that loads the list of advertisements available on the first page
 /// Called by dashboard
 
 class ViewAdvertisements extends StatefulWidget {
-  ViewAdvertisements({Key? key}) : super(key: key);
+  ///Posts shown are fetched based on this data
+  String? userID;
+  var userType;
+
+  ViewAdvertisements({Key? key, required this.userID, required this.userType})
+      : super(key: key);
 
   @override
   State<ViewAdvertisements> createState() => _ViewAdvertisementsState();
 }
 
 class _ViewAdvertisementsState extends State<ViewAdvertisements> {
-  ///Widget list that contains advertisements
-  List<Widget> availableAdvertisements = <Widget>[];
 
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      generator();
-    });
-  }
-
-  generator() async {
-    var currentUser = await FirebaseAuth.instance.currentUser?.uid;
-    var userData = await FirebaseFirestore.instance.collection('Users')
-        .doc(currentUser).get();
-    if(userData['type'] == 2){
-      availableAdvertisements.add(
-        Text(
-          'Your currently available volunteering opportunities:',
-          style: TextStyle(
-              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey),
-        ),
-      );
-      var postsReference = await FirebaseFirestore.instance.collection('Posts');
-      QuerySnapshot querySnapshot = await postsReference.get();
-      var postList = querySnapshot.docs.toList();
-      for(var i=0;i<postList.length;i++){
-        availableAdvertisements.add(
-            FadeIn(
-                duration: Duration(milliseconds: 1000),
-                curve: Curves.easeIn,
-                child: Advertisement(id: postList[i].id, accepted: false))
-        );
-      }
-      setState(() {});
-    } else {
-      availableAdvertisements.add(
-        Text(
-          'Your currently active posts:',
-          style: TextStyle(
-              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey),
-        ),
-      );
-      var postsReference = await FirebaseFirestore.instance.collection('Posts')
-      .where('authorID', isEqualTo: currentUser);
-      QuerySnapshot querySnapshot = await postsReference.get();
-      var postList = querySnapshot.docs.toList();
-      for(var i=0;i<postList.length;i++){
-        availableAdvertisements.add(
-            FadeIn(
-                duration: Duration(milliseconds: 1000),
-                curve: Curves.easeIn,
-                child: Advertisement(id: postList[i].id, accepted: false))
-        );
-      }
-      setState(() {});
-    }
-  }
-
-  final Stream<QuerySnapshot> _postsStream = FirebaseFirestore.instance.collection('Posts')
-      .snapshots();
+  ///Reference point for posts that changes based on user
+  late final Stream<QuerySnapshot> _postsStream;
 
   @override
   Widget build(BuildContext context) {
+
+    ///Different post fetching based on user type
+    if (widget.userType == 2 || widget.userType == 0) {
+      _postsStream = FirebaseFirestore.instance.collection('Posts').snapshots();
+    } else {
+      _postsStream = FirebaseFirestore.instance
+          .collection('Posts')
+          .where('authorID', isEqualTo: widget.userID)
+          .snapshots();
+    }
+
     return StreamBuilder<QuerySnapshot>(
       stream: _postsStream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -91,15 +49,15 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
 
         return ListView(
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
-            Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-
-            print(data.runtimeType);
-            return ListTile(
-              title: Text(data['authorID']),
+            Map<String, dynamic> data =
+                document.data()! as Map<String, dynamic>;
+            return ListBody(
+              children: [Advertisement(data: data, accepted: false)],
             );
           }).toList(),
         );
       },
     );
+    ;
   }
 }

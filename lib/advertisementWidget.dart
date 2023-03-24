@@ -6,47 +6,21 @@ import 'package:graduation_project/advertisementDetailed.dart';
 /// Requires title, description, image link and status[accepted or not]
 
 class Advertisement extends StatefulWidget {
-  ///Widget options
-  String id;
+  ///Widget data
+  Map<String, dynamic> data;
   bool accepted;
 
-
-  Advertisement(
-      {Key? key,
-      required this.id,
-      required this.accepted,})
-      : super(key: key);
+  Advertisement({
+    Key? key,
+    required this.data,
+    required this.accepted,
+  }) : super(key: key);
 
   @override
   State<Advertisement> createState() => _AdvertisementState();
 }
 
 class _AdvertisementState extends State<Advertisement> {
-  var postTitle='';
-  var postAuthor ='';
-  var postDescription = '';
-  var postImage = '';
-  
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      loadPostData();
-    });
-  }
-  
-  loadPostData() async {
-    var postData = await FirebaseFirestore.instance.collection('Posts').doc(widget.id).get();
-    postTitle =  postData['title'];
-    postAuthor = postData['authorName'];
-    postDescription = postData['description'];
-    postImage = postData['profilePhotoUrl'];
-    setState(() {});
-  }
-
-  loadImage(){
-    if(postImage!='') return Image.network(postImage);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -72,7 +46,8 @@ class _AdvertisementState extends State<Advertisement> {
                 onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => AdvertisementDetailed())),
+                        builder: (context) =>
+                            AdvertisementDetailed(data: widget.data))),
                 child: Column(
                   children: [
                     Row(
@@ -82,20 +57,23 @@ class _AdvertisementState extends State<Advertisement> {
                           padding: EdgeInsets.fromLTRB(0, 13, 10, 10),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
+
                             ///Image in corner of widget
                             child: Container(
                               height: 70.0,
                               width: 70.0,
-                              child: loadImage(),
+                              child:
+                                  Image.network(widget.data['profilePhotoUrl']),
                             ),
                           ),
                         ),
+
                         ///Title in widget
                         Flexible(
                           child: Padding(
                             padding: EdgeInsets.fromLTRB(0, 13, 10, 10),
                             child: Text(
-                              '${postTitle} by ${postAuthor}',
+                              '${widget.data['title']} by ${widget.data['authorName']}',
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -106,6 +84,7 @@ class _AdvertisementState extends State<Advertisement> {
                         ),
                       ],
                     ),
+
                     ///Description in widget
                     Row(
                       children: [
@@ -113,7 +92,7 @@ class _AdvertisementState extends State<Advertisement> {
                             child: Padding(
                           padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
                           child: Text(
-                            postDescription,
+                            widget.data['description'],
                             textAlign: TextAlign.justify,
                           ),
                         ))

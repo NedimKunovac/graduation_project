@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -190,9 +191,26 @@ class ProfilePage extends StatelessWidget {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 child: Text('Logout'),
-                onPressed: () {
-
-                },
+                onPressed: () => showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text('Sign out'),
+                    content: const Text('Are you sure you want to sign out?'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          FirebaseAuth.instance.signOut();
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Yes'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'No'),
+                        child: const Text('No'),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
