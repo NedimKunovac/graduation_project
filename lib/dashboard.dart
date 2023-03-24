@@ -43,9 +43,11 @@ class _DashboardState extends State<Dashboard> {
       return Center(
           child: Text('Your profile', style: TextStyle(color: Colors.blue)));
     } else {
-      var message='';
-      if(data['type']==0 || data['type']==2) message = 'Your currently available volunteering opportunities:';
-      else message='Your currently active posts:';
+      var message = '';
+      if (data['type'] == 0 || data['type'] == 2)
+        message = 'Your currently available volunteering opportunities:';
+      else
+        message = 'Your currently active posts:';
 
       return Column(
         children: [
@@ -59,12 +61,11 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
           SizedBox(
-          height: 5,
+            height: 5,
           ),
           Center(
             child: Text(message,
-                style: TextStyle(color: Colors.grey,
-                fontSize: 15)),
+                style: TextStyle(color: Colors.grey, fontSize: 15)),
           ),
           SizedBox(
             height: 5,

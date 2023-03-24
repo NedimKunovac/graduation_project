@@ -1,34 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:graduation_project/updateAdvertisementForm.dart';
 import 'flashBar.dart';
 
 ///Page that displays detailed information about post
-
 
 class AdvertisementDetailed extends StatefulWidget {
   ///User data
   Map<String, dynamic> data;
   var userType;
 
-  AdvertisementDetailed({Key? key, required this.data,required this.userType}) : super(key: key);
+  AdvertisementDetailed({Key? key, required this.data, required this.userType})
+      : super(key: key);
 
   @override
   State<AdvertisementDetailed> createState() => _AdvertisementDetailedState();
 }
 
 class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
-
-  applyToPost()async{
-    try{
-      await FirebaseFirestore.instance.collection('Posts').doc(widget.data['postID'])
-          .update({"applicationSubmitted": FieldValue.arrayUnion([FirebaseAuth.instance.currentUser?.uid])});
+  applyToPost() async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('Posts')
+          .doc(widget.data['postID'])
+          .update({
+        "applicationSubmitted":
+            FieldValue.arrayUnion([FirebaseAuth.instance.currentUser?.uid])
+      });
       await flashBar.showBasicsFlashSuccessful(
         duration: Duration(seconds: 7),
         context: context,
-        message: 'You just applied to ${widget.data['title']}! Great job! \nYou can find this again post under the profile section',
+        message:
+            'You just applied to ${widget.data['title']}! Great job! \nYou can find this again post under the profile section.',
       );
-    } catch(e){
+    } catch (e) {
       await flashBar.showBasicsFlashFailed(
         duration: Duration(seconds: 5),
         context: context,
@@ -38,7 +44,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
     Navigator.pop(context);
   }
 
-  deletePost() async{
+  deletePost() async {
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -47,16 +53,20 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
             'Deleted posts cannot be recovered, and you will lose all your applicants. Think twice before you do this.'),
         actions: <Widget>[
           TextButton(
-            onPressed: () async{
-              try{
-                await FirebaseFirestore.instance.collection('Posts').doc(widget.data['postID']).delete();
+            onPressed: () async {
+              try {
+                await FirebaseFirestore.instance
+                    .collection('Posts')
+                    .doc(widget.data['postID'])
+                    .delete();
                 await flashBar.showBasicsFlashFailed(
                   duration: Duration(seconds: 5),
                   context: context,
-                  message: 'You just deleted your post! Maybe try adding a new one?',
+                  message:
+                      'You just deleted your post! Maybe try adding a new one?',
                 );
                 Navigator.pop(context);
-              } catch(e){
+              } catch (e) {
                 await flashBar.showBasicsFlashFailed(
                   duration: Duration(seconds: 5),
                   context: context,
@@ -64,28 +74,33 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                 );
               }
               Navigator.pop(context);
-              },
-            child: const Text('I understand, delete this post',
-            style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.bold,
-            ),),
+            },
+            child: const Text(
+              'I understand, delete this post',
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, 'No, I want to keep this post!'),
-            child: const Text('No, I want to keep this post',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),),
+            onPressed: () =>
+                Navigator.pop(context, 'No, I want to keep this post'),
+            child: const Text(
+              'No, I want to keep this post',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ],
       ),
     );
-
-
   }
-  submitButtonGenerator(){
-    if(widget.data['authorID']==FirebaseAuth.instance.currentUser?.uid || widget.userType==0){
+
+  bottomAppBarGenerator() {
+    if (widget.data['authorID'] == FirebaseAuth.instance.currentUser?.uid ||
+        widget.userType == 0) {
       return BottomAppBar(
         child: Container(
           height: 50.0,
@@ -93,7 +108,43 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(
-                onPressed: (){},
+                onPressed: () {
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text(
+                          'Are you sure you want to edit this post?'),
+                      content: const Text(
+                          'Once you edit your post, you cannot revert your changes!'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => updateAdvertisementForm(
+                                      data: widget.data))),
+                          child: const Text(
+                            'I understand, I want to edit this post',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.pop(
+                              context, 'No, I don\'t want to edit this post'),
+                          child: const Text(
+                            'No, I don\'t want to edit this post',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
                 icon: Icon(Icons.edit_calendar),
                 color: Colors.red,
                 iconSize: 35.0,
@@ -137,6 +188,12 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
+          title: Text(
+            '${widget.data['title']}',
+            style: TextStyle(
+              color: Colors.red.shade400,
+            ),
+          ),
           leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -222,6 +279,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       ],
                     ),
                     SizedBox(height: 10),
+
                     ///START DATE
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -249,6 +307,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       ],
                     ),
                     SizedBox(height: 10),
+
                     ///END DATE
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -276,6 +335,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       ],
                     ),
                     SizedBox(height: 10),
+
                     ///LENGTH OF JOB
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -303,6 +363,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       ],
                     ),
                     SizedBox(height: 10),
+
                     ///NUMBER OF APPLICANTS
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -330,6 +391,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       ],
                     ),
                     SizedBox(height: 10),
+
                     ///DESCRIPTION
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -357,6 +419,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       ],
                     ),
                     SizedBox(height: 10),
+
                     ///REQUIREMENTS
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -384,6 +447,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       ],
                     ),
                     SizedBox(height: 10),
+
                     ///OPPORTUNITIES
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -416,8 +480,9 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
             ],
           ),
         ),
+
         ///ACCEPT BUTTON
-        bottomNavigationBar: submitButtonGenerator(),
+        bottomNavigationBar: bottomAppBarGenerator(),
       ),
     );
   }
