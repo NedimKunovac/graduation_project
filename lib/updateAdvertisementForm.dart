@@ -520,6 +520,10 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                       ),
                       Expanded(
                         flex: 3,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxHeight: MediaQuery.of(context).size.height * 0.3,
+                            ),
                         child: TextFormField(
                           controller: workDescriptionController,
                           autovalidateMode: AutovalidateMode.disabled,
@@ -527,6 +531,8 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                               value != null && value.length < 10
                                   ? 'Please enter a long description \n'
                                   : null,
+                          maxLines: null,
+                          expands: true,
                           decoration: InputDecoration(
                             errorStyle: TextStyle(
                               color: Colors.white,
@@ -548,7 +554,7 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                           ),
                         ),
                       ),
-                    ]),
+                      )]),
 
                 ///REQUIREMENTS FIELD
                 SizedBox(height: 10),
@@ -567,6 +573,10 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                       ),
                       Expanded(
                         flex: 3,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxHeight: MediaQuery.of(context).size.height * 0.3,
+                            ),
                         child: TextFormField(
                           controller: requirementsController,
                           autovalidateMode: AutovalidateMode.disabled,
@@ -574,6 +584,8 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                               value != null && value.length < 10
                                   ? 'Please enter your requirements'
                                   : null,
+                          maxLines: null,
+                          expands: true,
                           decoration: InputDecoration(
                             errorStyle: TextStyle(
                               color: Colors.white,
@@ -595,7 +607,7 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                           ),
                         ),
                       ),
-                    ]),
+                      )]),
 
                 ///OPPORTUNITIES FIELD
                 SizedBox(height: 10),
@@ -614,12 +626,18 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                       ),
                       Expanded(
                         flex: 3,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxHeight: MediaQuery.of(context).size.height * 0.3,
+                            ),
                         child: TextFormField(
                           validator: (value) =>
                               value != null && value.length < 3
                                   ? 'Please enter opportunities'
                                   : null,
                           controller: opportunitiesController,
+                          maxLines: null,
+                          expands: true,
                           decoration: InputDecoration(
                             errorStyle: TextStyle(
                               color: Colors.white,
@@ -641,7 +659,7 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                           ),
                         ),
                       ),
-                    ]),
+                      )]),
                 SizedBox(height: 10),
               ]),
             ),
