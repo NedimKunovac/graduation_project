@@ -35,7 +35,7 @@ class _DashboardState extends State<Dashboard> {
   }
 
   ///Dynamically changes AppBar title based on page that is opened
-  AppBarBulder(userName) {
+  AppBarBulder(data) {
     if (_selectedIndex == 1) {
       return Center(
           child: Text('Your messages', style: TextStyle(color: Colors.blue)));
@@ -43,11 +43,34 @@ class _DashboardState extends State<Dashboard> {
       return Center(
           child: Text('Your profile', style: TextStyle(color: Colors.blue)));
     } else {
-      return Center(
-        child: Text(
-          'Welcome ${userName}!',
-          style: TextStyle(color: Colors.blue),
-        ),
+      var message = '';
+      if (data['type'] == 0 || data['type'] == 2)
+        message = 'Your currently available volunteering opportunities:';
+      else
+        message = 'Your currently active posts:';
+
+      return Column(
+        children: [
+          SizedBox(
+            height: 10,
+          ),
+          Center(
+            child: Text(
+              'Welcome ${data['name']}!',
+              style: TextStyle(color: Colors.blue),
+            ),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Center(
+            child: Text(message,
+                style: TextStyle(color: Colors.grey, fontSize: 15)),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+        ],
       );
     }
   }
@@ -114,19 +137,21 @@ class _DashboardState extends State<Dashboard> {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
+          data["userID"] = FirebaseAuth.instance.currentUser?.uid;
           _widgetOptions.add(ViewAdvertisements(
-              userID: FirebaseAuth.instance.currentUser?.uid,
+              userID: data['userID'],
               userType: data['type']));
           _widgetOptions.add(Placeholder());
-          _widgetOptions.add(ProfilePage());
+          _widgetOptions.add(ProfilePage(data: data));
 
           return Scaffold(
             appBar: AppBar(
+              toolbarHeight: 70,
               backgroundColor: Colors.white,
               elevation: 0,
               brightness: Brightness.light,
               automaticallyImplyLeading: false,
-              title: AppBarBulder(data['name']),
+              title: AppBarBulder(data),
             ),
 
             ///Body openes selected page/widget based on list above

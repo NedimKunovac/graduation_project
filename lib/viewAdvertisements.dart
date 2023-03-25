@@ -44,16 +44,38 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
+          return Scaffold(
+            body: Center(
+              child: Text('Loading'),
+            ),
+          );
         }
 
         return ListView(
           children: snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data =
                 document.data()! as Map<String, dynamic>;
-            return ListBody(
-              children: [Advertisement(data: data, accepted: false)],
-            );
+            data["postID"] = document.id;
+            if(widget.userType==2 && data['applicationSubmitted']!=null){
+              bool toggle = false;
+              for (var i=0; i < data['applicationSubmitted'].length; i++) {
+                if(data['applicationSubmitted'][i]==FirebaseAuth.instance.currentUser?.uid){
+                  toggle=true;
+                  break;
+                }
+              }
+              if(!toggle){
+                return ListBody(
+                  children: [Advertisement(data: data,userType: widget.userType, accepted: false)],
+                );
+              }
+            } else{
+              return ListBody(
+                children: [Advertisement(data: data,userType: widget.userType , accepted: false)],
+              );
+            }
+
+            return ListBody();
           }).toList(),
         );
       },

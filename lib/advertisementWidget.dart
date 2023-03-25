@@ -9,11 +9,13 @@ class Advertisement extends StatefulWidget {
   ///Widget data
   Map<String, dynamic> data;
   bool accepted;
+  var userType;
 
   Advertisement({
     Key? key,
     required this.data,
     required this.accepted,
+    required this.userType,
   }) : super(key: key);
 
   @override
@@ -21,6 +23,17 @@ class Advertisement extends StatefulWidget {
 }
 
 class _AdvertisementState extends State<Advertisement> {
+  ///Makes it so description displayed on dash is limited to cutoffLen number of characters
+  descriptionBuilder() {
+    var cutoffLen = 200;
+    if (widget.data['description'].length <= cutoffLen) {
+      return widget.data['description'];
+    } else {
+      return widget.data['description']
+          .replaceRange(cutoffLen, widget.data['description'].length, '...');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -47,7 +60,7 @@ class _AdvertisementState extends State<Advertisement> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            AdvertisementDetailed(data: widget.data))),
+                            AdvertisementDetailed(data: widget.data, userType: widget.userType))),
                 child: Column(
                   children: [
                     Row(
@@ -92,7 +105,7 @@ class _AdvertisementState extends State<Advertisement> {
                             child: Padding(
                           padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
                           child: Text(
-                            widget.data['description'],
+                            descriptionBuilder(),
                             textAlign: TextAlign.justify,
                           ),
                         ))
