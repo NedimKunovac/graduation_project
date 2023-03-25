@@ -156,7 +156,7 @@ class ProfilePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                       margin: EdgeInsets.only(right: 8.0),
-                      width: 200.0,
+                      width: 300.0,
                       height: 200.0,
                     ),
                     Container(
@@ -166,7 +166,7 @@ class ProfilePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                       margin: EdgeInsets.only(right: 8.0),
-                      width: 200.0,
+                      width: 300.0,
                       height: 200.0,
                     ),
                     Container(
@@ -176,7 +176,7 @@ class ProfilePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                       margin: EdgeInsets.only(right: 8.0),
-                      width: 200.0,
+                      width: 300.0,
                       height: 200.0,
                     ),
                     Container(
@@ -186,8 +186,71 @@ class ProfilePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                       margin: EdgeInsets.only(right: 8.0),
-                      width: 200.0,
+                      width: 300.0,
                       height: 200.0,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                'Pending applications:',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                        color:Colors.red,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      margin: EdgeInsets.only(right: 8.0),
+                      width: 400.0,
+                      height: 200.0,
+
+                    ),
+                    SizedBox(height: 16.0),
+                    Container(
+                      decoration: BoxDecoration(
+                        color:Colors.red,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      margin: EdgeInsets.only(right: 8.0),
+                      width: 400.0,
+                      height: 200.0,
+
+                    ),
+                    SizedBox(height: 16.0),
+                    Container(
+                      decoration: BoxDecoration(
+                        color:Colors.red,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      margin: EdgeInsets.only(right: 8.0),
+                      width: 400.0,
+                      height: 200.0,
+
+                    ),
+                    SizedBox(height: 16.0),
+                    Container(
+                      decoration: BoxDecoration(
+                        color:Colors.red,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      margin: EdgeInsets.only(right: 8.0),
+                      width: 400.0,
+                      height: 200.0,
+
                     ),
                   ],
                 ),
