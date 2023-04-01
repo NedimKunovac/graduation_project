@@ -38,10 +38,68 @@ class _DashboardState extends State<Dashboard> {
   AppBarBulder(data) {
     if (_selectedIndex == 1) {
       return Center(
-          child: Text('Your messages', style: TextStyle(color: Colors.blue)));
+          child: AppBar(
+            elevation: 0,
+            backgroundColor: Colors.red,
+
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.settings,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Settings'),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            TextButton(
+                                onPressed: () {
+                                  // Navigate to edit profile screen
+                                },
+                                child: Text('Edit Profile',style: TextStyle(color: Colors.black),)
+                            ),
+                            TextButton(
+                              child: Text('Logout',style: TextStyle(color: Colors.black),),
+                              onPressed: () => showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: const Text('Sign out'),
+                                  content: const Text('Are you sure you want to sign out?'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        FirebaseAuth.instance.signOut();
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('Yes',style: TextStyle(color: Colors.black),),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context, 'No'),
+                                      child: const Text('No' ,style: TextStyle(color: Colors.black),),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+      /*Text('Your messages', style: TextStyle(color: Colors.blue))*/);
     } else if (_selectedIndex == 2) {
       return Center(
-          child: Text('Your profile', style: TextStyle(color: Colors.blue)));
+          child: Text('Profile')
+      );
     } else {
       var message = '';
       if (data['type'] == 0 || data['type'] == 2)
@@ -57,7 +115,7 @@ class _DashboardState extends State<Dashboard> {
           Center(
             child: Text(
               'Welcome ${data['name']}!',
-              style: TextStyle(color: Colors.blue),
+              style: TextStyle(color: Colors.red),
             ),
           ),
           SizedBox(
@@ -169,13 +227,13 @@ class _DashboardState extends State<Dashboard> {
                 )
               ]),
               child: BottomNavigationBar(
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.white,
                 items: const <BottomNavigationBarItem>[
                   ///HOME PAGE ICON
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home),
                     label: 'Home',
-                    backgroundColor: Colors.white,
+                    backgroundColor: Colors.blue,
                   ),
 
                   ///MESSAGES ICON

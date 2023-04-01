@@ -10,7 +10,64 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      appBar:AppBar(
+        elevation: 0,
+        backgroundColor: Colors.red,
+
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Settings'),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        TextButton(
+                            onPressed: () {
+                              // Navigate to edit profile screen
+                            },
+                            child: Text('Edit Profile',style: TextStyle(color: Colors.black),)
+                        ),
+                        TextButton(
+                            child: Text('Logout',style: TextStyle(color: Colors.black),),
+                          onPressed: () => showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Sign out'),
+                              content: const Text('Are you sure you want to sign out?'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    FirebaseAuth.instance.signOut();
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('Yes',style: TextStyle(color: Colors.black),),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'No'),
+                                  child: const Text('No' ,style: TextStyle(color: Colors.black),),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ],
+      ),
+       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(16.0),
           child: Column(
@@ -240,6 +297,7 @@ class ProfilePage extends StatelessWidget {
                       height: 200.0,
 
                     ),
+
                     SizedBox(height: 16.0),
                     Container(
                       decoration: BoxDecoration(
@@ -252,39 +310,16 @@ class ProfilePage extends StatelessWidget {
                       height: 200.0,
 
                     ),
-                  ],
+        ],
                 ),
               ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                child: Text('Logout'),
-                onPressed: () => showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text('Sign out'),
-                    content: const Text('Are you sure you want to sign out?'),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () {
-                          FirebaseAuth.instance.signOut();
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Yes'),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'No'),
-                        child: const Text('No'),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+
+
             ],
           ),
         ),
-      ),
-    );
-    ;
+      ),);
+
+
   }
 }
