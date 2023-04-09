@@ -60,16 +60,15 @@ class SignUpRouter extends StatelessWidget {
                                 MaterialPageRoute(
                                     builder: (context) => CompanySignup()));
                           },
-                          child: Icon(
-                            Icons.corporate_fare_rounded,
-                            size: 40,
-                            color: Colors.white,
+                          child: CircleAvatar(
+                              radius: 60.0,
+                              backgroundImage: NetworkImage('https://cdn-icons-png.flaticon.com/512/3061/3061341.png')
                           ),
                           style: ElevatedButton.styleFrom(
-                            shape: CircleBorder(),
-                            backgroundColor: Colors.red,
-                            padding: EdgeInsets.all(65),
-                          ),
+                            backgroundColor: Colors.white, // set background color to white
+                            // set text color
+                            shape: CircleBorder(
+                            ),),
                         ),
 
                         ///Volunteer button
@@ -80,17 +79,17 @@ class SignUpRouter extends StatelessWidget {
                                 MaterialPageRoute(
                                     builder: (context) => VolunteerSignup()));
                           },
-                          child: Icon(
-                            Icons.volunteer_activism,
-                            size: 40,
-                            color: Colors.white,
+                          child: CircleAvatar(
+                              radius: 60.0,
+                              backgroundImage: NetworkImage('https://cdn-icons-png.flaticon.com/512/3045/3045363.png')
                           ),
                           style: ElevatedButton.styleFrom(
-                            shape: CircleBorder(),
-                            backgroundColor: Colors.red,
-                            padding: EdgeInsets.all(65),
+                            backgroundColor: Colors.white, // set background color to white
+                            // set text color
+                            shape: CircleBorder(//Mora ostati da bi buttons sa slikama ostali okrugli
+                            ),),
                           ),
-                        )
+
                       ],
                     ),
                   ])

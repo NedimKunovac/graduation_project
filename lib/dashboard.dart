@@ -41,7 +41,8 @@ class _DashboardState extends State<Dashboard> {
           child: Text('Your messages', style: TextStyle(color: Colors.blue)));
     } else if (_selectedIndex == 2) {
       return Center(
-          child: Text('Your profile', style: TextStyle(color: Colors.blue)));
+        child: Text('Your profile', style: TextStyle(color: Colors.blue)));
+
     } else {
       var message = '';
       if (data['type'] == 0 || data['type'] == 2)
