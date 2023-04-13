@@ -29,6 +29,7 @@ class _DashboardState extends State<Dashboard> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
+    if(_selectedIndex!=index)
     setState(() {
       _selectedIndex = index;
     });
