@@ -10,52 +10,6 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.red,
-        title: Text('Profile'),
-        actions: <Widget>[
-          PopupMenuButton(
-            onSelected: (result) {
-              // Do something when an option is selected
-              if (result == "Edit Profile") {
-                // Navigate to the edit profile page
-              } else if (result == "Logout") {
-                showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text('Sign out'),
-                    content: const Text('Are you sure you want to sign out?'),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () {
-                          FirebaseAuth.instance.signOut();
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Yes'),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'No'),
-                        child: const Text('No'),
-                      ),
-                    ],
-                  ),
-                );
-              }
-            },
-            itemBuilder: (BuildContext context) => [
-              PopupMenuItem(
-                value: "Edit Profile",
-                child: Text("Edit Profile"),
-              ),
-              PopupMenuItem(
-                value: "Logout",
-                child: Text("Logout"),
-              ),
-            ],
-          ),
-        ],
-      ),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(16.0),
