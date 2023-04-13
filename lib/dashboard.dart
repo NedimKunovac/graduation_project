@@ -219,7 +219,7 @@ class _DashboardState extends State<Dashboard> {
                 )
               ]),
               child: BottomNavigationBar(
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.red,
                 items: const <BottomNavigationBarItem>[
                   ///HOME PAGE ICON
                   BottomNavigationBarItem(
@@ -232,14 +232,14 @@ class _DashboardState extends State<Dashboard> {
                   BottomNavigationBarItem(
                     icon: Icon(Icons.message),
                     label: 'Messages',
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.white,
                   ),
 
                   ///PROFILE ICON
                   BottomNavigationBarItem(
                     icon: Icon(Icons.account_circle),
                     label: 'Profile',
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.white,
                   ),
                 ],
                 currentIndex: _selectedIndex,
