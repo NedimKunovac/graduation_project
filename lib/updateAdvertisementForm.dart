@@ -131,7 +131,8 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
         ),
         leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard()),
+              );
             },
             icon: Icon(
               Icons.arrow_back_ios,

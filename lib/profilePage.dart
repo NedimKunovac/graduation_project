@@ -158,6 +158,27 @@ class ProfilePage extends StatelessWidget {
                       margin: EdgeInsets.only(right: 8.0),
                       width: 300.0,
                       height: 200.0,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image(
+                            image: NetworkImage(
+                                'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
+                            height: 80,
+                            width: 90,
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  left: 8.0, top: 8.0, right: 8.0),
+                              child: Text(
+                                'This is an opportunity that you will not miss. IAHIHIHIHIHIHIHIHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnHHH',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -168,6 +189,27 @@ class ProfilePage extends StatelessWidget {
                       margin: EdgeInsets.only(right: 8.0),
                       width: 300.0,
                       height: 200.0,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image(
+                            image: NetworkImage(
+                                'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
+                            height: 80,
+                            width: 90,
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  left: 8.0, top: 8.0, right: 8.0),
+                              child: Text(
+                                'This is an opportunity that you will not miss. IAHIHIHIHIHIHIHIHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnHHH',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -178,6 +220,27 @@ class ProfilePage extends StatelessWidget {
                       margin: EdgeInsets.only(right: 8.0),
                       width: 300.0,
                       height: 200.0,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image(
+                            image: NetworkImage(
+                                'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
+                            height: 80,
+                            width: 90,
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  left: 8.0, top: 8.0, right: 8.0),
+                              child: Text(
+                                'This is an opportunity that you will not miss. IAHIHIHIHIHIHIHIHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnHHH',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -188,6 +251,27 @@ class ProfilePage extends StatelessWidget {
                       margin: EdgeInsets.only(right: 8.0),
                       width: 300.0,
                       height: 200.0,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image(
+                            image: NetworkImage(
+                                'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
+                            height: 80,
+                            width: 90,
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  left: 8.0, top: 8.0, right: 8.0),
+                              child: Text(
+                                'This is an opportunity that you will not miss. IAHIHIHIHIHIHIHIHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnHHH',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -207,79 +291,136 @@ class ProfilePage extends StatelessWidget {
                   children: <Widget>[
                     Container(
                       decoration: BoxDecoration(
-                        color:Colors.red,
+                        color: Colors.red,
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                       margin: EdgeInsets.only(right: 8.0),
                       width: 400.0,
                       height: 200.0,
-
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image(
+                            image: NetworkImage(
+                                'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
+                            height: 80,
+                            width: 90,
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  left: 8.0, top: 8.0, right: 8.0),
+                              child: Text(
+                                'This is an opportunity that you will not miss. IAHIHIHIHIHIHIHIHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnHHH',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(height: 16.0),
                     Container(
                       decoration: BoxDecoration(
-                        color:Colors.red,
+                        color: Colors.red,
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                       margin: EdgeInsets.only(right: 8.0),
                       width: 400.0,
                       height: 200.0,
-
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image(
+                            image: NetworkImage(
+                                'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
+                            height: 80,
+                            width: 90,
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  left: 8.0, top: 8.0, right: 8.0),
+                              child: Text(
+                                'This is an opportunity that you will not miss. IAHIHIHIHIHIHIHIHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnHHH',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(height: 16.0),
                     Container(
                       decoration: BoxDecoration(
-                        color:Colors.red,
+                        color: Colors.red,
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                       margin: EdgeInsets.only(right: 8.0),
                       width: 400.0,
                       height: 200.0,
-
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image(
+                            image: NetworkImage(
+                                'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
+                            height: 80,
+                            width: 90,
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  left: 8.0, top: 8.0, right: 8.0),
+                              child: Text(
+                                'This is an opportunity that you will not miss. IAHIHIHIHIHIHIHIHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnHHH',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(height: 16.0),
                     Container(
                       decoration: BoxDecoration(
-                        color:Colors.red,
+                        color: Colors.red,
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(25.0),
                       ),
                       margin: EdgeInsets.only(right: 8.0),
                       width: 400.0,
                       height: 200.0,
-
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image(
+                            image: NetworkImage(
+                                'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
+                            height: 80,
+                            width: 90,
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  left: 8.0, top: 8.0, right: 8.0),
+                              child: Text(
+                                'This is an opportunity that you will not miss. IAHIHIHIHIHIHIHIHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnHHH',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                child: Text('Logout'),
-                onPressed: () => showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text('Sign out'),
-                    content: const Text('Are you sure you want to sign out?'),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () {
-                          FirebaseAuth.instance.signOut();
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Yes'),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'No'),
-                        child: const Text('No'),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+
+
             ],
           ),
         ),

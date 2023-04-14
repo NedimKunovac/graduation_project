@@ -29,26 +29,83 @@ class _DashboardState extends State<Dashboard> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
+    if(_selectedIndex!=index)
     setState(() {
       _selectedIndex = index;
     });
   }
 
+  AppBarBulder(data){
+    List<Widget> actionOptions = <Widget>[];
+    if(_selectedIndex==2){
+      actionOptions.add(
+        PopupMenuButton(
+          onSelected: (result) {
+            // Do something when an option is selected
+            if (result == "Edit Profile") {
+              // Navigate to the edit profile page
+            } else if (result == "Logout") {
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Sign out'),
+                  content: const Text('Are you sure you want to sign out?'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut();
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Yes'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'No'),
+                      child: const Text('No'),
+                    ),
+                  ],
+                ),
+              );
+            }
+          },
+          itemBuilder: (BuildContext context) => [
+            PopupMenuItem(
+              value: "Edit Profile",
+              child: Text("Edit Profile"),
+            ),
+            PopupMenuItem(
+              value: "Logout",
+              child: Text("Logout"),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return AppBar(
+      elevation: 0,
+      toolbarHeight: 70,
+      backgroundColor: Colors.red,
+      title: AppBarTitleBulder(data),
+      automaticallyImplyLeading: false,
+      actions: actionOptions,
+    );
+  }
+  
   ///Dynamically changes AppBar title based on page that is opened
-  AppBarBulder(data) {
+  AppBarTitleBulder(data) {
     if (_selectedIndex == 1) {
       return Center(
-          child: Text('Your messages', style: TextStyle(color: Colors.blue)));
+          child: Text('Messages', style: TextStyle(color: Colors.white)));
     } else if (_selectedIndex == 2) {
       return Center(
-          child: Text('Your profile', style: TextStyle(color: Colors.blue)));
+        child: Text('Profile', style: TextStyle(color: Colors.white)));
+
     } else {
       var message = '';
       if (data['type'] == 0 || data['type'] == 2)
         message = 'Your currently available volunteering opportunities:';
       else
         message = 'Your currently active posts:';
-
       return Column(
         children: [
           SizedBox(
@@ -57,7 +114,7 @@ class _DashboardState extends State<Dashboard> {
           Center(
             child: Text(
               'Welcome ${data['name']}!',
-              style: TextStyle(color: Colors.blue),
+              style: TextStyle(color: Colors.white),
             ),
           ),
           SizedBox(
@@ -65,7 +122,7 @@ class _DashboardState extends State<Dashboard> {
           ),
           Center(
             child: Text(message,
-                style: TextStyle(color: Colors.grey, fontSize: 15)),
+                style: TextStyle(color: Colors.white, fontSize: 15)),
           ),
           SizedBox(
             height: 5,
@@ -145,14 +202,7 @@ class _DashboardState extends State<Dashboard> {
           _widgetOptions.add(ProfilePage(data: data));
 
           return Scaffold(
-            appBar: AppBar(
-              toolbarHeight: 70,
-              backgroundColor: Colors.white,
-              elevation: 0,
-              brightness: Brightness.light,
-              automaticallyImplyLeading: false,
-              title: AppBarBulder(data),
-            ),
+            appBar: AppBarBulder(data),
 
             ///Body openes selected page/widget based on list above
             body: Container(child: _widgetOptions.elementAt(_selectedIndex)),
@@ -169,7 +219,7 @@ class _DashboardState extends State<Dashboard> {
                 )
               ]),
               child: BottomNavigationBar(
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.red,
                 items: const <BottomNavigationBarItem>[
                   ///HOME PAGE ICON
                   BottomNavigationBarItem(
@@ -182,14 +232,14 @@ class _DashboardState extends State<Dashboard> {
                   BottomNavigationBarItem(
                     icon: Icon(Icons.message),
                     label: 'Messages',
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.white,
                   ),
 
                   ///PROFILE ICON
                   BottomNavigationBarItem(
                     icon: Icon(Icons.account_circle),
                     label: 'Profile',
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.white,
                   ),
                 ],
                 currentIndex: _selectedIndex,
