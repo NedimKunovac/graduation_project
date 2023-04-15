@@ -5,6 +5,36 @@ import 'package:profanity_filter/profanity_filter.dart';
 ///Requires that the suggestions be pre-inputted
 ///Includes profanity check!
 
+class RenderTags extends StatefulWidget {
+  RenderTags({Key? key, required this.addedChips}) : super(key: key);
+
+  ///List of added tags
+  List<String> addedChips;
+
+  @override
+  State<RenderTags> createState() => _RenderTagsState();
+}
+
+class _RenderTagsState extends State<RenderTags> {
+  ///Getter for top fun
+  getChipList() {
+    List<Widget> chipList = <Widget>[];
+    for (var i = 0; i < widget.addedChips.length; i++) {
+      chipList.add(
+        Chip(label: Text(widget.addedChips[i].toString())),
+      );
+    }
+    return chipList;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      children: getChipList(),
+    );
+  }
+}
+
 ///TEMPLATE FOR CHIP OBJECT THAT HOLDS CHIP DATA
 class ChipObjectData {
   const ChipObjectData(this.value);
@@ -31,7 +61,6 @@ class TagsField extends StatefulWidget {
 
   ///List of suggestions
   List<String> suggestions = <String>[];
-
 
   @override
   State<TagsField> createState() => _TagsFieldState();
@@ -121,8 +150,8 @@ class _TagsFieldState extends State<TagsField> {
               decoration: InputDecoration(
                 suffixIcon: IconButton(
                     onPressed: () {
-                      if(textEditingController.text!='')
-                      if (!filter.hasProfanity(textEditingController.text)) {
+                      if (textEditingController.text != '') if (!filter
+                          .hasProfanity(textEditingController.text)) {
                         if (!widget.addedChips
                             .contains(textEditingController.text)) {
                           debugPrint(
@@ -140,10 +169,9 @@ class _TagsFieldState extends State<TagsField> {
                           print('Chip already exsists');
                         }
                       } else {
-                        print(
-                            'What you entered has the following bad words:');
-                        List<String> wordsFound = filter
-                            .getAllProfanity(textEditingController.text);
+                        print('What you entered has the following bad words:');
+                        List<String> wordsFound =
+                            filter.getAllProfanity(textEditingController.text);
                         print(wordsFound);
                         textEditingController.text = "";
                       }

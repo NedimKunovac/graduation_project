@@ -37,9 +37,12 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
   final passwordController = TextEditingController();
 
   var SkillsField = null;
-  getSkillsField(){
-    if(SkillsField==null) return SizedBox.shrink();
-    else return SkillsField;
+
+  getSkillsField() {
+    if (SkillsField == null)
+      return SizedBox.shrink();
+    else
+      return SkillsField;
   }
 
   ///Clear all controllers
@@ -76,9 +79,11 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
   Future createAccount() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
-    if (SkillsField.addedChips.length<3) {
+    if (SkillsField.addedChips.length < 3) {
       flashBar.showBasicsFlashFailed(
-          duration: Duration(seconds: 3), context: context, message: 'Please enter at least three skills');
+          duration: Duration(seconds: 3),
+          context: context,
+          message: 'Please enter at least three skills');
       return;
     }
 
@@ -119,27 +124,25 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
 
   @override
   Widget build(BuildContext context) {
-
-    WidgetsBinding.instance.addPostFrameCallback((_) async{
-      if(SkillsField==null) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (SkillsField == null) {
         await FirebaseFirestore.instance
-          .collection('Dictionary')
-          .doc('Skills')
-          .get()
-          .then((DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot.exists) {
-          print('Document data: ${documentSnapshot.data()}');
-          SkillsField = TagsField(suggestionsList: List<String>.from(documentSnapshot['skills'] as List));
-          setState(() {
-
-          });
-        } else {
-          print('Document does not exist on the database');
-        }
-      });
+            .collection('Dictionary')
+            .doc('Skills')
+            .get()
+            .then((DocumentSnapshot documentSnapshot) {
+          if (documentSnapshot.exists) {
+            print('Document data: ${documentSnapshot.data()}');
+            SkillsField = TagsField(
+                suggestionsList:
+                    List<String>.from(documentSnapshot['skills'] as List));
+            setState(() {});
+          } else {
+            print('Document does not exist on the database');
+          }
+        });
       }
     });
-
 
     ///Actual page
     return Scaffold(
@@ -368,26 +371,26 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           ],
                         ),
 
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'Your skills:',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Your skills:',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            getSkillsField(),
+                            SizedBox(
+                              height: 10,
+                            )
+                          ],
                         ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        getSkillsField(),
-                        SizedBox(
-                          height: 10,
-                        )
-                      ],
-                    ),
 
                         ///EMAIL FORM
                         Column(

@@ -42,9 +42,12 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
   final opportunitiesController = TextEditingController();
 
   var SkillsField = null;
-  getSkillsField(){
-    if(SkillsField==null) return SizedBox.shrink();
-    else return SkillsField;
+
+  getSkillsField() {
+    if (SkillsField == null)
+      return SizedBox.shrink();
+    else
+      return SkillsField;
   }
 
   ///Clear all controllers
@@ -62,12 +65,13 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
   Future submitForm() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
-    if (SkillsField.addedChips.length<3) {
+    if (SkillsField.addedChips.length < 3) {
       flashBar.showBasicsFlashFailed(
-          duration: Duration(seconds: 3), context: context, message: 'Please enter at least three skills');
+          duration: Duration(seconds: 3),
+          context: context,
+          message: 'Please enter at least three skills');
       return;
     }
-
 
     try {
       FirebaseFirestore usersCollection = FirebaseFirestore.instance;
@@ -101,9 +105,8 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
 
   @override
   Widget build(BuildContext context) {
-
-    WidgetsBinding.instance.addPostFrameCallback((_) async{
-      if(SkillsField==null) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (SkillsField == null) {
         await FirebaseFirestore.instance
             .collection('Dictionary')
             .doc('Skills')
@@ -111,10 +114,10 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
             .then((DocumentSnapshot documentSnapshot) {
           if (documentSnapshot.exists) {
             print('Document data: ${documentSnapshot.data()}');
-            SkillsField = TagsField(suggestionsList: List<String>.from(documentSnapshot['skills'] as List));
-            setState(() {
-
-            });
+            SkillsField = TagsField(
+                suggestionsList:
+                    List<String>.from(documentSnapshot['skills'] as List));
+            setState(() {});
           } else {
             print('Document does not exist on the database');
           }
@@ -594,40 +597,8 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                       Expanded(
                         flex: 3,
                         child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                          ),
+                          constraints: BoxConstraints(),
                           child: getSkillsField(),
-
-
-                          //TextFormField(
-                          //   controller: requirementsController,
-                          //   autovalidateMode: AutovalidateMode.disabled,
-                          //   validator: (value) =>
-                          //       value != null && value.length < 10
-                          //           ? 'Please enter your requirements'
-                          //           : null,
-                          //   maxLines: null,
-                          //   expands: true,
-                          //   decoration: InputDecoration(
-                          //     errorStyle: TextStyle(
-                          //       color: Colors.white,
-                          //     ),
-                          //     hintText: 'Enter requirements',
-                          //     hintStyle: TextStyle(
-                          //       color: Colors.white,
-                          //     ),
-                          //     enabledBorder: UnderlineInputBorder(
-                          //       borderSide: BorderSide(color: Colors.white),
-                          //     ),
-                          //     focusedBorder: UnderlineInputBorder(
-                          //       borderSide: BorderSide(color: Colors.white),
-                          //     ),
-                          //   ),
-                          //   style: TextStyle(
-                          //     fontSize: 16,
-                          //     color: Colors.white,
-                          //   ),
-                          // ),
                         ),
                       )
                     ]),
