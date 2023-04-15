@@ -399,18 +399,33 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                         readOnly: true,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         onTap: () async {
+                          DateTime? possibleStartDate;
+                          DateTime? initialDate;
+                          if (pickedDueDate != null) {
+                            if (pickedDueDate!.isAfter(pickedStartDate!)) {
+                              possibleStartDate = pickedDueDate;
+                              initialDate = pickedDueDate;
+                            } else {
+                              possibleStartDate = pickedStartDate;
+                              initialDate = pickedStartDate;
+                            }
+                          } else {
+                            possibleStartDate = DateTime.now();
+                            initialDate = DateTime.now();
+                          }
+
                           pickedEndDate = await showDatePicker(
                               context: context,
                               initialDate:
-                                  DateTime.parse(pickedStartDate.toString())
-                                      .add(const Duration(days: 1)),
+                              DateTime.parse(initialDate.toString())
+                                  .add(const Duration(days: 1)),
                               firstDate:
-                                  DateTime.parse(pickedStartDate.toString())
-                                      .add(const Duration(days: 1)),
+                              DateTime.parse(possibleStartDate.toString())
+                                  .add(const Duration(days: 1)),
                               //DateTime.now() - not to allow to choose before today.
                               lastDate:
-                                  DateTime.parse(pickedStartDate.toString())
-                                      .add(const Duration(days: 730)));
+                              DateTime.parse(pickedStartDate.toString())
+                                  .add(const Duration(days: 730)));
 
                           if (pickedEndDate != null) {
                             print(

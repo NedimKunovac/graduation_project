@@ -90,7 +90,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
         home: Scaffold(
       appBar: AppBar(
         title: Text(
-        'Create your post!',
+          'Create your post!',
           style: TextStyle(
             color: Colors.red,
           ),
@@ -366,13 +366,28 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                         readOnly: true,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         onTap: () async {
+                          DateTime? possibleStartDate;
+                          DateTime? initialDate;
+                          if (pickedDueDate != null) {
+                            if (pickedDueDate!.isAfter(pickedStartDate!)) {
+                              possibleStartDate = pickedDueDate;
+                              initialDate = pickedDueDate;
+                            } else {
+                              possibleStartDate = pickedStartDate;
+                              initialDate = pickedStartDate;
+                            }
+                          } else {
+                            possibleStartDate = DateTime.now();
+                            initialDate = DateTime.now();
+                          }
+
                           pickedEndDate = await showDatePicker(
                               context: context,
                               initialDate:
-                                  DateTime.parse(pickedStartDate.toString())
+                                  DateTime.parse(initialDate.toString())
                                       .add(const Duration(days: 1)),
                               firstDate:
-                                  DateTime.parse(pickedStartDate.toString())
+                                  DateTime.parse(possibleStartDate.toString())
                                       .add(const Duration(days: 1)),
                               //DateTime.now() - not to allow to choose before today.
                               lastDate:
@@ -488,41 +503,42 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                       ),
                       Expanded(
                         flex: 3,
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              maxHeight: MediaQuery.of(context).size.height * 0.3,
-                            ),
-                        child: TextFormField(
-                          controller: workDescriptionController,
-                          autovalidateMode: AutovalidateMode.disabled,
-                          validator: (value) =>
-                              value != null && value.length < 10
-                                  ? 'Please enter a long description \n'
-                                  : null,
-                          maxLines: null,
-                          expands: true,
-                          decoration: InputDecoration(
-                            errorStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            hintText: 'Enter work description',
-                            hintStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight: MediaQuery.of(context).size.height * 0.3,
                           ),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
+                          child: TextFormField(
+                            controller: workDescriptionController,
+                            autovalidateMode: AutovalidateMode.disabled,
+                            validator: (value) =>
+                                value != null && value.length < 10
+                                    ? 'Please enter a long description \n'
+                                    : null,
+                            maxLines: null,
+                            expands: true,
+                            decoration: InputDecoration(
+                              errorStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                              hintText: 'Enter work description',
+                              hintStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                      )]),
+                      )
+                    ]),
 
                 ///REQUIREMENTS FIELD
                 SizedBox(height: 10),
@@ -541,42 +557,42 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                       ),
                       Expanded(
                         flex: 3,
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              maxHeight: MediaQuery.of(context).size.height * 0.3,
-                            ),
-                        child: TextFormField(
-                          controller: requirementsController,
-                          autovalidateMode: AutovalidateMode.disabled,
-                          validator: (value) =>
-                              value != null && value.length < 10
-                                  ? 'Please enter your requirements'
-                                  : null,
-                          maxLines: null,
-                          expands: true,
-                          decoration: InputDecoration(
-                            errorStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            hintText: 'Enter requirements',
-                            hintStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight: MediaQuery.of(context).size.height * 0.3,
                           ),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
+                          child: TextFormField(
+                            controller: requirementsController,
+                            autovalidateMode: AutovalidateMode.disabled,
+                            validator: (value) =>
+                                value != null && value.length < 10
+                                    ? 'Please enter your requirements'
+                                    : null,
+                            maxLines: null,
+                            expands: true,
+                            decoration: InputDecoration(
+                              errorStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                              hintText: 'Enter requirements',
+                              hintStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-
-                      )]),
+                      )
+                    ]),
 
                 ///OPPORTUNITIES FIELD
                 SizedBox(height: 10),
@@ -595,40 +611,41 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                       ),
                       Expanded(
                         flex: 3,
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              maxHeight: MediaQuery.of(context).size.height * 0.3,
-                            ),
-                        child: TextFormField(
-                          validator: (value) =>
-                              value != null && value.length < 3
-                                  ? 'Please enter opportunities'
-                                  : null,
-                          controller: opportunitiesController,
-                          maxLines: null,
-                          expands: true,
-                          decoration: InputDecoration(
-                            errorStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            hintText: 'Enter opportunities',
-                            hintStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight: MediaQuery.of(context).size.height * 0.3,
                           ),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
+                          child: TextFormField(
+                            validator: (value) =>
+                                value != null && value.length < 3
+                                    ? 'Please enter opportunities'
+                                    : null,
+                            controller: opportunitiesController,
+                            maxLines: null,
+                            expands: true,
+                            decoration: InputDecoration(
+                              errorStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                              hintText: 'Enter opportunities',
+                              hintStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                      )]),
+                      )
+                    ]),
                 SizedBox(height: 10),
               ]),
             ),
