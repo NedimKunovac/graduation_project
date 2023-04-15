@@ -121,6 +121,7 @@ class _TagsFieldState extends State<TagsField> {
               decoration: InputDecoration(
                 suffixIcon: IconButton(
                     onPressed: () {
+                      if(textEditingController.text!='')
                       if (!filter.hasProfanity(textEditingController.text)) {
                         if (!widget.addedChips
                             .contains(textEditingController.text)) {
