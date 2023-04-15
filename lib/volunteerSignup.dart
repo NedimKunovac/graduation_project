@@ -45,6 +45,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
       return SkillsField;
   }
 
+
   ///Clear all controllers
   void clearControllers() {
     fullNameController.clear();
@@ -371,6 +372,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           ],
                         ),
 
+                        ///ENTER SKILLS FORM
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[

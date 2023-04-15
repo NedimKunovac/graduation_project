@@ -30,6 +30,8 @@ class _RenderTagsState extends State<RenderTags> {
   @override
   Widget build(BuildContext context) {
     return Wrap(
+      alignment: WrapAlignment.start,
+      crossAxisAlignment: WrapCrossAlignment.start,
       children: getChipList(),
     );
   }
