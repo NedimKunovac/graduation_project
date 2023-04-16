@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
+import 'package:graduation_project/editProfile.dart';
 import 'package:graduation_project/profilePage.dart';
 import 'viewAdvertisements.dart';
 import 'advertisementForm.dart';
@@ -43,7 +44,7 @@ class _DashboardState extends State<Dashboard> {
           onSelected: (result) {
             // Do something when an option is selected
             if (result == "Edit Profile") {
-              // Navigate to the edit profile page
+              Navigator.push(context,MaterialPageRoute(builder: (context) => EditProfilePage()));
             } else if (result == "Logout") {
               showDialog<String>(
                 context: context,
