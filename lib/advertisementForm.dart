@@ -3,6 +3,8 @@ import 'package:graduation_project/Dashboard.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'flashbar.dart';
+import 'tagField.dart';
+import 'updateDictionary.dart';
 
 ///Create a post form, accessed after pressing little plus on bottom of screen
 ///Requires userID so it can be passed to post details
@@ -39,6 +41,15 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
   final requirementsController = TextEditingController();
   final opportunitiesController = TextEditingController();
 
+  var SkillsField = null;
+
+  getSkillsField() {
+    if (SkillsField == null)
+      return SizedBox.shrink();
+    else
+      return SkillsField;
+  }
+
   ///Clear all controllers
   void clearControllers() {
     postTitleController.clear();
@@ -54,6 +65,13 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
   Future submitForm() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
+    if (SkillsField.addedChips.length < 3) {
+      flashBar.showBasicsFlashFailed(
+          duration: Duration(seconds: 3),
+          context: context,
+          message: 'Please enter at least three skills');
+      return;
+    }
 
     try {
       FirebaseFirestore usersCollection = FirebaseFirestore.instance;
@@ -67,9 +85,10 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
         'endDate': Timestamp.fromDate(pickedEndDate!),
         'applicants': numberOfPeopleController.text.trim(),
         'description': workDescriptionController.text.trim(),
-        'requirements': requirementsController.text.trim(),
+        'requirements': SkillsField.addedChips,
         'opportunities': opportunitiesController.text.trim()
       });
+      await updateDictionary().updateSkills(SkillsField.addedChips);
       clearControllers();
       await flashBar.showBasicsFlashSuccessful(
         duration: Duration(seconds: 5),
@@ -86,6 +105,26 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (SkillsField == null) {
+        await FirebaseFirestore.instance
+            .collection('Dictionary')
+            .doc('Skills')
+            .get()
+            .then((DocumentSnapshot documentSnapshot) {
+          if (documentSnapshot.exists) {
+            print('Document data: ${documentSnapshot.data()}');
+            SkillsField = TagsField(
+                suggestionsList:
+                    List<String>.from(documentSnapshot['skills'] as List));
+            setState(() {});
+          } else {
+            print('Document does not exist on the database');
+          }
+        });
+      }
+    });
+
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(
@@ -558,38 +597,8 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                       Expanded(
                         flex: 3,
                         child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxHeight: MediaQuery.of(context).size.height * 0.3,
-                          ),
-                          child: TextFormField(
-                            controller: requirementsController,
-                            autovalidateMode: AutovalidateMode.disabled,
-                            validator: (value) =>
-                                value != null && value.length < 10
-                                    ? 'Please enter your requirements'
-                                    : null,
-                            maxLines: null,
-                            expands: true,
-                            decoration: InputDecoration(
-                              errorStyle: TextStyle(
-                                color: Colors.white,
-                              ),
-                              hintText: 'Enter requirements',
-                              hintStyle: TextStyle(
-                                color: Colors.white,
-                              ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                            ),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                          ),
+                          constraints: BoxConstraints(),
+                          child: getSkillsField(),
                         ),
                       )
                     ]),

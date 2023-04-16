@@ -3,6 +3,8 @@ import 'package:graduation_project/Dashboard.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'flashbar.dart';
+import 'tagField.dart';
+import 'updateDictionary.dart';
 
 ///Create a post form, accessed after pressing little plus on bottom of screen
 ///Requires userID so it can be passed to post details
@@ -30,8 +32,16 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
   DateTime? pickedEndDate;
   final numberOfPeopleController = TextEditingController();
   final workDescriptionController = TextEditingController();
-  final requirementsController = TextEditingController();
   final opportunitiesController = TextEditingController();
+
+  var SkillsField = null;
+
+  getSkillsField() {
+    if (SkillsField == null)
+      return SizedBox.shrink();
+    else
+      return SkillsField;
+  }
 
   ///Clear all controllers
   void clearControllers() {
@@ -41,13 +51,19 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
     endDateController.clear();
     numberOfPeopleController.clear();
     workDescriptionController.clear();
-    requirementsController.clear();
     opportunitiesController.clear();
   }
 
   Future updateForm() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
+    if (SkillsField.addedChips.length < 3) {
+      flashBar.showBasicsFlashFailed(
+          duration: Duration(seconds: 3),
+          context: context,
+          message: 'Please enter at least three skills');
+      return;
+    }
 
     try {
       FirebaseFirestore usersCollection = FirebaseFirestore.instance;
@@ -61,16 +77,17 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
         'endDate': Timestamp.fromDate(pickedEndDate!),
         'applicants': numberOfPeopleController.text.trim(),
         'description': workDescriptionController.text.trim(),
-        'requirements': requirementsController.text.trim(),
+        'requirements': SkillsField.addedChips,
         'opportunities': opportunitiesController.text.trim()
       });
+      await updateDictionary().updateSkills(SkillsField.addedChips);
       clearControllers();
       await flashBar.showBasicsFlashSuccessful(
         duration: Duration(seconds: 5),
         context: context,
         message: 'Your post was updated!',
       );
-        Navigator.pop(context);
+      Navigator.pop(context);
     } on FirebaseException catch (e) {
       await flashBar.showBasicsFlashFailed(
         duration: Duration(seconds: 5),
@@ -102,10 +119,53 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
 
       numberOfPeopleController.text = widget.data['applicants'];
       workDescriptionController.text = widget.data['description'];
-      requirementsController.text = widget.data['requirements'];
       opportunitiesController.text = widget.data['opportunities'];
       toggle = true;
     }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (SkillsField == null) {
+        await FirebaseFirestore.instance
+            .collection('Dictionary')
+            .doc('Skills')
+            .get()
+            .then((DocumentSnapshot documentSnapshot) {
+          if (documentSnapshot.exists) {
+            print('Document data: ${documentSnapshot.data()}');
+            SkillsField = TagsField(
+                suggestionsList:
+                    List<String>.from(documentSnapshot['skills'] as List));
+            SkillsField.addedChips =
+                List<String>.from(widget.data['requirements'] as List);
+            for (var i = 0;
+                i <
+                    List<String>.from(widget.data['requirements'] as List)
+                        .length;
+                i++) {
+              print(widget.data['requirements'][i]);
+              SkillsField.chipDataList.add(
+                ChipObjectData(widget.data['requirements'][i]),
+              );
+            }
+            for (var i = 0;
+                i <
+                    List<String>.from(widget.data['requirements'] as List)
+                        .length;
+                i++) {
+              print(widget.data['requirements'][i]);
+              if (SkillsField.suggestionsList
+                  .contains(widget.data['requirements'][i]))
+                SkillsField.suggestionsList
+                    .remove(widget.data['requirements'][i]);
+            }
+            print(SkillsField.suggestionsList);
+            setState(() {});
+          } else {
+            print('Document does not exist on the database');
+          }
+        });
+      }
+    });
 
     return MaterialApp(
         home: Scaffold(
@@ -131,7 +191,9 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
         ),
         leading: IconButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard()),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Dashboard()),
               );
             },
             icon: Icon(
@@ -417,15 +479,15 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                           pickedEndDate = await showDatePicker(
                               context: context,
                               initialDate:
-                              DateTime.parse(initialDate.toString())
-                                  .add(const Duration(days: 1)),
+                                  DateTime.parse(initialDate.toString())
+                                      .add(const Duration(days: 1)),
                               firstDate:
-                              DateTime.parse(possibleStartDate.toString())
-                                  .add(const Duration(days: 1)),
+                                  DateTime.parse(possibleStartDate.toString())
+                                      .add(const Duration(days: 1)),
                               //DateTime.now() - not to allow to choose before today.
                               lastDate:
-                              DateTime.parse(pickedStartDate.toString())
-                                  .add(const Duration(days: 730)));
+                                  DateTime.parse(pickedStartDate.toString())
+                                      .add(const Duration(days: 730)));
 
                           if (pickedEndDate != null) {
                             print(
@@ -536,41 +598,42 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                       ),
                       Expanded(
                         flex: 3,
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              maxHeight: MediaQuery.of(context).size.height * 0.3,
-                            ),
-                        child: TextFormField(
-                          controller: workDescriptionController,
-                          autovalidateMode: AutovalidateMode.disabled,
-                          validator: (value) =>
-                              value != null && value.length < 10
-                                  ? 'Please enter a long description \n'
-                                  : null,
-                          maxLines: null,
-                          expands: true,
-                          decoration: InputDecoration(
-                            errorStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            hintText: 'Enter work description',
-                            hintStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight: MediaQuery.of(context).size.height * 0.3,
                           ),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
+                          child: TextFormField(
+                            controller: workDescriptionController,
+                            autovalidateMode: AutovalidateMode.disabled,
+                            validator: (value) =>
+                                value != null && value.length < 10
+                                    ? 'Please enter a long description \n'
+                                    : null,
+                            maxLines: null,
+                            expands: true,
+                            decoration: InputDecoration(
+                              errorStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                              hintText: 'Enter work description',
+                              hintStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                      )]),
+                      )
+                    ]),
 
                 ///REQUIREMENTS FIELD
                 SizedBox(height: 10),
@@ -589,41 +652,12 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                       ),
                       Expanded(
                         flex: 3,
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              maxHeight: MediaQuery.of(context).size.height * 0.3,
-                            ),
-                        child: TextFormField(
-                          controller: requirementsController,
-                          autovalidateMode: AutovalidateMode.disabled,
-                          validator: (value) =>
-                              value != null && value.length < 10
-                                  ? 'Please enter your requirements'
-                                  : null,
-                          maxLines: null,
-                          expands: true,
-                          decoration: InputDecoration(
-                            errorStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            hintText: 'Enter requirements',
-                            hintStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                          ),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(),
+                          child: getSkillsField(),
                         ),
-                      ),
-                      )]),
+                      )
+                    ]),
 
                 ///OPPORTUNITIES FIELD
                 SizedBox(height: 10),
@@ -642,40 +676,41 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                       ),
                       Expanded(
                         flex: 3,
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              maxHeight: MediaQuery.of(context).size.height * 0.3,
-                            ),
-                        child: TextFormField(
-                          validator: (value) =>
-                              value != null && value.length < 3
-                                  ? 'Please enter opportunities'
-                                  : null,
-                          controller: opportunitiesController,
-                          maxLines: null,
-                          expands: true,
-                          decoration: InputDecoration(
-                            errorStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            hintText: 'Enter opportunities',
-                            hintStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight: MediaQuery.of(context).size.height * 0.3,
                           ),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
+                          child: TextFormField(
+                            validator: (value) =>
+                                value != null && value.length < 3
+                                    ? 'Please enter opportunities'
+                                    : null,
+                            controller: opportunitiesController,
+                            maxLines: null,
+                            expands: true,
+                            decoration: InputDecoration(
+                              errorStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                              hintText: 'Enter opportunities',
+                              hintStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                      )]),
+                      )
+                    ]),
                 SizedBox(height: 10),
               ]),
             ),

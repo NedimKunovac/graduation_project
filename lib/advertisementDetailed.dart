@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:graduation_project/tagField.dart';
 import 'package:graduation_project/updateAdvertisementForm.dart';
 import 'flashBar.dart';
 
@@ -123,8 +124,9 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => updateAdvertisementForm(
-                                        data: widget.data)));
+                                    builder: (context) =>
+                                        updateAdvertisementForm(
+                                            data: widget.data)));
                           },
                           child: const Text(
                             'I understand, I want to edit this post',
@@ -439,13 +441,9 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         ),
                         Expanded(
                           flex: 3,
-                          child: Text(
-                            widget.data['requirements'],
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                          ),
+                          child: RenderTags(
+                              addedChips: List<String>.from(
+                                  widget.data['requirements'] as List)),
                         ),
                       ],
                     ),

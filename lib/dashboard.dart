@@ -196,9 +196,7 @@ class _DashboardState extends State<Dashboard> {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
           data["userID"] = FirebaseAuth.instance.currentUser?.uid;
-          _widgetOptions.add(ViewAdvertisements(
-              userID: data['userID'],
-              userType: data['type']));
+          _widgetOptions.add(ViewAdvertisements(userData: data));
           _widgetOptions.add(Placeholder());
           _widgetOptions.add(ProfilePage(data: data));
 
