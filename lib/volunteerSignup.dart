@@ -115,7 +115,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
         await usersCollection.collection('Users').doc(userReference!).set({
           'name': fullNameController.text.trim(),
           'type': 2,
-          'Interests': InterestsTiles.added,
+          'interests': InterestsTiles.added,
           'dateOfBirth': Timestamp.fromDate(pickedDate!),
           'profilePhotoUrl': imageUrl,
           'skills': SkillsField.addedChips
