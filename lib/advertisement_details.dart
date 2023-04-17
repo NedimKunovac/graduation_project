@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:graduation_project/updateAdvertisementForm.dart';
-import 'flashBar.dart';
+import 'package:graduation_project/update_advertisement_form.dart';
+import 'flash_bar.dart';
 
 ///Page that displays detailed information about post
 
@@ -398,6 +398,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                     ///DESCRIPTION
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
                           flex: 2,
@@ -426,6 +427,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                     ///REQUIREMENTS
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
                           flex: 2,
@@ -454,6 +456,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                     ///OPPORTUNITIES
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
                           flex: 2,

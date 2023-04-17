@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:email_validator/email_validator.dart';
-import 'flashBar.dart';
-import 'imagePicker.dart';
+import 'flash_bar.dart';
+import 'image_picker.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 

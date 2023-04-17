@@ -1,5 +1,5 @@
-import 'companySignup.dart';
-import 'volunteerSignup.dart';
+import 'company_signup.dart';
+import 'volunteer_signup.dart';
 import 'package:flutter/material.dart';
 
 ///Page made so user can select if he is a company or a volunteer

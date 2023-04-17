@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project/advertisementDetailed.dart';
+import 'package:graduation_project/advertisement_details.dart';
 
 /// Advertisement Preview [Small box seen on dashboard]
 /// Requires title, description, image link and status[accepted or not]

@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/login.dart';
-import 'signorlog.dart';
+import 'sign_or_log.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 ///This file serves to route user to dash if he is already logged in upon startup

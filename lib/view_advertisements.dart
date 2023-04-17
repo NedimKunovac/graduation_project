@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'advertisementWidget.dart';
+import 'advertisement_widget.dart';
 
 /// Widget that loads the list of advertisements available on the first page
 /// Called by dashboard

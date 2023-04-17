@@ -5,9 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
-import 'package:graduation_project/profilePage.dart';
-import 'viewAdvertisements.dart';
-import 'advertisementForm.dart';
+import 'package:graduation_project/profile_page.dart';
+import 'view_advertisements.dart';
+import 'advertisement_form.dart';
 
 ///Dashboard, main page of the app
 ///Make sure hide code for easier view
@@ -204,7 +204,7 @@ class _DashboardState extends State<Dashboard> {
           return Scaffold(
             appBar: AppBarBulder(data),
 
-            ///Body openes selected page/widget based on list above
+            ///Body opens selected page/widget based on list above
             body: Container(child: _widgetOptions.elementAt(_selectedIndex)),
 
             ///Button that routes to create new advertisement page, doesn't load if volunteer is logged in

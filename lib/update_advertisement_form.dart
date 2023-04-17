@@ -2,29 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Dashboard.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'flashbar.dart';
+import 'flash_bar.dart';
 
 ///Create a post form, accessed after pressing little plus on bottom of screen
 ///Requires userID so it can be passed to post details
 
-class AdvertisementForm extends StatefulWidget {
+class updateAdvertisementForm extends StatefulWidget {
   ///Relevant user data
-  String? userID;
-  String? userName;
-  String? userProfilePhoto;
+  Map<String, dynamic> data;
 
-  AdvertisementForm(
-      {Key? key,
-      required this.userID,
-      required this.userName,
-      required this.userProfilePhoto})
-      : super(key: key);
+  updateAdvertisementForm({Key? key, required this.data}) : super(key: key);
 
   @override
-  State<AdvertisementForm> createState() => _AdvertisementFormState();
+  State<updateAdvertisementForm> createState() =>
+      _updateAdvertisementFormState();
 }
 
-class _AdvertisementFormState extends State<AdvertisementForm> {
+class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
   ///Controllers for form fileds
   final formKey = GlobalKey<FormState>();
   final postTitleController = TextEditingController();
@@ -51,17 +45,17 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
     opportunitiesController.clear();
   }
 
-  Future submitForm() async {
+  Future updateForm() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
 
     try {
       FirebaseFirestore usersCollection = FirebaseFirestore.instance;
-      await usersCollection.collection('Posts').doc().set({
+      await usersCollection
+          .collection('Posts')
+          .doc(widget.data['postID'])
+          .update({
         'title': postTitleController.text.trim(),
-        'authorID': widget.userID,
-        'authorName': widget.userName,
-        'profilePhotoUrl': widget.userProfilePhoto,
         'dueDate': Timestamp.fromDate(pickedDueDate!),
         'startDate': Timestamp.fromDate(pickedStartDate!),
         'endDate': Timestamp.fromDate(pickedEndDate!),
@@ -74,32 +68,71 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
       await flashBar.showBasicsFlashSuccessful(
         duration: Duration(seconds: 5),
         context: context,
-        message: 'Your post was created!',
+        message: 'Your post was updated!',
       );
-      setState(() {
         Navigator.pop(context);
-      });
     } on FirebaseException catch (e) {
-      print(e);
+      await flashBar.showBasicsFlashFailed(
+        duration: Duration(seconds: 5),
+        context: context,
+        message: e.message,
+      );
     }
   }
 
+  var toggle = false;
+
   @override
   Widget build(BuildContext context) {
+    if (!toggle) {
+      postTitleController.text = widget.data['title'];
+      pickedDueDate = DateTime.fromMillisecondsSinceEpoch(
+          widget.data['dueDate'].seconds * 1000);
+      dueDateController.text = DateFormat('yyyy-MM-dd').format(pickedDueDate!);
+
+      pickedStartDate = DateTime.fromMillisecondsSinceEpoch(
+          widget.data['startDate'].seconds * 1000);
+      ;
+      startDateController.text =
+          DateFormat('yyyy-MM-dd').format(pickedStartDate!);
+
+      pickedEndDate = DateTime.fromMillisecondsSinceEpoch(
+          widget.data['endDate'].seconds * 1000);
+      endDateController.text = DateFormat('yyyy-MM-dd').format(pickedEndDate!);
+
+      numberOfPeopleController.text = widget.data['applicants'];
+      workDescriptionController.text = widget.data['description'];
+      requirementsController.text = widget.data['requirements'];
+      opportunitiesController.text = widget.data['opportunities'];
+      toggle = true;
+    }
+
     return MaterialApp(
         home: Scaffold(
       appBar: AppBar(
-        title: Text(
-        'Create your post!',
-          style: TextStyle(
-            color: Colors.red,
-          ),
-        ),
+        toolbarHeight: 70,
         elevation: 0,
         backgroundColor: Colors.transparent,
+        title: Column(
+          children: [
+            Text(
+              'Currently editing:',
+              style: TextStyle(
+                color: Colors.red,
+              ),
+            ),
+            Text(
+              '${widget.data['title']}',
+              style: TextStyle(
+                color: Colors.red,
+              ),
+            )
+          ],
+        ),
         leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard()),
+              );
             },
             icon: Icon(
               Icons.arrow_back_ios,
@@ -113,7 +146,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
             height: MediaQuery.of(context).size.height * 0.3,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/client.png'),
+                image: NetworkImage(widget.data['profilePhotoUrl']),
                 fit: BoxFit.cover,
               ),
             ),
@@ -575,7 +608,6 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                           ),
                         ),
                       ),
-
                       )]),
 
                 ///OPPORTUNITIES FIELD
@@ -644,8 +676,8 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(
-                  onPressed: submitForm,
-                  icon: Icon(Icons.add_circle),
+                  onPressed: updateForm,
+                  icon: Icon(Icons.update_outlined),
                   color: Colors.red,
                   iconSize: 40),
               // add additional icons here as needed
