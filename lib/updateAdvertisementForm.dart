@@ -610,7 +610,8 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                                     ? 'Please enter a long description \n'
                                     : null,
                             maxLines: null,
-                            expands: true,
+                            keyboardType: TextInputType.multiline,
+                            style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                               errorStyle: TextStyle(
                                 color: Colors.white,
@@ -626,10 +627,7 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
+
                           ),
                         ),
                       )
@@ -687,7 +685,8 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                                     : null,
                             controller: opportunitiesController,
                             maxLines: null,
-                            expands: true,
+                            keyboardType: TextInputType.multiline,
+                            style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                               errorStyle: TextStyle(
                                 color: Colors.white,
@@ -703,10 +702,7 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
+
                           ),
                         ),
                       )
