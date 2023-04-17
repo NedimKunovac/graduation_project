@@ -257,6 +257,34 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                 ),
                 child: Column(
                   children: [
+                    ///CATEGORY
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            'Category:',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Text(
+                            widget.data['category'][0],
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+
                     ///DUE DATE
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
