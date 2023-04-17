@@ -65,10 +65,26 @@ class _AdvertisementState extends State<Advertisement> {
                 child: Column(
                   children: [
                     Row(
+                      children: [
+                        Flexible(
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              child: Text(
+                                widget.data['category'][0],
+                                textAlign: TextAlign.justify,
+                                style: TextStyle(
+                                  color: Colors.grey.shade200,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ))
+                      ],
+                    ),
+                    Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.fromLTRB(0, 13, 10, 10),
+                          padding: EdgeInsets.fromLTRB(0, 5, 10, 10),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
 
