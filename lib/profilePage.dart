@@ -173,8 +173,9 @@ class ProfilePage extends StatelessWidget {
                                   left: 8.0, top: 8.0, right: 8.0),
                               child: Text(
                                 'Name of the company',
-                                style: TextStyle(color: Colors.white,
-                                fontSize: 18,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
                                 ),
                               ),
                             ),
@@ -206,8 +207,8 @@ class ProfilePage extends StatelessWidget {
                                   left: 8.0, top: 8.0, right: 8.0),
                               child: Text(
                                 'Name of the company',
-                                style: TextStyle(color: Colors.white,
-                                fontSize: 18),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
                               ),
                             ),
                           ),
@@ -238,8 +239,8 @@ class ProfilePage extends StatelessWidget {
                                   left: 8.0, top: 8.0, right: 8.0),
                               child: Text(
                                 'Name of the company',
-                                style: TextStyle(color: Colors.white,
-                                fontSize: 18),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
                               ),
                             ),
                           ),
@@ -268,9 +269,10 @@ class ProfilePage extends StatelessWidget {
                             child: Container(
                               margin: EdgeInsets.only(
                                   left: 8.0, top: 8.0, right: 8.0),
-                              child:Text(
+                              child: Text(
                                 'Name of the company',
-                                style: TextStyle(color: Colors.white,fontSize: 18),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
                               ),
                             ),
                           ),
@@ -302,13 +304,43 @@ class ProfilePage extends StatelessWidget {
                       margin: EdgeInsets.only(right: 8.0),
                       width: 400.0,
                       height: 80.0,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image(
+                              image: NetworkImage(
+                                  'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
+                              height: 50,
+                              width: 70,
+                            ),
+                            Expanded(
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    left: 40.0, right: 8.0),
+                                child: Text(
+                                  'Name of the company',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    SizedBox(height: 16.0),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      margin: EdgeInsets.only(right: 8.0),
+                      width: 400.0,
+                      height: 80.0,
                       child: Row(
-
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-
                           Image(
-
                             image: NetworkImage(
                                 'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
                             height: 50,
@@ -317,10 +349,11 @@ class ProfilePage extends StatelessWidget {
                           Expanded(
                             child: Container(
                               margin: EdgeInsets.only(
-                                  left: 40.0, top: 8.0, right: 8.0),
+                                  left: 40.0, right: 8.0),
                               child: Text(
                                 'Name of the company',
-                                style: TextStyle(color: Colors.white,fontSize: 18),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
                               ),
                             ),
                           ),
@@ -338,7 +371,7 @@ class ProfilePage extends StatelessWidget {
                       width: 400.0,
                       height: 80.0,
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Image(
                             image: NetworkImage(
@@ -349,10 +382,11 @@ class ProfilePage extends StatelessWidget {
                           Expanded(
                             child: Container(
                               margin: EdgeInsets.only(
-                                  left: 40.0, top: 8.0, right: 8.0),
+                                  left: 40.0, right: 8.0),
                               child: Text(
                                 'Name of the company',
-                                style: TextStyle(color: Colors.white,fontSize: 18),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
                               ),
                             ),
                           ),
@@ -370,39 +404,7 @@ class ProfilePage extends StatelessWidget {
                       width: 400.0,
                       height: 80.0,
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image(
-                            image: NetworkImage(
-                                'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
-                            height: 50,
-                            width: 70,
-                          ),
-                          Expanded(
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                  left: 40.0, top: 8.0, right: 8.0),
-                              child: Text(
-                                'Name of the company',
-                                style: TextStyle(color: Colors.white,fontSize: 18),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 16.0),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      margin: EdgeInsets.only(right: 8.0),
-                      width: 400.0,
-                      height: 80.0,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Image(
                             image: NetworkImage(
@@ -413,10 +415,11 @@ class ProfilePage extends StatelessWidget {
                           Expanded(
                             child: Container(
                               margin: EdgeInsets.only(
-                                  left: 40.0, top: 8.0, right: 8.0),
+                                  left: 40.0, right: 8.0),
                               child: Text(
                                 'Name of the company',
-                                style: TextStyle(color: Colors.white,fontSize: 18),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
                               ),
                             ),
                           ),
@@ -426,8 +429,6 @@ class ProfilePage extends StatelessWidget {
                   ],
                 ),
               ),
-
-
             ],
           ),
         ),
