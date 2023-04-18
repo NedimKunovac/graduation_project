@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 
-class DropdownField extends StatefulWidget {
-  DropdownField({Key? key, required this.options, this.textColor, this.dropdownColor, this.fontSize, this.dropdownValue}) : super(key: key);
+///This is a dropdown field that can take in values for selection
+///Can be customized based on stuff provided below
 
+class DropdownField extends StatefulWidget {
+  DropdownField(
+      {Key? key,
+      required this.options,
+      this.textColor,
+      this.dropdownColor,
+      this.fontSize,
+      this.dropdownValue})
+      : super(key: key);
 
   ///Options for dropdown
-  List <String> options;
+  List<String> options;
 
   ///Color Scheme text
   Color? textColor;
@@ -26,7 +35,8 @@ class DropdownField extends StatefulWidget {
 class _DropdownFieldState extends State<DropdownField> {
   @override
   Widget build(BuildContext context) {
-    if(widget.dropdownValue==null) widget.dropdownValue=widget.options.first;
+    if (widget.dropdownValue == null)
+      widget.dropdownValue = widget.options.first;
     return DropdownButton<String>(
       isExpanded: true,
       value: widget.dropdownValue,

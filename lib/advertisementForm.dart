@@ -42,7 +42,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
   final requirementsController = TextEditingController();
   final opportunitiesController = TextEditingController();
 
-  ///Category Field
+  ///Category Field and loader
   var CategoryField = null;
 
   getCategoryField() {
@@ -52,7 +52,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
       return CategoryField;
   }
 
-  ///Skills Field
+  ///Skills Field and loader
   var SkillsField = null;
 
   getSkillsField() {
@@ -118,6 +118,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
 
   @override
   Widget build(BuildContext context) {
+    ///Functions that fetch data from Dictionary after page is loaded
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (SkillsField == null) {
         await FirebaseFirestore.instance
@@ -126,7 +127,6 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
             .get()
             .then((DocumentSnapshot documentSnapshot) {
           if (documentSnapshot.exists) {
-            print('Document data: ${documentSnapshot.data()}');
             SkillsField = TagsField(
                 suggestionsList:
                     List<String>.from(documentSnapshot['skills'] as List));
@@ -143,7 +143,6 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
             .get()
             .then((DocumentSnapshot documentSnapshot) {
           if (documentSnapshot.exists) {
-            print('Document data: ${documentSnapshot.data()}');
             CategoryField = DropdownField(
               options: List<String>.from(documentSnapshot['interests'] as List),
               textColor: Colors.white,
@@ -577,9 +576,9 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
 
                 ///WORK DESCRIPTION FILED
                 SizedBox(height: 10),
-              Row(
+                Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                         flex: 2,
@@ -622,7 +621,6 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
-
                           ),
                         ),
                       )
@@ -654,7 +652,8 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
 
                 ///OPPORTUNITIES FIELD
                 SizedBox(height: 10),
-                Row(crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
@@ -697,7 +696,6 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
-
                           ),
                         ),
                       )

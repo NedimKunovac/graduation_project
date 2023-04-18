@@ -6,15 +6,17 @@ import 'package:image_picker/image_picker.dart';
 import 'tagField.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:profanity_filter/profanity_filter.dart';
 import 'checkboxTiles.dart';
 import 'flashBar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'updateDictionary.dart';
 
+///Edit profile page, pretty self explanatory
+
 class EditProfilePage extends StatefulWidget {
   EditProfilePage({Key? key, required this.data}) : super(key: key);
 
+  ///Input data map that contains user data
   Map<String, dynamic> data;
 
   @override
@@ -22,6 +24,7 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  ///Controllers, form-key, image and date inputs
   TextEditingController _nameController = TextEditingController();
   TextEditingController _repController = TextEditingController();
   TextEditingController _dobController = TextEditingController();
@@ -30,10 +33,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   final formKey = GlobalKey<FormState>();
   XFile? pickedImage;
-
   DateTime? pickedDate;
 
-  ///Skills Field
+  ///Skills Field and loader
   var SkillsField = null;
 
   getSkillsField() {
@@ -43,7 +45,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       return SkillsField;
   }
 
-  ///Category Field
+  ///Category Field and loader
   var InterestsTiles = null;
 
   getCategoryField() {
@@ -53,7 +55,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
       return InterestsTiles;
   }
 
+  ///Function that passes changed user data to firebase
   Future updateData() async {
+    ///Check if form is valid
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
     if (widget.data['type'] == 2) {
@@ -73,11 +77,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
       }
     }
 
+    ///Pass logic different based on user type
     if (widget.data['type'] == 1) {
       try {
         var imageUrl = null;
         String userReference = widget.data['userID'];
 
+        ///Firebase Storage
         if (pickedImage != null) {
           print('Here');
           Reference referenceRoot = FirebaseStorage.instance.ref();
@@ -89,14 +95,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
           imageUrl = await referenceImageToUpload.getDownloadURL();
         }
 
-
+        ///Firestore
         FirebaseFirestore usersCollection = FirebaseFirestore.instance;
         await usersCollection.collection('Users').doc(userReference!).update({
           'name': _nameController.text.trim(),
           'rep': _repController.text.trim(),
           'profileInfo': _infoController.text.trim(),
           'profilePhotoUrl':
-            imageUrl != null ? imageUrl : widget.data['profilePhotoUrl'],
+              imageUrl != null ? imageUrl : widget.data['profilePhotoUrl'],
           'vatNum': _VATController.text.trim()
         });
         Navigator.pop(context);
@@ -108,26 +114,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
         var imageUrl = null;
         String userReference = widget.data['userID'];
 
+        ///Firebase Storage
         if (pickedImage != null) {
           print('Here');
           Reference referenceRoot = FirebaseStorage.instance.ref();
           Reference referenceDirImages =
-          referenceRoot.child('${userReference}');
+              referenceRoot.child('${userReference}');
           Reference referenceImageToUpload =
-          referenceDirImages.child('profile_photo');
+              referenceDirImages.child('profile_photo');
           await referenceImageToUpload.putFile(File(pickedImage!.path));
           imageUrl = await referenceImageToUpload.getDownloadURL();
         }
 
-
+        ///Firestore
         FirebaseFirestore usersCollection = FirebaseFirestore.instance;
         await usersCollection.collection('Users').doc(userReference!).update({
           'name': _nameController.text.trim(),
           'interests': InterestsTiles.added,
           'profileInfo': _infoController.text.trim(),
-          'dateOfBirth': pickedDate!=null ? Timestamp.fromDate(pickedDate!): widget.data['dateOfBirth'],
+          'dateOfBirth': pickedDate != null
+              ? Timestamp.fromDate(pickedDate!)
+              : widget.data['dateOfBirth'],
           'profilePhotoUrl':
-          imageUrl != null ? imageUrl : widget.data['profilePhotoUrl'],
+              imageUrl != null ? imageUrl : widget.data['profilePhotoUrl'],
           'skills': SkillsField.addedChips
         });
         await updateDictionary().updateSkills(SkillsField.addedChips);
@@ -138,6 +147,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
   }
 
+  ///Init state so inputted values get passed to controllers
   @override
   void initState() {
     super.initState();
@@ -156,6 +166,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    ///Functions that fetch data from Dictionary after page is loaded
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (SkillsField == null && widget.data['type'] == 2) {
         await FirebaseFirestore.instance
@@ -230,7 +241,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Profile Picture
+              /// Profile Picture
               GestureDetector(
                 onTap: () async {
                   pickedImage = await imagePicker.imgPickDialog(context);
@@ -246,17 +257,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
               SizedBox(height: 16.0),
 
-              // Name
-              widget.data['type']==1 ? Text('Company Name'): Text('Name'),
+              /// Name
+              widget.data['type'] == 1 ? Text('Company Name') : Text('Name'),
               TextFormField(
                 obscureText: false,
                 controller: _nameController,
                 autovalidateMode: AutovalidateMode.disabled,
                 validator: (value) => value != null && value.length < 3
-                    ? widget.data['type']==1 ? 'Please enter your company name' : 'Please enter your full name'
+                    ? widget.data['type'] == 1
+                        ? 'Please enter your company name'
+                        : 'Please enter your full name'
                     : null,
                 decoration: InputDecoration(
-                  hintText: widget.data['type']==1 ? 'Enter your company name' : 'Enter your full name',
+                  hintText: widget.data['type'] == 1
+                      ? 'Enter your company name'
+                      : 'Enter your full name',
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.black),
                   ),
@@ -266,32 +281,36 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ),
               ),
 
-              widget.data['rep'] != null ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 16.0),
-                  Text('Representative'),
-                  TextFormField(
-                    obscureText: false,
-                    controller: _repController,
-                    autovalidateMode: AutovalidateMode.disabled,
-                    validator: (value) => value != null && value.length < 3
-                        ? 'Please enter your full name'
-                        : null,
-                    decoration: InputDecoration(
-                      hintText: 'Enter your name',
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
-                    ),
-                  ),
-                ],
-              ): SizedBox.shrink(),
+              /// Representative
+              widget.data['rep'] != null
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 16.0),
+                        Text('Representative'),
+                        TextFormField(
+                          obscureText: false,
+                          controller: _repController,
+                          autovalidateMode: AutovalidateMode.disabled,
+                          validator: (value) =>
+                              value != null && value.length < 3
+                                  ? 'Please enter your full name'
+                                  : null,
+                          decoration: InputDecoration(
+                            hintText: 'Enter your name',
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : SizedBox.shrink(),
 
-
+              /// Date of Birth field
               widget.data['dateOfBirth'] != null
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -353,7 +372,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
               SizedBox(height: 16.0),
 
-              // Profile Info
+              /// Profile Info
               Text('Profile Info'),
               TextFormField(
                 controller: _infoController,
@@ -372,6 +391,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
               SizedBox(height: 16.0),
 
+              ///VAT Number Field
               widget.data['vatNum'] != null
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -400,6 +420,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     )
                   : SizedBox.shrink(),
 
+              /// Skills Field
               widget.data['skills'] != null
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -411,6 +432,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     )
                   : SizedBox.shrink(),
 
+              ///Skills Field
               widget.data['interests'] != null
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -428,7 +450,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
         onPressed: () {
-          print('You pressed me!');
+          print('yamete kudasai');
           updateData();
         },
         child: Icon(Icons.check),

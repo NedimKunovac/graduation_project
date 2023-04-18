@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:profanity_filter/profanity_filter.dart';
 
-///This widget returns a text field where the user can enter tags
+///This file contains two widgets
+///First is TagField, which returns a textField that generated Tags under it
+///Second is RenderTags, which renders the inputted tags
 ///Requires that the suggestions be pre-inputted
 ///Includes profanity check!
 
 class RenderTags extends StatefulWidget {
-  RenderTags({Key? key, required this.addedChips, this.chipColor, this.textStyle}) : super(key: key);
+  RenderTags(
+      {Key? key, required this.addedChips, this.chipColor, this.textStyle})
+      : super(key: key);
 
   ///List of added tags
   List<String> addedChips;
@@ -16,7 +20,6 @@ class RenderTags extends StatefulWidget {
 
   ///Chip inner text color
   TextStyle? textStyle;
-
 
   @override
   State<RenderTags> createState() => _RenderTagsState();
@@ -30,9 +33,13 @@ class _RenderTagsState extends State<RenderTags> {
       chipList.add(
         Padding(
           padding: EdgeInsets.fromLTRB(0, 2, 7, 2),
-          child: Chip(label: Text(widget.addedChips[i].toString(),
-          style: widget.textStyle,),
-          backgroundColor: widget.chipColor,),
+          child: Chip(
+            label: Text(
+              widget.addedChips[i].toString(),
+              style: widget.textStyle,
+            ),
+            backgroundColor: widget.chipColor,
+          ),
         ),
       );
     }
@@ -59,13 +66,12 @@ class ChipObjectData {
 ///TAGS FIELD WIDGET
 ///-----------------------------------------------------------------------------
 class TagsField extends StatefulWidget {
-  TagsField({
-    super.key,
-    required this.suggestionsList,
-    this.chipColor,
-    this.textStyle,
-    this.iconColor
-  });
+  TagsField(
+      {super.key,
+      required this.suggestionsList,
+      this.chipColor,
+      this.textStyle,
+      this.iconColor});
 
   ///Passed suggestions
   List<String> suggestionsList;
@@ -104,9 +110,8 @@ class _TagsFieldState extends State<TagsField> {
         padding: EdgeInsets.fromLTRB(0, 2, 7, 2),
         child: Chip(
           backgroundColor: widget.chipColor,
-          deleteIcon: Icon(Icons.highlight_remove,
-          color: widget.iconColor),
-          label: Text(data.value,style:widget.textStyle),
+          deleteIcon: Icon(Icons.highlight_remove, color: widget.iconColor),
+          label: Text(data.value, style: widget.textStyle),
           onDeleted: () {
             setState(() {
               widget.chipDataList.removeWhere((ChipObjectData entry) {
@@ -140,7 +145,7 @@ class _TagsFieldState extends State<TagsField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ///Acutal form
+        ///Actual form
         Autocomplete<String>(
           optionsBuilder: (TextEditingValue textEditingValue) {
             if (textEditingValue.text == '') {

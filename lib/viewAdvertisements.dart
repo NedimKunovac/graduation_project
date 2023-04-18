@@ -10,23 +10,20 @@ class ViewAdvertisements extends StatefulWidget {
   ///Posts shown are fetched based on this data
   Map<String, dynamic> userData;
 
-  ViewAdvertisements({Key? key, required this.userData})
-      : super(key: key);
+  ViewAdvertisements({Key? key, required this.userData}) : super(key: key);
 
   @override
   State<ViewAdvertisements> createState() => _ViewAdvertisementsState();
 }
 
 class _ViewAdvertisementsState extends State<ViewAdvertisements> {
+  ///Post loading options for volunteers, and first post set
   final List<bool> selectedLoading = <bool>[true, false, false];
-  List<String> loadingTypes = <String>[
-    'By Skills',
-    'By Category',
-    'All'
-  ];
+  List<String> loadingTypes = <String>['By Skills', 'By Category', 'All'];
 
-  loadToggleButtons(){
-    if(widget.userData['type']==2){
+  ///Function that returns toggle buttons if volunteer is logged in.
+  loadToggleButtons() {
+    if (widget.userData['type'] == 2) {
       return Column(
         children: [
           SizedBox(
@@ -38,20 +35,24 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
             color: Colors.transparent,
             child: GridView.count(
               primary: true,
-              crossAxisCount: 3, //set the number of buttons in a row
-              crossAxisSpacing: 20, //set the spacing between the buttons
-              childAspectRatio: 3, //set the width-to-height ratio of the button,
+              crossAxisCount: 3,
+              //set the number of buttons in a row
+              crossAxisSpacing: 20,
+              //set the spacing between the buttons
+              childAspectRatio: 3,
+              //set the width-to-height ratio of the button,
               //>1 is a horizontal rectangle
               children: List.generate(selectedLoading.length, (index) {
                 //using Inkwell widget to create a button
                 return InkWell(
-                    splashColor: Colors.yellow, //the default splashColor is grey
+                    splashColor: Colors.yellow,
+                    //the default splashColor is grey
                     onTap: () {
                       //set the toggle logic
                       setState(() {
                         for (int indexBtn = 0;
-                        indexBtn < selectedLoading.length;
-                        indexBtn++) {
+                            indexBtn < selectedLoading.length;
+                            indexBtn++) {
                           if (indexBtn == index) {
                             selectedLoading[indexBtn] = true;
                           } else {
@@ -63,7 +64,9 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
                     child: Ink(
                       decoration: BoxDecoration(
                         //set the background color of the button when it is selected/ not selected
-                        color: selectedLoading[index] ? Colors.red.shade400: Colors.white,
+                        color: selectedLoading[index]
+                            ? Colors.red.shade400
+                            : Colors.white,
                         // here is where we set the rounded corner
                         borderRadius: BorderRadius.circular(8),
                         //don't forget to set the border,
@@ -71,10 +74,14 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
                         border: Border.all(color: Colors.red),
                       ),
                       child: Center(
-                        child: Text(loadingTypes[index],
-                        style: TextStyle(
-                          color: selectedLoading[index] ? Colors.white: Colors.red.shade400,
-                        ),),
+                        child: Text(
+                          loadingTypes[index],
+                          style: TextStyle(
+                            color: selectedLoading[index]
+                                ? Colors.white
+                                : Colors.red.shade400,
+                          ),
+                        ),
                       ),
                     ));
               }),
@@ -82,34 +89,43 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
           ),
         ],
       );
-    } else return SizedBox.shrink();
-
+    } else {
+      return SizedBox.shrink();
+    }
   }
-
 
   @override
   Widget build(BuildContext context) {
     ///Reference point for posts that changes based on user
     late Stream<QuerySnapshot> _postsStream;
 
-    ///Different post fetching based on user type
-    if(widget.userData['type']==2){
-      if(selectedLoading[0]==true){
+    ///Different post fetching based on user type and selected tab
+
+    ///Volunteer loading
+    if (widget.userData['type'] == 2) {
+      if (selectedLoading[0] == true) {
         _postsStream = FirebaseFirestore.instance
             .collection('Posts')
             .where('requirements', arrayContainsAny: widget.userData['skills'])
             .snapshots();
-      } else if(selectedLoading[1]==true){
+      } else if (selectedLoading[1] == true) {
         _postsStream = FirebaseFirestore.instance
             .collection('Posts')
             .where('category', arrayContainsAny: widget.userData['interests'])
             .snapshots();
-      } else if(selectedLoading[2]==true){
-        _postsStream = FirebaseFirestore.instance.collection('Posts').snapshots();
+      } else if (selectedLoading[2] == true) {
+        _postsStream =
+            FirebaseFirestore.instance.collection('Posts').snapshots();
       }
-    } else if (widget.userData['type'] == 0) {
+    } else
+
+    ///Admin loading
+    if (widget.userData['type'] == 0) {
       _postsStream = FirebaseFirestore.instance.collection('Posts').snapshots();
-    } else {
+    }
+
+    ///Company loading
+    else {
       print(widget.userData['type']);
       _postsStream = FirebaseFirestore.instance
           .collection('Posts')
@@ -117,6 +133,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
           .snapshots();
     }
 
+    ///StreamBuilder so posts are always up to date
     return StreamBuilder<QuerySnapshot>(
       stream: _postsStream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -141,22 +158,36 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
                   Map<String, dynamic> data =
                       document.data()! as Map<String, dynamic>;
                   data["postID"] = document.id;
-                  if(widget.userData['type']==2 && data['applicationSubmitted']!=null){
+                  if (widget.userData['type'] == 2 &&
+                      data['applicationSubmitted'] != null) {
                     bool toggle = false;
-                    for (var i=0; i < data['applicationSubmitted'].length; i++) {
-                      if(data['applicationSubmitted'][i]==FirebaseAuth.instance.currentUser?.uid){
-                        toggle=true;
+                    for (var i = 0;
+                        i < data['applicationSubmitted'].length;
+                        i++) {
+                      if (data['applicationSubmitted'][i] ==
+                          FirebaseAuth.instance.currentUser?.uid) {
+                        toggle = true;
                         break;
                       }
                     }
-                    if(!toggle){
+                    if (!toggle) {
                       return ListBody(
-                        children: [Advertisement(data: data,userType: widget.userData['type'], accepted: false)],
+                        children: [
+                          Advertisement(
+                              data: data,
+                              userType: widget.userData['type'],
+                              accepted: false)
+                        ],
                       );
                     }
-                  } else{
+                  } else {
                     return ListBody(
-                      children: [Advertisement(data: data,userType: widget.userData['type'] , accepted: false)],
+                      children: [
+                        Advertisement(
+                            data: data,
+                            userType: widget.userData['type'],
+                            accepted: false)
+                      ],
                     );
                   }
 

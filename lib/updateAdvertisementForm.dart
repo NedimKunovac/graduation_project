@@ -35,7 +35,6 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
   final workDescriptionController = TextEditingController();
   final opportunitiesController = TextEditingController();
 
-
   ///Category Field
   var CategoryField = null;
 
@@ -115,6 +114,8 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
 
   @override
   Widget build(BuildContext context) {
+    ///There is a good reason on why I didn't use init state here
+    ///but 4 weeks later, I cannot truly remember it.
     if (!toggle) {
       postTitleController.text = widget.data['title'];
       pickedDueDate = DateTime.fromMillisecondsSinceEpoch(
@@ -137,6 +138,7 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
       toggle = true;
     }
 
+    ///Functions that fetch data from Dictionary after page is loaded
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (SkillsField == null) {
         await FirebaseFirestore.instance
@@ -679,7 +681,6 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
-
                           ),
                         ),
                       )
@@ -754,7 +755,6 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
-
                           ),
                         ),
                       )

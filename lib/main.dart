@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
           ///Login page has routing to dashboard if user is already logged in
           return LoginPage(passedEmail: '', newAccount: false);
         } else
+
           ///Routes to first page
           return SignOrLog();
       },

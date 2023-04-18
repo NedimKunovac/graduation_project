@@ -144,6 +144,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
 
   @override
   Widget build(BuildContext context) {
+    ///Functions that fetch data from Dictionary after page is loaded
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (SkillsField == null) {
         await FirebaseFirestore.instance
@@ -154,13 +155,12 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
           if (documentSnapshot.exists) {
             print('Document data: ${documentSnapshot.data()}');
             SkillsField = TagsField(
-                suggestionsList:
-                    List<String>.from(documentSnapshot['skills'] as List),
-            chipColor: Colors.blue,
-            iconColor: Colors.white,
-            textStyle: TextStyle(
-              color: Colors.white
-            ),);
+              suggestionsList:
+                  List<String>.from(documentSnapshot['skills'] as List),
+              chipColor: Colors.blue,
+              iconColor: Colors.white,
+              textStyle: TextStyle(color: Colors.white),
+            );
             setState(() {});
           } else {
             print('Document does not exist on the database');
@@ -176,7 +176,8 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
           if (documentSnapshot.exists) {
             print('Document data: ${documentSnapshot.data()}');
             InterestsTiles = CheckboxTiles(
-              tileValues: List<String>.from(documentSnapshot['interests'] as List),
+              tileValues:
+                  List<String>.from(documentSnapshot['interests'] as List),
             );
             setState(() {});
           } else {
