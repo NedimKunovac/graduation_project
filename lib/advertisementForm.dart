@@ -577,9 +577,9 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
 
                 ///WORK DESCRIPTION FILED
                 SizedBox(height: 10),
-                Row(
+              Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                         flex: 2,
@@ -605,7 +605,8 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                                     ? 'Please enter a long description \n'
                                     : null,
                             maxLines: null,
-                            expands: true,
+                            keyboardType: TextInputType.multiline,
+                            style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                               errorStyle: TextStyle(
                                 color: Colors.white,
@@ -621,10 +622,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
+
                           ),
                         ),
                       )
@@ -656,8 +654,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
 
                 ///OPPORTUNITIES FIELD
                 SizedBox(height: 10),
-                Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                Row(crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
@@ -683,7 +680,8 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                                     : null,
                             controller: opportunitiesController,
                             maxLines: null,
-                            expands: true,
+                            keyboardType: TextInputType.multiline,
+                            style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                               errorStyle: TextStyle(
                                 color: Colors.white,
@@ -699,10 +697,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
+
                           ),
                         ),
                       )

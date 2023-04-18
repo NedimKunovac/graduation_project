@@ -127,16 +127,19 @@ class ProfilePage extends StatelessWidget {
                           Image(
                             image: NetworkImage(
                                 'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
-                            height: 80,
-                            width: 90,
+                            height: 70,
+                            width: 80,
                           ),
                           Expanded(
                             child: Container(
                               margin: EdgeInsets.only(
                                   left: 8.0, top: 8.0, right: 8.0),
                               child: Text(
-                                'This is an opportunity that you will not miss. IAHIHIHIHIHIHIHIHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnHHH',
-                                style: TextStyle(color: Colors.white),
+                                'Name of the company',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
                               ),
                             ),
                           ),
@@ -158,16 +161,17 @@ class ProfilePage extends StatelessWidget {
                           Image(
                             image: NetworkImage(
                                 'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
-                            height: 80,
-                            width: 90,
+                            height: 70,
+                            width: 80,
                           ),
                           Expanded(
                             child: Container(
                               margin: EdgeInsets.only(
                                   left: 8.0, top: 8.0, right: 8.0),
                               child: Text(
-                                'This is an opportunity that you will not miss. IAHIHIHIHIHIHIHIHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnHHH',
-                                style: TextStyle(color: Colors.white),
+                                'Name of the company',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
                               ),
                             ),
                           ),
@@ -189,16 +193,17 @@ class ProfilePage extends StatelessWidget {
                           Image(
                             image: NetworkImage(
                                 'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
-                            height: 80,
-                            width: 90,
+                            height: 70,
+                            width: 80,
                           ),
                           Expanded(
                             child: Container(
                               margin: EdgeInsets.only(
                                   left: 8.0, top: 8.0, right: 8.0),
                               child: Text(
-                                'This is an opportunity that you will not miss. IAHIHIHIHIHIHIHIHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnHHH',
-                                style: TextStyle(color: Colors.white),
+                                'Name of the company',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
                               ),
                             ),
                           ),
@@ -220,16 +225,17 @@ class ProfilePage extends StatelessWidget {
                           Image(
                             image: NetworkImage(
                                 'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
-                            height: 80,
-                            width: 90,
+                            height: 70,
+                            width: 80,
                           ),
                           Expanded(
                             child: Container(
                               margin: EdgeInsets.only(
                                   left: 8.0, top: 8.0, right: 8.0),
                               child: Text(
-                                'This is an opportunity that you will not miss. IAHIHIHIHIHIHIHIHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnHHH',
-                                style: TextStyle(color: Colors.white),
+                                'Name of the company',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
                               ),
                             ),
                           ),
@@ -256,27 +262,61 @@ class ProfilePage extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.red,
                         border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(25.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                       margin: EdgeInsets.only(right: 8.0),
                       width: 400.0,
-                      height: 200.0,
+                      height: 80.0,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image(
+                              image: NetworkImage(
+                                  'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
+                              height: 50,
+                              width: 70,
+                            ),
+                            Expanded(
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    left: 40.0, right: 8.0),
+                                child: Text(
+                                  'Name of the company',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    SizedBox(height: 16.0),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      margin: EdgeInsets.only(right: 8.0),
+                      width: 400.0,
+                      height: 80.0,
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Image(
                             image: NetworkImage(
                                 'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
-                            height: 80,
-                            width: 90,
+                            height: 50,
+                            width: 70,
                           ),
                           Expanded(
                             child: Container(
                               margin: EdgeInsets.only(
-                                  left: 8.0, top: 8.0, right: 8.0),
+                                  left: 40.0, right: 8.0),
                               child: Text(
-                                'This is an opportunity that you will not miss. IAHIHIHIHIHIHIHIHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnHHH',
-                                style: TextStyle(color: Colors.white),
+                                'Name of the company',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
                               ),
                             ),
                           ),
@@ -288,27 +328,28 @@ class ProfilePage extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.red,
                         border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(25.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                       margin: EdgeInsets.only(right: 8.0),
                       width: 400.0,
-                      height: 200.0,
+                      height: 80.0,
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Image(
                             image: NetworkImage(
                                 'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
-                            height: 80,
-                            width: 90,
+                            height: 50,
+                            width: 70,
                           ),
                           Expanded(
                             child: Container(
                               margin: EdgeInsets.only(
-                                  left: 8.0, top: 8.0, right: 8.0),
+                                  left: 40.0, right: 8.0),
                               child: Text(
-                                'This is an opportunity that you will not miss. IAHIHIHIHIHIHIHIHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnHHH',
-                                style: TextStyle(color: Colors.white),
+                                'Name of the company',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
                               ),
                             ),
                           ),
@@ -320,59 +361,28 @@ class ProfilePage extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.red,
                         border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(25.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                       margin: EdgeInsets.only(right: 8.0),
                       width: 400.0,
-                      height: 200.0,
+                      height: 80.0,
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Image(
                             image: NetworkImage(
-                                'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
-                            height: 80,
-                            width: 90,
+                                'https://itkonekt.com/media/2022/09/Comtrade_transparent.png'),
+                            height: 50,
+                            width: 70,
                           ),
                           Expanded(
                             child: Container(
                               margin: EdgeInsets.only(
-                                  left: 8.0, top: 8.0, right: 8.0),
+                                  left: 40.0, right: 8.0),
                               child: Text(
-                                'This is an opportunity that you will not miss. IAHIHIHIHIHIHIHIHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnHHH',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 16.0),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                      margin: EdgeInsets.only(right: 8.0),
-                      width: 400.0,
-                      height: 200.0,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image(
-                            image: NetworkImage(
-                                'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
-                            height: 80,
-                            width: 90,
-                          ),
-                          Expanded(
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                  left: 8.0, top: 8.0, right: 8.0),
-                              child: Text(
-                                'This is an opportunity that you will not miss. IAHIHIHIHIHIHIHIHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnHHH',
-                                style: TextStyle(color: Colors.white),
+                                'Name of the company',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
                               ),
                             ),
                           ),
@@ -382,8 +392,6 @@ class ProfilePage extends StatelessWidget {
                   ],
                 ),
               ),
-
-
             ],
           ),
         ),
