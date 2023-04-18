@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'tagField.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   Map<String, dynamic> data;
 
   ProfilePage({Key? key, required this.data}) : super(key: key);
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
@@ -19,22 +26,22 @@ class ProfilePage extends StatelessWidget {
             children: <Widget>[
               CircleAvatar(
                 radius: 60.0,
-                backgroundImage: NetworkImage(data['profilePhotoUrl']),
+                backgroundImage: NetworkImage(widget.data['profilePhotoUrl']),
               ),
               SizedBox(height: 16.0),
               Text(
-                data['name'],
+                widget.data['name'],
                 style: TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              data['dateOfBirth'] != null
+              widget.data['dateOfBirth'] != null
                   ? Column(
                       children: [
                         SizedBox(height: 16.0),
                         Text(
-                          'Age: ${(DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(data['dateOfBirth'].seconds * 1000)).inDays / 365).round()}',
+                          'Age: ${(DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(widget.data['dateOfBirth'].seconds * 1000)).inDays / 365).round()}',
                           style: TextStyle(
                             fontSize: 16.0,
                           ),
@@ -42,12 +49,12 @@ class ProfilePage extends StatelessWidget {
                       ],
                     )
                   : SizedBox.shrink(),
-              data['dateOfBirth'] != null
+              widget.data['dateOfBirth'] != null
                   ? Column(
                       children: [
                         SizedBox(height: 8.0),
                         Text(
-                          'Date of birth: ${DateFormat('dd.mm.yyyy.').format(DateTime.fromMillisecondsSinceEpoch(data['dateOfBirth'].seconds * 1000))}',
+                          'Date of birth: ${DateFormat.yMMMMd().format(DateTime.fromMillisecondsSinceEpoch(widget.data['dateOfBirth'].seconds * 1000))}',
                           style: TextStyle(
                             fontSize: 16.0,
                           ),
@@ -55,7 +62,7 @@ class ProfilePage extends StatelessWidget {
                       ],
                     )
                   : SizedBox.shrink(),
-              data['profileInfo'] != null
+              widget.data['profileInfo'] != null
                   ? Column(
                       children: [
                         SizedBox(height: 16.0),
@@ -76,7 +83,7 @@ class ProfilePage extends StatelessWidget {
                           padding: EdgeInsets.all(8.0),
                           child: SingleChildScrollView(
                             child: Text(
-                              data['profileInfo'].toString(),
+                              widget.data['profileInfo'].toString(),
                               textAlign: TextAlign.justify,
                               style: TextStyle(color: Colors.white),
                             ),
@@ -85,7 +92,7 @@ class ProfilePage extends StatelessWidget {
                       ],
                     )
                   : SizedBox.shrink(),
-              data['skills'] != null
+              widget.data['skills'] != null
                   ? Column(
                       children: [
                         SizedBox(height: 16.0),
@@ -98,8 +105,8 @@ class ProfilePage extends StatelessWidget {
                         ),
                         SizedBox(height: 8.0),
                         RenderTags(
-                            addedChips:
-                                List<String>.from(data['skills'] as List)),
+                            addedChips: List<String>.from(
+                                widget.data['skills'] as List)),
                       ],
                     )
                   : SizedBox.shrink(),

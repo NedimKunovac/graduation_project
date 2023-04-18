@@ -9,6 +9,8 @@ import 'package:intl/intl.dart';
 import 'package:profanity_filter/profanity_filter.dart';
 import 'checkboxTiles.dart';
 import 'flashBar.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'updateDictionary.dart';
 
 class EditProfilePage extends StatefulWidget {
   EditProfilePage({Key? key, required this.data}) : super(key: key);
@@ -21,6 +23,7 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController _nameController = TextEditingController();
+  TextEditingController _repController = TextEditingController();
   TextEditingController _dobController = TextEditingController();
   TextEditingController _infoController = TextEditingController();
   TextEditingController _VATController = TextEditingController();
@@ -50,11 +53,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
       return InterestsTiles;
   }
 
-
   Future updateData() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
-    if(widget.data['type']==2){
+    if (widget.data['type'] == 2) {
       if (SkillsField.addedChips.length < 3) {
         flashBar.showBasicsFlashFailed(
             duration: Duration(seconds: 3),
@@ -62,7 +64,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             message: 'Please enter at least three skills');
         return;
       }
-      if (InterestsTiles.added.length < 1){
+      if (InterestsTiles.added.length < 1) {
         flashBar.showBasicsFlashFailed(
             duration: Duration(seconds: 3),
             context: context,
@@ -71,39 +73,69 @@ class _EditProfilePageState extends State<EditProfilePage> {
       }
     }
 
+    if (widget.data['type'] == 1) {
+      try {
+        var imageUrl = null;
+        String userReference = widget.data['userID'];
 
-    // try {
-    //   String? userReference = FirebaseAuth.instance.currentUser?.uid;
-    //   userReference.toString();
-    //
-    //   Reference referenceRoot = FirebaseStorage.instance.ref();
-    //   Reference referenceDirImages = referenceRoot.child('${userReference}');
-    //   Reference referenceImageToUpload =
-    //   referenceDirImages.child('profile_photo');
-    //   await referenceImageToUpload.putFile(File(pickedImage!.path));
-    //   var imageUrl = await referenceImageToUpload.getDownloadURL();
-    //
-    //   FirebaseFirestore usersCollection = FirebaseFirestore.instance;
-    //   await usersCollection.collection('Users').doc(userReference!).set({
-    //     'name': fullNameController.text.trim(),
-    //     'type': 2,
-    //     'interests': InterestsTiles.added,
-    //     'dateOfBirth': Timestamp.fromDate(pickedDate!),
-    //     'profilePhotoUrl': imageUrl,
-    //     'skills': SkillsField.addedChips
-    //   });
-    //   await updateDictionary().updateSkills(SkillsField.addedChips);
-    //   await FirebaseAuth.instance.signOut();
-    //   await Navigator.pushReplacement(
-    //       context,
-    //       MaterialPageRoute(
-    //           builder: (context) => LoginPage(
-    //               passedEmail: emailController.text, newAccount: true)));
-    //
-    // } on FirebaseException catch (e) {
-    //   print(e);
-    // }
+        if (pickedImage != null) {
+          print('Here');
+          Reference referenceRoot = FirebaseStorage.instance.ref();
+          Reference referenceDirImages =
+              referenceRoot.child('${userReference}');
+          Reference referenceImageToUpload =
+              referenceDirImages.child('profile_photo');
+          await referenceImageToUpload.putFile(File(pickedImage!.path));
+          imageUrl = await referenceImageToUpload.getDownloadURL();
+        }
 
+
+        FirebaseFirestore usersCollection = FirebaseFirestore.instance;
+        await usersCollection.collection('Users').doc(userReference!).update({
+          'name': _nameController.text.trim(),
+          'rep': _repController.text.trim(),
+          'profileInfo': _infoController.text.trim(),
+          'profilePhotoUrl':
+            imageUrl != null ? imageUrl : widget.data['profilePhotoUrl'],
+          'vatNum': _VATController.text.trim()
+        });
+        Navigator.pop(context);
+      } on FirebaseException catch (e) {
+        print(e);
+      }
+    } else {
+      try {
+        var imageUrl = null;
+        String userReference = widget.data['userID'];
+
+        if (pickedImage != null) {
+          print('Here');
+          Reference referenceRoot = FirebaseStorage.instance.ref();
+          Reference referenceDirImages =
+          referenceRoot.child('${userReference}');
+          Reference referenceImageToUpload =
+          referenceDirImages.child('profile_photo');
+          await referenceImageToUpload.putFile(File(pickedImage!.path));
+          imageUrl = await referenceImageToUpload.getDownloadURL();
+        }
+
+
+        FirebaseFirestore usersCollection = FirebaseFirestore.instance;
+        await usersCollection.collection('Users').doc(userReference!).update({
+          'name': _nameController.text.trim(),
+          'interests': InterestsTiles.added,
+          'profileInfo': _infoController.text.trim(),
+          'dateOfBirth': pickedDate!=null ? Timestamp.fromDate(pickedDate!): widget.data['dateOfBirth'],
+          'profilePhotoUrl':
+          imageUrl != null ? imageUrl : widget.data['profilePhotoUrl'],
+          'skills': SkillsField.addedChips
+        });
+        await updateDictionary().updateSkills(SkillsField.addedChips);
+        Navigator.pop(context);
+      } on FirebaseException catch (e) {
+        print(e);
+      }
+    }
   }
 
   @override
@@ -111,10 +143,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.initState();
     // Set default values for text controllers
     _nameController.text = widget.data['name'];
-    _dobController.text = widget.data['dateOfBirth']!=null ? DateFormat('yyyy-mm-dd').format(DateTime.fromMillisecondsSinceEpoch(
-        widget.data['dateOfBirth'].seconds * 1000)) : '';
+    _repController.text = widget.data['rep'] != null ? widget.data['rep'] : '';
+    _dobController.text = widget.data['dateOfBirth'] != null
+        ? DateFormat('yyyy-MM-dd').format(DateTime.fromMillisecondsSinceEpoch(
+            widget.data['dateOfBirth'].seconds * 1000))
+        : '';
     _infoController.text =
-        widget.data['description'] != null ? widget.data['description'] : '';
+        widget.data['profileInfo'] != null ? widget.data['profileInfo'] : '';
     _VATController.text =
         widget.data['vatNum'] != null ? widget.data['vatNum'] : '';
   }
@@ -122,7 +157,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (SkillsField == null && widget.data['type']==2) {
+      if (SkillsField == null && widget.data['type'] == 2) {
         await FirebaseFirestore.instance
             .collection('Dictionary')
             .doc('Skills')
@@ -158,7 +193,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           }
         });
       }
-      if (InterestsTiles == null && widget.data['type']==2) {
+      if (InterestsTiles == null && widget.data['type'] == 2) {
         await FirebaseFirestore.instance
             .collection('Dictionary')
             .doc('Interests')
@@ -170,7 +205,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
               tileValues:
                   List<String>.from(documentSnapshot['interests'] as List),
             );
-            InterestsTiles.added = List<String>.from(widget.data['interests'] as List);
+            InterestsTiles.added =
+                List<String>.from(widget.data['interests'] as List);
             setState(() {});
           } else {
             print('Document does not exist on the database');
@@ -201,7 +237,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   setState(() {});
                 },
                 child: CircleAvatar(
-                  backgroundColor: Colors.transparent,
+                    backgroundColor: Colors.transparent,
                     radius: 60,
                     backgroundImage: pickedImage == null
                         ? NetworkImage(widget.data['profilePhotoUrl'])
@@ -211,16 +247,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
               SizedBox(height: 16.0),
 
               // Name
-              Text('Name'),
+              widget.data['type']==1 ? Text('Company Name'): Text('Name'),
               TextFormField(
                 obscureText: false,
                 controller: _nameController,
                 autovalidateMode: AutovalidateMode.disabled,
                 validator: (value) => value != null && value.length < 3
-                    ? 'Please enter your full name'
+                    ? widget.data['type']==1 ? 'Please enter your company name' : 'Please enter your full name'
                     : null,
                 decoration: InputDecoration(
-                  hintText: 'Enter your name',
+                  hintText: widget.data['type']==1 ? 'Enter your company name' : 'Enter your full name',
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.black),
                   ),
@@ -229,6 +265,32 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                 ),
               ),
+
+              widget.data['rep'] != null ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 16.0),
+                  Text('Representative'),
+                  TextFormField(
+                    obscureText: false,
+                    controller: _repController,
+                    autovalidateMode: AutovalidateMode.disabled,
+                    validator: (value) => value != null && value.length < 3
+                        ? 'Please enter your full name'
+                        : null,
+                    decoration: InputDecoration(
+                      hintText: 'Enter your name',
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                    ),
+                  ),
+                ],
+              ): SizedBox.shrink(),
+
 
               widget.data['dateOfBirth'] != null
                   ? Column(
@@ -321,7 +383,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           keyboardType: TextInputType.number,
                           autovalidateMode: AutovalidateMode.disabled,
                           validator: (value) => value != null &&
-                              value.length != 12
+                                  value.length != 12
                               ? 'Please enter a proper VAT Number \nA VAT Number contains 12 numbers'
                               : null,
                           decoration: InputDecoration(
