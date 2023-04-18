@@ -133,7 +133,10 @@ class _AdvertisementState extends State<Advertisement> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         RenderTags(addedChips:List<String>.from(
-                            widget.data['requirements'] as List)),
+                            widget.data['requirements'] as List),
+                        chipColor: Colors.green, textStyle: TextStyle(
+                            color: Colors.white,
+                          ),),
                       ],
                     ),
                   ],

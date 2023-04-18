@@ -148,7 +148,12 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
             print('Document data: ${documentSnapshot.data()}');
             SkillsField = TagsField(
                 suggestionsList:
-                    List<String>.from(documentSnapshot['skills'] as List));
+                    List<String>.from(documentSnapshot['skills'] as List),
+            chipColor: Colors.blue,
+            iconColor: Colors.white,
+            textStyle: TextStyle(
+              color: Colors.white
+            ),);
             setState(() {});
           } else {
             print('Document does not exist on the database');

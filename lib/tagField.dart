@@ -6,10 +6,17 @@ import 'package:profanity_filter/profanity_filter.dart';
 ///Includes profanity check!
 
 class RenderTags extends StatefulWidget {
-  RenderTags({Key? key, required this.addedChips}) : super(key: key);
+  RenderTags({Key? key, required this.addedChips, this.chipColor, this.textStyle}) : super(key: key);
 
   ///List of added tags
   List<String> addedChips;
+
+  ///Chip background color
+  Color? chipColor;
+
+  ///Chip inner text color
+  TextStyle? textStyle;
+
 
   @override
   State<RenderTags> createState() => _RenderTagsState();
@@ -21,7 +28,12 @@ class _RenderTagsState extends State<RenderTags> {
     List<Widget> chipList = <Widget>[];
     for (var i = 0; i < widget.addedChips.length; i++) {
       chipList.add(
-        Chip(label: Text(widget.addedChips[i].toString())),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 2, 7, 2),
+          child: Chip(label: Text(widget.addedChips[i].toString(),
+          style: widget.textStyle,),
+          backgroundColor: widget.chipColor,),
+        ),
       );
     }
     return chipList;
@@ -50,10 +62,22 @@ class TagsField extends StatefulWidget {
   TagsField({
     super.key,
     required this.suggestionsList,
+    this.chipColor,
+    this.textStyle,
+    this.iconColor
   });
 
   ///Passed suggestions
   List<String> suggestionsList;
+
+  ///Chip background color
+  Color? chipColor;
+
+  ///Chip inner text color
+  TextStyle? textStyle;
+
+  ///Icon colors
+  Color? iconColor;
 
   ///List of chip data objects so it can be iterated
   List<ChipObjectData> chipDataList = <ChipObjectData>[];
@@ -77,7 +101,10 @@ class _TagsFieldState extends State<TagsField> {
   Iterable<Widget> get actorWidgets {
     return widget.chipDataList.map((ChipObjectData data) {
       return Chip(
-        label: Text(data.value),
+        backgroundColor: widget.chipColor,
+        deleteIcon: Icon(Icons.highlight_remove,
+        color: widget.iconColor),
+        label: Text(data.value,style:widget.textStyle),
         onDeleted: () {
           setState(() {
             widget.chipDataList.removeWhere((ChipObjectData entry) {
