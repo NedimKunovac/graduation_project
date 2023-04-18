@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+import 'tagField.dart';
+
 
 class ProfilePage extends StatelessWidget {
   Map<String, dynamic> data;
@@ -28,114 +30,75 @@ class ProfilePage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 16.0),
-              Text(
-                //'Age: ${(DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(data['dateOfBirth'].seconds * 1000)).inDays/365).round()}',
-                'Age: TODO',
-                style: TextStyle(
-                  fontSize: 16.0,
-                ),
-              ),
-              SizedBox(height: 8.0),
-              Text(
-                //'Date of birth: ${DateFormat('dd.mm.yyyy.').format(DateTime.fromMillisecondsSinceEpoch(data['dateOfBirth'].seconds * 1000))}',
-                'Date of birth: TODO',
-                style: TextStyle(
-                  fontSize: 16.0,
-                ),
-              ),
-              SizedBox(height: 16.0),
-              Text(
-                'Profile info:',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 5.0),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                padding: EdgeInsets.all(8.0),
-                child: SingleChildScrollView(
-                  child: Text(
-                    'Hi, I\'m a free-spirited adventurer with a passion for exploring the great outdoors. I love hiking, camping, and discovering hidden gems off the beaten path. When I\'m not out exploring, you can find me indulging in my other love: cooking up a storm in the kitchen. I\'m always up for new experiences and meeting interesting people along the way!',
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-              SizedBox(height: 16.0),
-              Text(
-                'Skills:',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 8.0),
-              Wrap(
-                children: <Widget>[
-                  Chip(
-                    label: Text(
-                      'Skill 1 ',
-                      style: TextStyle(color: Colors.white),
+
+
+              data['dateOfBirth']!=null ? Column(
+                children: [
+                  SizedBox(height: 16.0),
+                  Text(
+                   'Age: ${(DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(data['dateOfBirth'].seconds * 1000)).inDays/365).round()}',
+                     style: TextStyle(
+                      fontSize: 16.0,
                     ),
-                    backgroundColor: Colors.red,
-                  ),
-                  SizedBox(width: 2.0),
-                  Chip(
-                    label: Text(
-                      'Skill 2 ',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.red,
-                  ),
-                  SizedBox(width: 2.0),
-                  Chip(
-                    label: Text(
-                      'Skill 3 ',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.red,
-                  ),
-                  SizedBox(width: 2.0),
-                  Chip(
-                    label: Text(
-                      'Skill 4 ',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.red,
-                  ),
-                  SizedBox(width: 2.0),
-                  Chip(
-                    label: Text(
-                      'Skill 5 ',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.red,
-                  ),
-                  SizedBox(width: 2.0),
-                  Chip(
-                    label: Text(
-                      'Skiiiiiiiiiiiiiiiiiiiill 6 ',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.red,
-                  ),
-                  SizedBox(width: 2.0),
-                  Chip(
-                    label: Text(
-                      'blbaaaaaaaaaaaaa ',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.red,
                   ),
                 ],
-              ),
+              ): SizedBox.shrink(),
+
+              data['dateOfBirth']!=null ? Column(
+                children: [
+                  SizedBox(height: 8.0),
+                  Text(
+                    'Date of birth: ${DateFormat('dd.mm.yyyy.').format(DateTime.fromMillisecondsSinceEpoch(data['dateOfBirth'].seconds * 1000))}',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ],
+              ) : SizedBox.shrink(),
+              data['profileInfo']!=null ? Column(
+                children: [
+                  SizedBox(height: 16.0),
+                  Text(
+                    'Profile info:',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 5.0),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    padding: EdgeInsets.all(8.0),
+                    child: SingleChildScrollView(
+                      child: Text(
+                        data['profileInfo'].toString(),
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
+              ): SizedBox.shrink(),
+
+              data['skills']!=null ? Column(
+                children: [
+                  SizedBox(height: 16.0),
+                  Text(
+                    'Skills:',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8.0),
+                  RenderTags(addedChips: List<String>.from(data['skills'] as List)),
+                ],
+              ): SizedBox.shrink(),
+
               SizedBox(height: 16.0),
               Text(
                 'Active engagement:',
