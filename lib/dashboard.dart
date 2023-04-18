@@ -45,7 +45,7 @@ class _DashboardState extends State<Dashboard> {
           onSelected: (result) {
             // Do something when an option is selected
             if (result == "Edit Profile") {
-              Navigator.push(context,MaterialPageRoute(builder: (context) => EditProfilePage()));
+              Navigator.push(context,MaterialPageRoute(builder: (context) => EditProfilePage(data: data)));
             } else if (result == "Logout") {
               showDialog<String>(
                 context: context,

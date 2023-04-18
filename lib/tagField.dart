@@ -100,25 +100,28 @@ class _TagsFieldState extends State<TagsField> {
   ///Function that generates the chip tag widget things
   Iterable<Widget> get actorWidgets {
     return widget.chipDataList.map((ChipObjectData data) {
-      return Chip(
-        backgroundColor: widget.chipColor,
-        deleteIcon: Icon(Icons.highlight_remove,
-        color: widget.iconColor),
-        label: Text(data.value,style:widget.textStyle),
-        onDeleted: () {
-          setState(() {
-            widget.chipDataList.removeWhere((ChipObjectData entry) {
-              if (entry.value == data.value) {
-                print('You removed ${entry.value}');
-                widget.addedChips.remove(data.value);
-                widget.suggestions.add(data.value);
-                return true;
-              } else {
-                return false;
-              }
+      return Padding(
+        padding: EdgeInsets.fromLTRB(0, 2, 7, 2),
+        child: Chip(
+          backgroundColor: widget.chipColor,
+          deleteIcon: Icon(Icons.highlight_remove,
+          color: widget.iconColor),
+          label: Text(data.value,style:widget.textStyle),
+          onDeleted: () {
+            setState(() {
+              widget.chipDataList.removeWhere((ChipObjectData entry) {
+                if (entry.value == data.value) {
+                  print('You removed ${entry.value}');
+                  widget.addedChips.remove(data.value);
+                  widget.suggestions.add(data.value);
+                  return true;
+                } else {
+                  return false;
+                }
+              });
             });
-          });
-        },
+          },
+        ),
       );
     });
   }
@@ -135,6 +138,7 @@ class _TagsFieldState extends State<TagsField> {
       widget.suggestions = widget.suggestionsList;
     }
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ///Acutal form
         Autocomplete<String>(

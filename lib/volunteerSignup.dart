@@ -98,6 +98,13 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
           message: 'Please enter at least three skills');
       return;
     }
+    if (InterestsTiles.added.length < 1) {
+      flashBar.showBasicsFlashFailed(
+          duration: Duration(seconds: 3),
+          context: context,
+          message: 'Please enter at least one interest');
+      return;
+    }
 
     if (await addLoginInfo()) {
       try {

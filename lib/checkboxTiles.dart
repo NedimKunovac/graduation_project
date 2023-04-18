@@ -5,7 +5,7 @@ class CheckboxTiles extends StatefulWidget {
 
   List<String>? tileValues;
 
-  List<String> added = <String>[];
+  List<String>? added = <String>[];
 
   @override
   State<CheckboxTiles> createState() => _CheckboxTilesState();
@@ -17,7 +17,9 @@ class _CheckboxTilesState extends State<CheckboxTiles> {
     List<Widget> tiles = <Widget>[];
     if(checked.isEmpty){
       for (int i = 0; i < widget.tileValues!.length; i++)
-        checked.add(false);
+        if(widget.added!.isNotEmpty && widget.added!.contains(widget.tileValues![i])){
+          checked.add(true);
+        } else checked.add(false);
     }
 
     for (int i = 0; i < widget.tileValues!.length; i++) {
@@ -29,9 +31,9 @@ class _CheckboxTilesState extends State<CheckboxTiles> {
           setState(() {
             checked[i] = value!;
             if(value){
-              widget.added.add(widget.tileValues![i]);
+              widget.added!.add(widget.tileValues![i]);
             } else {
-              widget.added.remove(widget.tileValues![i]);
+              widget.added!.remove(widget.tileValues![i]);
             }
           });
         },
