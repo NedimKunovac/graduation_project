@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flash/flash.dart';
 
-///Flashbar that pops up on the bottom of the page
+///Flash bar that pops up on the bottom of the page
 ///Mostly used for errors
 ///Two functions showBasicsFlashSuccessful[Green] and showBasicsFlashFailed showBasicsFlashFailed[Red]
 
@@ -19,7 +19,7 @@ class flashBar {
           backgroundColor: Colors.red,
           controller: controller,
           behavior: flashStyle,
-          position: FlashPosition.bottom,
+          position: FlashPosition.top,
           boxShadows: kElevationToShadow[4],
           horizontalDismissDirection: HorizontalDismissDirection.horizontal,
           child: FlashBar(

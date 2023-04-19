@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+import '../widgets/tag_field.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   Map<String, dynamic> data;
 
   ProfilePage({Key? key, required this.data}) : super(key: key);
 
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,124 +25,116 @@ class ProfilePage extends StatelessWidget {
             children: <Widget>[
               CircleAvatar(
                 radius: 60.0,
-                backgroundImage: NetworkImage(data['profilePhotoUrl']),
+                backgroundImage: NetworkImage(widget.data['profilePhotoUrl']),
               ),
               SizedBox(height: 16.0),
               Text(
-                data['name'],
+                widget.data['name'],
                 style: TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 16.0),
-              Text(
-                //'Age: ${(DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(data['dateOfBirth'].seconds * 1000)).inDays/365).round()}',
-                'Age: TODO',
-                style: TextStyle(
-                  fontSize: 16.0,
-                ),
-              ),
-              SizedBox(height: 8.0),
-              Text(
-                //'Date of birth: ${DateFormat('dd.mm.yyyy.').format(DateTime.fromMillisecondsSinceEpoch(data['dateOfBirth'].seconds * 1000))}',
-                'Date of birth: TODO',
-                style: TextStyle(
-                  fontSize: 16.0,
-                ),
-              ),
-              SizedBox(height: 16.0),
-              Text(
-                'Profile info:',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 5.0),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                padding: EdgeInsets.all(8.0),
-                child: SingleChildScrollView(
-                  child: Text(
-                    'Hi, I\'m a free-spirited adventurer with a passion for exploring the great outdoors. I love hiking, camping, and discovering hidden gems off the beaten path. When I\'m not out exploring, you can find me indulging in my other love: cooking up a storm in the kitchen. I\'m always up for new experiences and meeting interesting people along the way!',
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-              SizedBox(height: 16.0),
-              Text(
-                'Skills:',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 8.0),
-              Wrap(
-                children: <Widget>[
-                  Chip(
-                    label: Text(
-                      'Skill 1 ',
-                      style: TextStyle(color: Colors.white),
+              widget.data['dateOfBirth'] != null
+                  ? Column(
+                      children: [
+                        SizedBox(height: 16.0),
+                        Text(
+                          'Age: ${(DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(widget.data['dateOfBirth'].seconds * 1000)).inDays / 365).round()}',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
+                    )
+                  : SizedBox.shrink(),
+              widget.data['dateOfBirth'] != null
+                  ? Column(
+                      children: [
+                        SizedBox(height: 8.0),
+                        Text(
+                          'Date of birth: ${DateFormat.yMMMMd().format(DateTime.fromMillisecondsSinceEpoch(widget.data['dateOfBirth'].seconds * 1000))}',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
+                    )
+                  : SizedBox.shrink(),
+              widget.data['profileInfo'] != null && widget.data['profileInfo'] != ''
+                  ? Column(
+                      children: [
+                        SizedBox(height: 16.0),
+                        Text(
+                          'Profile info:',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 5.0),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          padding: EdgeInsets.all(8.0),
+                          child: SingleChildScrollView(
+                            child: Text(
+                              widget.data['profileInfo'].toString(),
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : SizedBox.shrink(),
+              widget.data['skills'] != null
+                  ? Column(
+                      children: [
+                        SizedBox(height: 16.0),
+                        Text(
+                          'Skills:',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8.0),
+                        RenderTags(
+                            addedChips: List<String>.from(
+                                widget.data['skills'] as List)),
+                      ],
+                    )
+                  : SizedBox.shrink(),
+
+              widget.data['interests'] != null ?
+              Column(
+                children: [
+                  SizedBox(height: 16.0),
+                  Text(
+                    'Interests:',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                    backgroundColor: Colors.red,
                   ),
-                  SizedBox(width: 2.0),
-                  Chip(
-                    label: Text(
-                      'Skill 2 ',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.red,
-                  ),
-                  SizedBox(width: 2.0),
-                  Chip(
-                    label: Text(
-                      'Skill 3 ',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.red,
-                  ),
-                  SizedBox(width: 2.0),
-                  Chip(
-                    label: Text(
-                      'Skill 4 ',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.red,
-                  ),
-                  SizedBox(width: 2.0),
-                  Chip(
-                    label: Text(
-                      'Skill 5 ',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.red,
-                  ),
-                  SizedBox(width: 2.0),
-                  Chip(
-                    label: Text(
-                      'Skiiiiiiiiiiiiiiiiiiiill 6 ',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.red,
-                  ),
-                  SizedBox(width: 2.0),
-                  Chip(
-                    label: Text(
-                      'blbaaaaaaaaaaaaa ',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.red,
+                  ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: widget.data['interests'].length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: Icon(Icons.check, color: Colors.green,),
+                        title: Text(widget.data['interests'][index]),
+                      );
+                    },
                   ),
                 ],
-              ),
+              ) : SizedBox.shrink(),
+              
               SizedBox(height: 16.0),
               Text(
                 'Active engagement:',
@@ -304,39 +303,6 @@ class ProfilePage extends StatelessWidget {
                       margin: EdgeInsets.only(right: 8.0),
                       width: 400.0,
                       height: 80.0,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image(
-                              image: NetworkImage(
-                                  'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
-                              height: 50,
-                              width: 70,
-                            ),
-                            Expanded(
-                              child: Container(
-                                margin: EdgeInsets.only(
-                                    left: 40.0, right: 8.0),
-                                child: Text(
-                                  'Name of the company',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 18),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    SizedBox(height: 16.0),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      margin: EdgeInsets.only(right: 8.0),
-                      width: 400.0,
-                      height: 80.0,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -348,8 +314,7 @@ class ProfilePage extends StatelessWidget {
                           ),
                           Expanded(
                             child: Container(
-                              margin: EdgeInsets.only(
-                                  left: 40.0, right: 8.0),
+                              margin: EdgeInsets.only(left: 40.0, right: 8.0),
                               child: Text(
                                 'Name of the company',
                                 style: TextStyle(
@@ -381,8 +346,39 @@ class ProfilePage extends StatelessWidget {
                           ),
                           Expanded(
                             child: Container(
-                              margin: EdgeInsets.only(
-                                  left: 40.0, right: 8.0),
+                              margin: EdgeInsets.only(left: 40.0, right: 8.0),
+                              child: Text(
+                                'Name of the company',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      margin: EdgeInsets.only(right: 8.0),
+                      width: 400.0,
+                      height: 80.0,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image(
+                            image: NetworkImage(
+                                'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
+                            height: 50,
+                            width: 70,
+                          ),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(left: 40.0, right: 8.0),
                               child: Text(
                                 'Name of the company',
                                 style: TextStyle(
@@ -414,8 +410,7 @@ class ProfilePage extends StatelessWidget {
                           ),
                           Expanded(
                             child: Container(
-                              margin: EdgeInsets.only(
-                                  left: 40.0, right: 8.0),
+                              margin: EdgeInsets.only(left: 40.0, right: 8.0),
                               child: Text(
                                 'Name of the company',
                                 style: TextStyle(

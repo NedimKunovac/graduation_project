@@ -1,5 +1,5 @@
-import 'company_signup.dart';
-import 'volunteer_signup.dart';
+import 'signup_company.dart';
+import 'signup_volunteer.dart';
 import 'package:flutter/material.dart';
 
 ///Page made so user can select if he is a company or a volunteer
@@ -62,13 +62,14 @@ class SignUpRouter extends StatelessWidget {
                           },
                           child: CircleAvatar(
                               radius: 60.0,
-                              backgroundImage: NetworkImage('https://cdn-icons-png.flaticon.com/512/3061/3061341.png')
-                          ),
+                              backgroundImage: NetworkImage(
+                                  'https://cdn-icons-png.flaticon.com/512/3061/3061341.png')),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white, // set background color to white
+                            backgroundColor: Colors.white,
+                            // set background color to white
                             // set text color
-                            shape: CircleBorder(
-                            ),),
+                            shape: CircleBorder(),
+                          ),
                         ),
 
                         ///Volunteer button
@@ -81,15 +82,17 @@ class SignUpRouter extends StatelessWidget {
                           },
                           child: CircleAvatar(
                               radius: 60.0,
-                              backgroundImage: NetworkImage('https://cdn-icons-png.flaticon.com/512/3045/3045363.png')
-                          ),
+                              backgroundImage: NetworkImage(
+                                  'https://cdn-icons-png.flaticon.com/512/3045/3045363.png')),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white, // set background color to white
+                            backgroundColor: Colors.white,
+                            // set background color to white
                             // set text color
-                            shape: CircleBorder(//Mora ostati da bi buttons sa slikama ostali okrugli
-                            ),),
+                            shape: CircleBorder(
+                                //Mora ostati da bi buttons sa slikama ostali okrugli
+                                ),
                           ),
-
+                        ),
                       ],
                     ),
                   ])

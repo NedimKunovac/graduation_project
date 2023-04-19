@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/sign_up_router.dart';
+import 'package:graduation_project/screens/sign_up_pick.dart';
 import 'login.dart';
 
 ///First page of the app, serves to allow user to navigate to login or sign-up pages
@@ -56,7 +56,7 @@ class _SignOrLogState extends State<SignOrLog> {
                 height: MediaQuery.of(context as BuildContext).size.height / 3,
                 decoration: const BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("assets/Images/introduction.png"))),
+                        image: AssetImage("assets/images/introduction.png"))),
               ),
               //Buttons that route to login or sign up
               Column(

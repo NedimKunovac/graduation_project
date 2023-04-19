@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:graduation_project/tagField.dart';
-import 'package:graduation_project/update_advertisement_form.dart';
-import 'flash_bar.dart';
+import 'package:graduation_project/widgets/tag_field.dart';
+import 'package:graduation_project/screens/advertisement_form_update.dart';
+import '../utilities/flash_bar.dart';
 
 ///Page that displays detailed information about post
 
@@ -257,6 +257,34 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                 ),
                 child: Column(
                   children: [
+                    ///CATEGORY
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            'Category:',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Text(
+                            widget.data['category'][0],
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+
                     ///DUE DATE
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

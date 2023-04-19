@@ -5,10 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
-import 'package:graduation_project/profile_page.dart';
-import 'view_advertisements.dart';
+import 'package:graduation_project/screens/profile_page.dart';
+import '../widgets/view_advertisements.dart';
 import 'advertisement_form.dart';
-import 'package:graduation_project/editProfile.dart';
+import 'package:graduation_project/screens/edit_profile.dart';
 
 
 ///Dashboard, main page of the app
@@ -31,22 +31,25 @@ class _DashboardState extends State<Dashboard> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
-    if(_selectedIndex!=index)
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (_selectedIndex != index)
+      setState(() {
+        _selectedIndex = index;
+      });
   }
 
-  AppBarBulder(data){
+  AppBarBulder(data) {
     List<Widget> actionOptions = <Widget>[];
-    if(_selectedIndex==2){
+    if (_selectedIndex == 2) {
       actionOptions.add(
         PopupMenuButton(
           color: Colors.black54,
           onSelected: (result) {
             // Do something when an option is selected
             if (result == "Edit Profile") {
-              Navigator.push(context,MaterialPageRoute(builder: (context) => EditProfilePage()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => EditProfilePage(data: data)));
             } else if (result == "Logout") {
               showDialog<String>(
                 context: context,
@@ -73,11 +76,17 @@ class _DashboardState extends State<Dashboard> {
           itemBuilder: (BuildContext context) => [
             PopupMenuItem(
               value: "Edit Profile",
-              child: Text("Edit Profile",style: TextStyle(color: Colors.white),),
+              child: Text(
+                "Edit Profile",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
             PopupMenuItem(
               value: "Logout",
-              child: Text("Logout",style: TextStyle(color: Colors.white),),
+              child: Text(
+                "Logout",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         ),
@@ -93,7 +102,7 @@ class _DashboardState extends State<Dashboard> {
       actions: actionOptions,
     );
   }
-  
+
   ///Dynamically changes AppBar title based on page that is opened
   AppBarTitleBulder(data) {
     if (_selectedIndex == 1) {
@@ -101,8 +110,7 @@ class _DashboardState extends State<Dashboard> {
           child: Text('Messages', style: TextStyle(color: Colors.black)));
     } else if (_selectedIndex == 2) {
       return Center(
-        child: Text('Profile', style: TextStyle(color: Colors.black)));
-
+          child: Text('Profile', style: TextStyle(color: Colors.black)));
     } else {
       var message = '';
       if (data['type'] == 0 || data['type'] == 2)
@@ -163,11 +171,17 @@ class _DashboardState extends State<Dashboard> {
                                 userName: data['name'],
                                 userProfilePhoto: data['profilePhotoUrl'],
                               ))),
-                  child: const Text('Yes',style: TextStyle(color: Colors.black),),
+                  child: const Text(
+                    'Yes',
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'No'),
-                  child: const Text('No',style: TextStyle(color: Colors.red),),
+                  child: const Text(
+                    'No',
+                    style: TextStyle(color: Colors.red),
+                  ),
                 ),
               ],
             ),
@@ -226,25 +240,25 @@ class _DashboardState extends State<Dashboard> {
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home),
                     label: 'Home',
-                    backgroundColor: Colors.black54,
+                    backgroundColor: Colors.grey,
                   ),
 
                   ///MESSAGES ICON
                   BottomNavigationBarItem(
                     icon: Icon(Icons.message),
                     label: 'Messages',
-                    backgroundColor: Colors.black54,
+                    backgroundColor: Colors.grey,
                   ),
 
                   ///PROFILE ICON
                   BottomNavigationBarItem(
                     icon: Icon(Icons.account_circle),
                     label: 'Profile',
-                    backgroundColor: Colors.black54,
+                    backgroundColor: Colors.grey,
                   ),
                 ],
                 currentIndex: _selectedIndex,
-                selectedItemColor: Colors.black54,
+                selectedItemColor: Colors.red.shade400,
                 onTap: _onItemTapped,
               ),
             ),
