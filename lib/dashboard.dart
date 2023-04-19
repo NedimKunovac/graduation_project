@@ -8,6 +8,8 @@ import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:graduation_project/profile_page.dart';
 import 'view_advertisements.dart';
 import 'advertisement_form.dart';
+import 'package:graduation_project/editProfile.dart';
+
 
 ///Dashboard, main page of the app
 ///Make sure hide code for easier view
@@ -40,10 +42,11 @@ class _DashboardState extends State<Dashboard> {
     if(_selectedIndex==2){
       actionOptions.add(
         PopupMenuButton(
+          color: Colors.black54,
           onSelected: (result) {
             // Do something when an option is selected
             if (result == "Edit Profile") {
-              // Navigate to the edit profile page
+              Navigator.push(context,MaterialPageRoute(builder: (context) => EditProfilePage()));
             } else if (result == "Logout") {
               showDialog<String>(
                 context: context,
@@ -70,11 +73,11 @@ class _DashboardState extends State<Dashboard> {
           itemBuilder: (BuildContext context) => [
             PopupMenuItem(
               value: "Edit Profile",
-              child: Text("Edit Profile"),
+              child: Text("Edit Profile",style: TextStyle(color: Colors.white),),
             ),
             PopupMenuItem(
               value: "Logout",
-              child: Text("Logout"),
+              child: Text("Logout",style: TextStyle(color: Colors.white),),
             ),
           ],
         ),
@@ -84,7 +87,7 @@ class _DashboardState extends State<Dashboard> {
     return AppBar(
       elevation: 0,
       toolbarHeight: 70,
-      backgroundColor: Colors.red,
+      backgroundColor: Colors.white,
       title: AppBarTitleBulder(data),
       automaticallyImplyLeading: false,
       actions: actionOptions,
@@ -95,10 +98,10 @@ class _DashboardState extends State<Dashboard> {
   AppBarTitleBulder(data) {
     if (_selectedIndex == 1) {
       return Center(
-          child: Text('Messages', style: TextStyle(color: Colors.white)));
+          child: Text('Messages', style: TextStyle(color: Colors.black)));
     } else if (_selectedIndex == 2) {
       return Center(
-        child: Text('Profile', style: TextStyle(color: Colors.white)));
+        child: Text('Profile', style: TextStyle(color: Colors.black)));
 
     } else {
       var message = '';
@@ -114,7 +117,7 @@ class _DashboardState extends State<Dashboard> {
           Center(
             child: Text(
               'Welcome ${data['name']}!',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.black),
             ),
           ),
           SizedBox(
@@ -122,7 +125,7 @@ class _DashboardState extends State<Dashboard> {
           ),
           Center(
             child: Text(message,
-                style: TextStyle(color: Colors.white, fontSize: 15)),
+                style: TextStyle(color: Colors.grey, fontSize: 15)),
           ),
           SizedBox(
             height: 5,
@@ -160,11 +163,11 @@ class _DashboardState extends State<Dashboard> {
                                 userName: data['name'],
                                 userProfilePhoto: data['profilePhotoUrl'],
                               ))),
-                  child: const Text('Yes'),
+                  child: const Text('Yes',style: TextStyle(color: Colors.black),),
                 ),
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'No'),
-                  child: const Text('No'),
+                  child: const Text('No',style: TextStyle(color: Colors.red),),
                 ),
               ],
             ),
@@ -195,9 +198,7 @@ class _DashboardState extends State<Dashboard> {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
           data["userID"] = FirebaseAuth.instance.currentUser?.uid;
-          _widgetOptions.add(ViewAdvertisements(
-              userID: data['userID'],
-              userType: data['type']));
+          _widgetOptions.add(ViewAdvertisements(userData: data));
           _widgetOptions.add(Placeholder());
           _widgetOptions.add(ProfilePage(data: data));
 
@@ -219,31 +220,31 @@ class _DashboardState extends State<Dashboard> {
                 )
               ]),
               child: BottomNavigationBar(
-                backgroundColor: Colors.red,
+                backgroundColor: Colors.white,
                 items: const <BottomNavigationBarItem>[
                   ///HOME PAGE ICON
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home),
                     label: 'Home',
-                    backgroundColor: Colors.white,
+                    backgroundColor: Colors.black54,
                   ),
 
                   ///MESSAGES ICON
                   BottomNavigationBarItem(
                     icon: Icon(Icons.message),
                     label: 'Messages',
-                    backgroundColor: Colors.white,
+                    backgroundColor: Colors.black54,
                   ),
 
                   ///PROFILE ICON
                   BottomNavigationBarItem(
                     icon: Icon(Icons.account_circle),
                     label: 'Profile',
-                    backgroundColor: Colors.white,
+                    backgroundColor: Colors.black54,
                   ),
                 ],
                 currentIndex: _selectedIndex,
-                selectedItemColor: Colors.white,
+                selectedItemColor: Colors.black54,
                 onTap: _onItemTapped,
               ),
             ),

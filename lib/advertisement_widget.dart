@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/advertisement_details.dart';
+import 'tagField.dart';
 
 /// Advertisement Preview [Small box seen on dashboard]
 /// Requires title, description, image link and status[accepted or not]
@@ -109,6 +110,14 @@ class _AdvertisementState extends State<Advertisement> {
                             textAlign: TextAlign.justify,
                           ),
                         ))
+                      ],
+                    ),
+
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RenderTags(addedChips:List<String>.from(
+                            widget.data['requirements'] as List)),
                       ],
                     ),
                   ],

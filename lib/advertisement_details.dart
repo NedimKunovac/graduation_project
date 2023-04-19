@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:graduation_project/tagField.dart';
 import 'package:graduation_project/update_advertisement_form.dart';
 import 'flash_bar.dart';
 
@@ -123,8 +124,9 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => updateAdvertisementForm(
-                                        data: widget.data)));
+                                    builder: (context) =>
+                                        updateAdvertisementForm(
+                                            data: widget.data)));
                           },
                           child: const Text(
                             'I understand, I want to edit this post',
@@ -398,7 +400,6 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                     ///DESCRIPTION
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
                           flex: 2,
@@ -427,7 +428,6 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                     ///REQUIREMENTS
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
                           flex: 2,
@@ -441,13 +441,9 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         ),
                         Expanded(
                           flex: 3,
-                          child: Text(
-                            widget.data['requirements'],
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                          ),
+                          child: RenderTags(
+                              addedChips: List<String>.from(
+                                  widget.data['requirements'] as List)),
                         ),
                       ],
                     ),
@@ -456,7 +452,6 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                     ///OPPORTUNITIES
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
                           flex: 2,

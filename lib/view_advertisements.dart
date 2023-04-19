@@ -8,10 +8,9 @@ import 'advertisement_widget.dart';
 
 class ViewAdvertisements extends StatefulWidget {
   ///Posts shown are fetched based on this data
-  String? userID;
-  var userType;
+  Map<String, dynamic> userData;
 
-  ViewAdvertisements({Key? key, required this.userID, required this.userType})
+  ViewAdvertisements({Key? key, required this.userData})
       : super(key: key);
 
   @override
@@ -25,14 +24,19 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
 
   @override
   Widget build(BuildContext context) {
-
     ///Different post fetching based on user type
-    if (widget.userType == 2 || widget.userType == 0) {
-      _postsStream = FirebaseFirestore.instance.collection('Posts').snapshots();
-    } else {
+    if(widget.userData['type']==2){
       _postsStream = FirebaseFirestore.instance
           .collection('Posts')
-          .where('authorID', isEqualTo: widget.userID)
+          .where('requirements', arrayContainsAny: widget.userData['skills'])
+          .snapshots();
+    }else if (widget.userData['type'] == 0) {
+      _postsStream = FirebaseFirestore.instance.collection('Posts').snapshots();
+    } else {
+      print(widget.userData['type']);
+      _postsStream = FirebaseFirestore.instance
+          .collection('Posts')
+          .where('authorID', isEqualTo: widget.userData['userID'])
           .snapshots();
     }
 
@@ -56,7 +60,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
             Map<String, dynamic> data =
                 document.data()! as Map<String, dynamic>;
             data["postID"] = document.id;
-            if(widget.userType==2 && data['applicationSubmitted']!=null){
+            if(widget.userData['type']==2 && data['applicationSubmitted']!=null){
               bool toggle = false;
               for (var i=0; i < data['applicationSubmitted'].length; i++) {
                 if(data['applicationSubmitted'][i]==FirebaseAuth.instance.currentUser?.uid){
@@ -66,12 +70,12 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
               }
               if(!toggle){
                 return ListBody(
-                  children: [Advertisement(data: data,userType: widget.userType, accepted: false)],
+                  children: [Advertisement(data: data,userType: widget.userData['type'], accepted: false)],
                 );
               }
             } else{
               return ListBody(
-                children: [Advertisement(data: data,userType: widget.userType , accepted: false)],
+                children: [Advertisement(data: data,userType: widget.userData['type'] , accepted: false)],
               );
             }
 
