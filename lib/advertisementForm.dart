@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Dashboard.dart';
+import 'package:graduation_project/dropdownField.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'flashbar.dart';
@@ -41,6 +42,17 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
   final requirementsController = TextEditingController();
   final opportunitiesController = TextEditingController();
 
+  ///Category Field and loader
+  var CategoryField = null;
+
+  getCategoryField() {
+    if (CategoryField == null)
+      return SizedBox.shrink();
+    else
+      return CategoryField;
+  }
+
+  ///Skills Field and loader
   var SkillsField = null;
 
   getSkillsField() {
@@ -77,6 +89,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
       FirebaseFirestore usersCollection = FirebaseFirestore.instance;
       await usersCollection.collection('Posts').doc().set({
         'title': postTitleController.text.trim(),
+        'category': [CategoryField.dropdownValue],
         'authorID': widget.userID,
         'authorName': widget.userName,
         'profilePhotoUrl': widget.userProfilePhoto,
@@ -105,6 +118,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
 
   @override
   Widget build(BuildContext context) {
+    ///Functions that fetch data from Dictionary after page is loaded
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (SkillsField == null) {
         await FirebaseFirestore.instance
@@ -113,10 +127,28 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
             .get()
             .then((DocumentSnapshot documentSnapshot) {
           if (documentSnapshot.exists) {
-            print('Document data: ${documentSnapshot.data()}');
             SkillsField = TagsField(
                 suggestionsList:
                     List<String>.from(documentSnapshot['skills'] as List));
+            setState(() {});
+          } else {
+            print('Document does not exist on the database');
+          }
+        });
+      }
+      if (CategoryField == null) {
+        await FirebaseFirestore.instance
+            .collection('Dictionary')
+            .doc('Interests')
+            .get()
+            .then((DocumentSnapshot documentSnapshot) {
+          if (documentSnapshot.exists) {
+            CategoryField = DropdownField(
+              options: List<String>.from(documentSnapshot['interests'] as List),
+              textColor: Colors.white,
+              dropdownColor: Colors.red.shade400,
+              fontSize: 16,
+            );
             setState(() {});
           } else {
             print('Document does not exist on the database');
@@ -219,6 +251,23 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                           ),
                         ),
                       ),
+                    ]),
+
+                ///POST CATEGORY FIELD
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          'Post Category:',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      Expanded(flex: 3, child: getCategoryField())
                     ]),
 
                 ///APPLICATION DEADLINE FIELD
@@ -527,7 +576,8 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
 
                 ///WORK DESCRIPTION FILED
                 SizedBox(height: 10),
-                Row( crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
@@ -571,7 +621,6 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
-
                           ),
                         ),
                       )
@@ -603,7 +652,8 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
 
                 ///OPPORTUNITIES FIELD
                 SizedBox(height: 10),
-                Row(crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
@@ -646,7 +696,6 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
-
                           ),
                         ),
                       )

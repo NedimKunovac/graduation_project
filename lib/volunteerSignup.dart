@@ -12,6 +12,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'tagField.dart';
 import 'updateDictionary.dart';
+import 'checkboxTiles.dart';
 
 ///TODO: ADD SKILLS FOR VOLUNTEERS
 ///Volunteer sign up page
@@ -36,6 +37,17 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  ///Category Field
+  var InterestsTiles = null;
+
+  getCategoryField() {
+    if (InterestsTiles == null)
+      return SizedBox.shrink();
+    else
+      return InterestsTiles;
+  }
+
+  ///Skills Field
   var SkillsField = null;
 
   getSkillsField() {
@@ -44,7 +56,6 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
     else
       return SkillsField;
   }
-
 
   ///Clear all controllers
   void clearControllers() {
@@ -87,6 +98,13 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
           message: 'Please enter at least three skills');
       return;
     }
+    if (InterestsTiles.added.length < 1) {
+      flashBar.showBasicsFlashFailed(
+          duration: Duration(seconds: 3),
+          context: context,
+          message: 'Please enter at least one interest');
+      return;
+    }
 
     if (await addLoginInfo()) {
       try {
@@ -104,6 +122,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
         await usersCollection.collection('Users').doc(userReference!).set({
           'name': fullNameController.text.trim(),
           'type': 2,
+          'interests': InterestsTiles.added,
           'dateOfBirth': Timestamp.fromDate(pickedDate!),
           'profilePhotoUrl': imageUrl,
           'skills': SkillsField.addedChips
@@ -125,6 +144,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
 
   @override
   Widget build(BuildContext context) {
+    ///Functions that fetch data from Dictionary after page is loaded
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (SkillsField == null) {
         await FirebaseFirestore.instance
@@ -135,8 +155,30 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
           if (documentSnapshot.exists) {
             print('Document data: ${documentSnapshot.data()}');
             SkillsField = TagsField(
-                suggestionsList:
-                    List<String>.from(documentSnapshot['skills'] as List));
+              suggestionsList:
+                  List<String>.from(documentSnapshot['skills'] as List),
+              chipColor: Colors.blue,
+              iconColor: Colors.white,
+              textStyle: TextStyle(color: Colors.white),
+            );
+            setState(() {});
+          } else {
+            print('Document does not exist on the database');
+          }
+        });
+      }
+      if (InterestsTiles == null) {
+        await FirebaseFirestore.instance
+            .collection('Dictionary')
+            .doc('Interests')
+            .get()
+            .then((DocumentSnapshot documentSnapshot) {
+          if (documentSnapshot.exists) {
+            print('Document data: ${documentSnapshot.data()}');
+            InterestsTiles = CheckboxTiles(
+              tileValues:
+                  List<String>.from(documentSnapshot['interests'] as List),
+            );
             setState(() {});
           } else {
             print('Document does not exist on the database');
@@ -372,12 +414,33 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           ],
                         ),
 
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Please select the category of jobs you would be interested in:',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            getCategoryField(),
+                            SizedBox(
+                              height: 10,
+                            )
+                          ],
+                        ),
+
                         ///ENTER SKILLS FORM
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Your skills:',
+                              'Please enter your skills:',
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,

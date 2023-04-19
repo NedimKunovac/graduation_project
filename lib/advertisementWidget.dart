@@ -60,15 +60,31 @@ class _AdvertisementState extends State<Advertisement> {
                 onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            AdvertisementDetailed(data: widget.data, userType: widget.userType))),
+                        builder: (context) => AdvertisementDetailed(
+                            data: widget.data, userType: widget.userType))),
                 child: Column(
                   children: [
+                    Row(
+                      children: [
+                        Flexible(
+                            child: Padding(
+                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Text(
+                            widget.data['category'][0],
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              color: Colors.grey.shade200,
+                              fontSize: 10,
+                            ),
+                          ),
+                        ))
+                      ],
+                    ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.fromLTRB(0, 13, 10, 10),
+                          padding: EdgeInsets.fromLTRB(0, 5, 10, 10),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
 
@@ -116,8 +132,14 @@ class _AdvertisementState extends State<Advertisement> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        RenderTags(addedChips:List<String>.from(
-                            widget.data['requirements'] as List)),
+                        RenderTags(
+                          addedChips: List<String>.from(
+                              widget.data['requirements'] as List),
+                          chipColor: Colors.green,
+                          textStyle: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
                       ],
                     ),
                   ],

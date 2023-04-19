@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Dashboard.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dropdownField.dart';
 import 'flashbar.dart';
 import 'tagField.dart';
 import 'updateDictionary.dart';
@@ -34,6 +35,17 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
   final workDescriptionController = TextEditingController();
   final opportunitiesController = TextEditingController();
 
+  ///Category Field
+  var CategoryField = null;
+
+  getCategoryField() {
+    if (CategoryField == null)
+      return SizedBox.shrink();
+    else
+      return CategoryField;
+  }
+
+  ///Skills Field
   var SkillsField = null;
 
   getSkillsField() {
@@ -72,6 +84,7 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
           .doc(widget.data['postID'])
           .update({
         'title': postTitleController.text.trim(),
+        'category': [CategoryField.dropdownValue],
         'dueDate': Timestamp.fromDate(pickedDueDate!),
         'startDate': Timestamp.fromDate(pickedStartDate!),
         'endDate': Timestamp.fromDate(pickedEndDate!),
@@ -101,6 +114,8 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
 
   @override
   Widget build(BuildContext context) {
+    ///There is a good reason on why I didn't use init state here
+    ///but 4 weeks later, I cannot truly remember it.
     if (!toggle) {
       postTitleController.text = widget.data['title'];
       pickedDueDate = DateTime.fromMillisecondsSinceEpoch(
@@ -123,6 +138,7 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
       toggle = true;
     }
 
+    ///Functions that fetch data from Dictionary after page is loaded
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (SkillsField == null) {
         await FirebaseFirestore.instance
@@ -159,6 +175,27 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                     .remove(widget.data['requirements'][i]);
             }
             print(SkillsField.suggestionsList);
+            setState(() {});
+          } else {
+            print('Document does not exist on the database');
+          }
+        });
+      }
+      if (CategoryField == null) {
+        await FirebaseFirestore.instance
+            .collection('Dictionary')
+            .doc('Interests')
+            .get()
+            .then((DocumentSnapshot documentSnapshot) {
+          if (documentSnapshot.exists) {
+            print('Document data: ${documentSnapshot.data()}');
+            CategoryField = DropdownField(
+              options: List<String>.from(documentSnapshot['interests'] as List),
+              textColor: Colors.white,
+              dropdownColor: Colors.red.shade400,
+              fontSize: 16,
+              dropdownValue: widget.data['category'][0],
+            );
             setState(() {});
           } else {
             print('Document does not exist on the database');
@@ -275,6 +312,23 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                           ),
                         ),
                       ),
+                    ]),
+
+                ///POST CATEGORY FIELD
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          'Post Category:',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      Expanded(flex: 3, child: getCategoryField())
                     ]),
 
                 ///APPLICATION DEADLINE FIELD
@@ -627,7 +681,6 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
-
                           ),
                         ),
                       )
@@ -702,7 +755,6 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                                 borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
-
                           ),
                         ),
                       )
