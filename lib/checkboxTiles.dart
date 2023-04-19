@@ -19,11 +19,11 @@ class _CheckboxTilesState extends State<CheckboxTiles> {
   ///What is checked
   List<bool> checked = <bool>[];
 
-  ///Actual tiles
-  List<Widget> tiles = <Widget>[];
-
   ///Generator that takes into account preselected tiles
   genTiles() {
+    ///Actual tiles
+    List<Widget> tiles = <Widget>[];
+
     if (checked.isEmpty) {
       for (int i = 0; i < widget.tileValues!.length; i++)
         if (widget.added!.isNotEmpty &&
