@@ -19,7 +19,7 @@ class flashBar {
           backgroundColor: Colors.red,
           controller: controller,
           behavior: flashStyle,
-          position: FlashPosition.bottom,
+          position: FlashPosition.top,
           boxShadows: kElevationToShadow[4],
           horizontalDismissDirection: HorizontalDismissDirection.horizontal,
           child: FlashBar(
@@ -48,7 +48,7 @@ class flashBar {
           backgroundColor: Colors.green,
           controller: controller,
           behavior: flashStyle,
-          position: FlashPosition.bottom,
+          position: FlashPosition.top,
           boxShadows: kElevationToShadow[4],
           horizontalDismissDirection: HorizontalDismissDirection.horizontal,
           child: FlashBar(
