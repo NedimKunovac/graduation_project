@@ -239,25 +239,25 @@ class _DashboardState extends State<Dashboard> {
                   BottomNavigationBarItem(
                     icon: Icon(Icons.home),
                     label: 'Home',
-                    backgroundColor: Colors.black54,
+                    backgroundColor: Colors.grey,
                   ),
 
                   ///MESSAGES ICON
                   BottomNavigationBarItem(
                     icon: Icon(Icons.message),
                     label: 'Messages',
-                    backgroundColor: Colors.black54,
+                    backgroundColor: Colors.grey,
                   ),
 
                   ///PROFILE ICON
                   BottomNavigationBarItem(
                     icon: Icon(Icons.account_circle),
                     label: 'Profile',
-                    backgroundColor: Colors.black54,
+                    backgroundColor: Colors.grey,
                   ),
                 ],
                 currentIndex: _selectedIndex,
-                selectedItemColor: Colors.black54,
+                selectedItemColor: Colors.red.shade400,
                 onTap: _onItemTapped,
               ),
             ),

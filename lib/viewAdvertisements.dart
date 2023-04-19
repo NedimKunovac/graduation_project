@@ -126,7 +126,6 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
 
     ///Company loading
     else {
-      print(widget.userData['type']);
       _postsStream = FirebaseFirestore.instance
           .collection('Posts')
           .where('authorID', isEqualTo: widget.userData['userID'])

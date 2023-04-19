@@ -61,7 +61,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     )
                   : SizedBox.shrink(),
-              widget.data['profileInfo'] != null
+              widget.data['profileInfo'] != null && widget.data['profileInfo'] != ''
                   ? Column(
                       children: [
                         SizedBox(height: 16.0),

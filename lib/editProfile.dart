@@ -85,7 +85,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
         ///Firebase Storage
         if (pickedImage != null) {
-          print('Here');
           Reference referenceRoot = FirebaseStorage.instance.ref();
           Reference referenceDirImages =
               referenceRoot.child('${userReference}');
@@ -105,6 +104,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
               imageUrl != null ? imageUrl : widget.data['profilePhotoUrl'],
           'vatNum': _VATController.text.trim()
         });
+        flashBar.showBasicsFlashSuccessful(
+            duration: Duration(seconds: 3), context: context, message: 'You have updated your profile! Please restart the app to see your changes');
+
         Navigator.pop(context);
       } on FirebaseException catch (e) {
         print(e);
@@ -116,7 +118,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
         ///Firebase Storage
         if (pickedImage != null) {
-          print('Here');
           Reference referenceRoot = FirebaseStorage.instance.ref();
           Reference referenceDirImages =
               referenceRoot.child('${userReference}');
@@ -140,6 +141,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
           'skills': SkillsField.addedChips
         });
         await updateDictionary().updateSkills(SkillsField.addedChips);
+        flashBar.showBasicsFlashSuccessful(
+            duration: Duration(seconds: 3), context: context, message: 'You have updated your profile! Please restart the app to see your changes');
         Navigator.pop(context);
       } on FirebaseException catch (e) {
         print(e);
@@ -175,7 +178,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             .get()
             .then((DocumentSnapshot documentSnapshot) {
           if (documentSnapshot.exists) {
-            print('Document data: ${documentSnapshot.data()}');
+           // print('Document data: ${documentSnapshot.data()}');
             SkillsField = TagsField(
                 suggestionsList:
                     List<String>.from(documentSnapshot['skills'] as List));
@@ -184,7 +187,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             for (var i = 0;
                 i < List<String>.from(widget.data['skills'] as List).length;
                 i++) {
-              print(widget.data['skills'][i]);
+             // print(widget.data['skills'][i]);
               SkillsField.chipDataList.add(
                 ChipObjectData(widget.data['skills'][i]),
               );
@@ -192,12 +195,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
             for (var i = 0;
                 i < List<String>.from(widget.data['skills'] as List).length;
                 i++) {
-              print(widget.data['skills'][i]);
+             // print(widget.data['skills'][i]);
               if (SkillsField.suggestionsList
                   .contains(widget.data['skills'][i]))
                 SkillsField.suggestionsList.remove(widget.data['skills'][i]);
             }
-            print(SkillsField.suggestionsList);
+           // print(SkillsField.suggestionsList);
             setState(() {});
           } else {
             print('Document does not exist on the database');
@@ -211,7 +214,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             .get()
             .then((DocumentSnapshot documentSnapshot) {
           if (documentSnapshot.exists) {
-            print('Document data: ${documentSnapshot.data()}');
+           // print('Document data: ${documentSnapshot.data()}');
             InterestsTiles = CheckboxTiles(
               tileValues:
                   List<String>.from(documentSnapshot['interests'] as List),
@@ -450,7 +453,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
         onPressed: () {
-          print('yamete kudasai');
           updateData();
         },
         child: Icon(Icons.check),
