@@ -109,6 +109,32 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     )
                   : SizedBox.shrink(),
+
+              widget.data['interests'] != null ?
+              Column(
+                children: [
+                  SizedBox(height: 16.0),
+                  Text(
+                    'Interests:',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: widget.data['interests'].length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: Icon(Icons.check, color: Colors.green,),
+                        title: Text(widget.data['interests'][index]),
+                      );
+                    },
+                  ),
+                ],
+              ) : SizedBox.shrink(),
+              
               SizedBox(height: 16.0),
               Text(
                 'Active engagement:',
