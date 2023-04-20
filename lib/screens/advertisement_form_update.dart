@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Dashboard.dart';
+import 'package:graduation_project/screens/dashboard.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dropdownField.dart';
-import 'flashbar.dart';
-import 'tagField.dart';
-import 'updateDictionary.dart';
+import '../widgets/dropdown_field.dart';
+import '../utilities/flash_bar.dart';
+import '../widgets/tag_field.dart';
+import '../utilities/update_dictionary.dart';
 
 ///Create a post form, accessed after pressing little plus on bottom of screen
 ///Requires userID so it can be passed to post details
@@ -93,7 +93,7 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
         'requirements': SkillsField.addedChips,
         'opportunities': opportunitiesController.text.trim()
       });
-      await updateDictionary().updateSkills(SkillsField.addedChips);
+      await UpdateDictionary().updateSkills(SkillsField.addedChips);
       clearControllers();
       await flashBar.showBasicsFlashSuccessful(
         duration: Duration(seconds: 5),

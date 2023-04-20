@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 ///This class contains methods that serve to update the Dictionary in firebase
 ///This is to support the infinitely many tags concept
 
-class updateDictionary {
+class UpdateDictionary {
   updateSkills(List<String> skills) async {
     await FirebaseFirestore.instance
         .collection('Dictionary')

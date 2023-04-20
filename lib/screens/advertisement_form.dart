@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Dashboard.dart';
-import 'package:graduation_project/dropdownField.dart';
+import 'package:graduation_project/screens/dashboard.dart';
+import 'package:graduation_project/widgets/dropdown_field.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'flashbar.dart';
-import 'tagField.dart';
-import 'updateDictionary.dart';
+import '../widgets/tag_field.dart';
+import '../utilities/update_dictionary.dart';
+import '../utilities/flash_bar.dart';
 
 ///Create a post form, accessed after pressing little plus on bottom of screen
 ///Requires userID so it can be passed to post details
@@ -101,7 +101,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
         'requirements': SkillsField.addedChips,
         'opportunities': opportunitiesController.text.trim()
       });
-      await updateDictionary().updateSkills(SkillsField.addedChips);
+      await UpdateDictionary().updateSkills(SkillsField.addedChips);
       clearControllers();
       await flashBar.showBasicsFlashSuccessful(
         duration: Duration(seconds: 5),
@@ -184,7 +184,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
             height: MediaQuery.of(context).size.height * 0.3,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/client.png'),
+                image: AssetImage('assets/images/client.png'),
                 fit: BoxFit.cover,
               ),
             ),

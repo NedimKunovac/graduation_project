@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project/advertisementDetailed.dart';
-import 'tagField.dart';
+import 'package:graduation_project/screens/advertisement_details.dart';
+import 'tag_field.dart';
 
 /// Advertisement Preview [Small box seen on dashboard]
 /// Requires title, description, image link and status[accepted or not]

@@ -1,9 +1,9 @@
 import 'package:email_validator/email_validator.dart';
 
-import 'Dashboard.dart';
+import 'dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'flashBar.dart';
+import '../utilities/flash_bar.dart';
 
 /// Login page, made so if change in authentication is detected, user is redirected
 /// Users already logged in will be redirected to dash
@@ -144,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: 150,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage('assets/permission.png'),
+                                image: AssetImage('assets/images/permission.png'),
                                 fit: BoxFit.fitHeight),
                           ),
                         ),

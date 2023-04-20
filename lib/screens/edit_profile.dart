@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:graduation_project/imagePicker.dart';
+import '../utilities/image_picker_custom.dart';
 import 'package:image_picker/image_picker.dart';
-import 'tagField.dart';
+import '../widgets/tag_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'checkboxTiles.dart';
-import 'flashBar.dart';
+import '../widgets/checkbox_tiles.dart';
+import '../utilities/flash_bar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'updateDictionary.dart';
+import '../utilities/update_dictionary.dart';
 
 ///Edit profile page, pretty self explanatory
 
@@ -140,7 +140,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               imageUrl != null ? imageUrl : widget.data['profilePhotoUrl'],
           'skills': SkillsField.addedChips
         });
-        await updateDictionary().updateSkills(SkillsField.addedChips);
+        await UpdateDictionary().updateSkills(SkillsField.addedChips);
         flashBar.showBasicsFlashSuccessful(
             duration: Duration(seconds: 3), context: context, message: 'You have updated your profile! Please restart the app to see your changes');
         Navigator.pop(context);

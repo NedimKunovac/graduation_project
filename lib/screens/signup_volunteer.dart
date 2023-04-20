@@ -1,18 +1,18 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:graduation_project/login.dart';
+import 'package:graduation_project/screens/login.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:email_validator/email_validator.dart';
-import 'flashBar.dart';
-import 'imagePicker.dart';
+import '../utilities/flash_bar.dart';
+import '../utilities/image_picker_custom.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'tagField.dart';
-import 'updateDictionary.dart';
-import 'checkboxTiles.dart';
+import '../widgets/tag_field.dart';
+import '../utilities/update_dictionary.dart';
+import '../widgets/checkbox_tiles.dart';
 
 ///TODO: ADD SKILLS FOR VOLUNTEERS
 ///Volunteer sign up page
@@ -127,7 +127,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
           'profilePhotoUrl': imageUrl,
           'skills': SkillsField.addedChips
         });
-        await updateDictionary().updateSkills(SkillsField.addedChips);
+        await UpdateDictionary().updateSkills(SkillsField.addedChips);
         await FirebaseAuth.instance.signOut();
         await Navigator.pushReplacement(
             context,

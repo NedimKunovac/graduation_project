@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:graduation_project/tagField.dart';
-import 'package:graduation_project/updateAdvertisementForm.dart';
-import 'flashBar.dart';
+import 'package:graduation_project/widgets/tag_field.dart';
+import 'package:graduation_project/screens/advertisement_form_update.dart';
+import '../utilities/flash_bar.dart';
 
 ///Page that displays detailed information about post
 

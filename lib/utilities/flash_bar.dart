@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flash/flash.dart';
 
-///Flashbar that pops up on the bottom of the page
+///Flash bar that pops up on the bottom of the page
 ///Mostly used for errors
 ///Two functions showBasicsFlashSuccessful[Green] and showBasicsFlashFailed showBasicsFlashFailed[Red]
 
