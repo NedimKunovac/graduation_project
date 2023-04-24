@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
+import 'package:graduation_project/screens/messagingScreens/Messaging.dart';
 import 'package:graduation_project/screens/profile_page.dart';
 import '../widgets/view_advertisements.dart';
 import 'advertisement_form.dart';
@@ -62,11 +63,17 @@ class _DashboardState extends State<Dashboard> {
                         FirebaseAuth.instance.signOut();
                         Navigator.pop(context);
                       },
-                      child: const Text('Yes'),
+                      child: const Text('Yes',
+                        style:TextStyle(
+                          color: Colors.black
+                        ) ,),
                     ),
                     TextButton(
                       onPressed: () => Navigator.pop(context, 'No'),
-                      child: const Text('No'),
+                      child: const Text('No',
+                      style: TextStyle(
+                        color: Colors.red
+                      ),),
                     ),
                   ],
                 ),
@@ -213,7 +220,7 @@ class _DashboardState extends State<Dashboard> {
               snapshot.data!.data() as Map<String, dynamic>;
           data["userID"] = FirebaseAuth.instance.currentUser?.uid;
           _widgetOptions.add(ViewAdvertisements(userData: data));
-          _widgetOptions.add(Placeholder());
+          _widgetOptions.add(Messaging());
           _widgetOptions.add(ProfilePage(data: data));
 
           return Scaffold(

@@ -91,6 +91,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
               'No, I want to keep this post',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
+                color: Colors.black
               ),
             ),
           ),
@@ -131,7 +132,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                           child: const Text(
                             'I understand, I want to edit this post',
                             style: TextStyle(
-                              color: Colors.red,
+                              color: Colors.black,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -143,6 +144,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             'No, I don\'t want to edit this post',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
+                              color: Colors.red
                             ),
                           ),
                         ),
