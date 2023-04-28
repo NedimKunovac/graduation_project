@@ -772,7 +772,7 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                 borderRadius: BorderRadius.circular(50),
               ),
               child: Text(
-                'Create post',
+                'Edit post',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 18,
@@ -784,7 +784,7 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
         ]),
       ),
 
-      ///ADD POST BUTTON
+      
 
     ));
   }
