@@ -759,30 +759,33 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
                         ),
                       )
                     ]),
-                SizedBox(height: 10),
+
               ]),
             ),
           ),
+          SizedBox(height: 10),
+          MaterialButton(
+              height: 60,
+              color: Colors.red.shade400,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: Text(
+                'Create post',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+              ),
+              onPressed: updateForm),
+          SizedBox(height: 10,)
         ]),
       ),
 
       ///ADD POST BUTTON
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 50.0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IconButton(
-                  onPressed: updateForm,
-                  icon: Icon(Icons.update_outlined),
-                  color: Colors.red,
-                  iconSize: 40),
-              // add additional icons here as needed
-            ],
-          ),
-        ),
-      ),
+
     ));
   }
 }
