@@ -11,29 +11,31 @@ class messagingHPage extends StatelessWidget {
     return  Scaffold(
       drawer: Drawer(),
 
-      body: ListView(
-        children: [
-
-          Padding(padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              decoration: BoxDecoration(
-                color:Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    blurRadius: 10,
-                    spreadRadius: 2,
-                    offset: Offset(0, 3),
-                  )
-                ],
-              ),
-
-            ),),
-          ActiveChats(),
-          RecentChats(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            //
+            // Padding(padding: EdgeInsets.symmetric(horizontal: 15),
+            //   child: Container(
+            //     padding: EdgeInsets.symmetric(horizontal: 15),
+            //     decoration: BoxDecoration(
+            //       color:Colors.white,
+            //       borderRadius: BorderRadius.circular(20),
+            //       boxShadow: [
+            //         BoxShadow(
+            //           color: Colors.grey.withOpacity(0.5),
+            //           blurRadius: 10,
+            //           spreadRadius: 2,
+            //           offset: Offset(0, 3),
+            //         )
+            //       ],
+            //     ),
+            //
+            //   ),),
+            ActiveChats(),
+            RecentChats(),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){},

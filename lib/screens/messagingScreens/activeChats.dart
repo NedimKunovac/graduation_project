@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ActiveChats extends StatelessWidget{
   @override
   Widget build(BuildContext context){
-    return Padding(padding: EdgeInsets.only(top: 25,left: 5),
+    return Padding(padding: EdgeInsets.only(left: 5),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(

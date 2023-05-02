@@ -1,25 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/screens/messagingScreens/ChatPage.dart';
 
 class RecentChats extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Container(
-      margin: EdgeInsets.only(top: 20),
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+      padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(35),
-          topRight: Radius.circular(35),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            blurRadius: 10,
-            spreadRadius: 2,
-            offset: Offset(0, 2),
-          )
-        ],
       ),
       child: Column(
         children: [
@@ -27,7 +15,9 @@ class RecentChats extends StatelessWidget{
             Padding(padding: EdgeInsets.symmetric(vertical: 15),
               child: InkWell(
                 onTap: (){
-                  Navigator.pushNamed(context, "chatPage");
+                  Navigator.of(context, rootNavigator:true).push( // ensures fullscreen
+                      MaterialPageRoute(
+                          builder: (context) => ChatPage()) );
                 },
                 child: Container(
                   height: 65,
