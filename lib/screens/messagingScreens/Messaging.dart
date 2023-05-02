@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:graduation_project/screens/messagingScreens/ChatPage.dart';
 import 'package:graduation_project/screens/messagingScreens/messagingHPage.dart';
@@ -20,8 +19,8 @@ class _MessagingState extends State<Messaging> {
           appBarTheme: AppBarTheme(
             backgroundColor: Colors.white,
             foregroundColor: Colors.black,
-          )
-      ),
-          home: messagingHPage(),
+          )),
+      home: messagingHPage(),
     );
-  }}
+  }
+}

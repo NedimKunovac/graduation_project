@@ -11,7 +11,6 @@ import '../widgets/view_advertisements.dart';
 import 'advertisement_form.dart';
 import 'package:graduation_project/screens/edit_profile.dart';
 
-
 ///Dashboard, main page of the app
 ///Make sure hide code for easier view
 
@@ -39,6 +38,7 @@ class _DashboardState extends State<Dashboard> {
   }
 
   AppBarBulder(data) {
+    final searchBar = TextEditingController();
     List<Widget> actionOptions = <Widget>[];
     if (_selectedIndex == 2) {
       actionOptions.add(
@@ -63,17 +63,17 @@ class _DashboardState extends State<Dashboard> {
                         FirebaseAuth.instance.signOut();
                         Navigator.pop(context);
                       },
-                      child: const Text('Yes',
-                        style:TextStyle(
-                          color: Colors.black
-                        ) ,),
+                      child: const Text(
+                        'Yes',
+                        style: TextStyle(color: Colors.black),
+                      ),
                     ),
                     TextButton(
                       onPressed: () => Navigator.pop(context, 'No'),
-                      child: const Text('No',
-                      style: TextStyle(
-                        color: Colors.red
-                      ),),
+                      child: const Text(
+                        'No',
+                        style: TextStyle(color: Colors.red),
+                      ),
                     ),
                   ],
                 ),
@@ -98,6 +98,8 @@ class _DashboardState extends State<Dashboard> {
           ],
         ),
       );
+    } else if (_selectedIndex == 1) {
+      return null;
     }
 
     return AppBar(
@@ -112,10 +114,7 @@ class _DashboardState extends State<Dashboard> {
 
   ///Dynamically changes AppBar title based on page that is opened
   AppBarTitleBulder(data) {
-    if (_selectedIndex == 1) {
-      return Center(
-          child: Text('Messages', style: TextStyle(color: Colors.black)));
-    } else if (_selectedIndex == 2) {
+    if (_selectedIndex == 2) {
       return Center(
           child: Text('Profile', style: TextStyle(color: Colors.black)));
     } else {
