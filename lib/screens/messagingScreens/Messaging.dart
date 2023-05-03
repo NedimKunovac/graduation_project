@@ -17,7 +17,7 @@ class _MessagingState extends State<Messaging> {
       theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
           appBarTheme: AppBarTheme(
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.black,
             foregroundColor: Colors.black,
           )),
       home: messagingHPage(),

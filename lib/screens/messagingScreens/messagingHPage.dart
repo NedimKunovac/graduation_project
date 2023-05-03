@@ -32,7 +32,8 @@ class _messagingHPageState extends State<messagingHPage> {
                   documents[i].data() as Map<String, dynamic>;
               _suggestions.add(userData['name']);
             }
-            var SearchBar = EasySearchBar(
+            var SearchBar =  EasySearchBar(
+
                 elevation: 0,
                 appBarHeight: 70,
                 backgroundColor: Colors.white,
@@ -40,12 +41,19 @@ class _messagingHPageState extends State<messagingHPage> {
                 onSearch: (value) {},
                 onSuggestionTap: (value) {
                   Navigator.of(context, rootNavigator: true).push(
-                      // ensures fullscreen
-                      MaterialPageRoute(
-                          builder: (context) => ChatPage(
-                              id: documents[_suggestions.indexOf(value)].id)));
+                    // ensures fullscreen
+                    MaterialPageRoute(
+                      builder: (context) => ChatPage(
+                        id: documents[_suggestions.indexOf(value)].id,
+                      ),
+                    ),
+                  );
                 },
-                suggestions: _suggestions);
+                suggestions: _suggestions,
+
+
+
+          );
             // Return a widget that displays the data
             return Scaffold(
               appBar: SearchBar,

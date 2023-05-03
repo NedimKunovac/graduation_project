@@ -784,7 +784,7 @@ class _updateAdvertisementFormState extends State<updateAdvertisementForm> {
         ]),
       ),
 
-      
+
 
     ));
   }

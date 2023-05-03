@@ -56,15 +56,17 @@ class _ActiveChatsState extends State<ActiveChats> {
                                             ChatPage(id: user)));
                               },
                               child: Column(
+
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.symmetric(
                                         vertical: 10, horizontal: 12),
                                     child: Container(
+
                                       width: 65,
                                       height: 65,
                                       decoration: BoxDecoration(
-                                        color: Colors.white,
+                                        color: Colors.black,
                                         borderRadius: BorderRadius.circular(35),
                                         boxShadow: [
                                           BoxShadow(
