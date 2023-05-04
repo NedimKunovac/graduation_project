@@ -44,7 +44,7 @@ class _RenderTagsState extends State<RenderTags> {
           padding: EdgeInsets.fromLTRB(0, 0, 7, 0),
           child: Chip(
             label: Text(
-              widget.addedChips[i].toString(),
+              widget.addedChips[i].length<20? widget.addedChips[i].toString() : widget.addedChips[i].replaceRange(20, widget.addedChips[i].length, '...'),
               style: widget.textStyle,
             ),
             backgroundColor: widget.chipColor,

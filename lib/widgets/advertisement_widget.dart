@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/screens/advertisement_details.dart';
+import 'package:intl/intl.dart';
 import 'tag_field.dart';
 
 /// Advertisement Preview [Small box seen on dashboard]
@@ -72,7 +73,7 @@ class _AdvertisementState extends State<Advertisement> {
                             child: Align(
                               alignment: Alignment.topRight,
                               child: Text(
-                                '18/04/2023',
+                                DateFormat.yMMMMd('en_US').format(widget.data['endDate'].toDate()).toString(),
                                 textAlign: TextAlign.justify,
                                 style: TextStyle(
                                   color: Colors.grey.shade200,
