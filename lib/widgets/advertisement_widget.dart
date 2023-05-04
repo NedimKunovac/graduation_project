@@ -160,40 +160,43 @@ class _AdvertisementState extends State<Advertisement> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            RenderTags(
-                              addedChips: List<String>.from(
-                                  widget.data['requirements'] as List),
-                              chipColor: Colors.green,
-                              textStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 8,
+                            Flexible(
+                              child: RenderTags(
+                                addedChips: List<String>.from(
+                                    widget.data['requirements'] as List),
+                                chipColor: Colors.green,
+                                textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                ),
+                                nChips: 3,
                               ),
                             ),
                           ],
                         ),
-                        Positioned(
-                          right: 0,
-                          top: 0,
-                          bottom: 0,
-                          child: Container(
-                            width: 40,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.black,
-                            ),
-                            child: Center(
-                              child: Text(
-                                '+1',
-
-                                ///Number regarding other skills that are required but arent displayed on the dashboard card. Currently this is UI element only
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Positioned(
+                        //   right: 0,
+                        //   top: 0,
+                        //   bottom: 0,
+                        //   child: Container(
+                        //     width: 40,
+                        //     decoration: BoxDecoration(
+                        //       shape: BoxShape.circle,
+                        //       color: Colors.black,
+                        //     ),
+                        //     child: Center(
+                        //       child: Text(
+                        //         '+1',
+                        //
+                        //         ///Number regarding other skills that are required but arent displayed on the dashboard card. Currently this is UI element only
+                        //         style: TextStyle(
+                        //           color: Colors.white,
+                        //           fontSize: 10,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ],

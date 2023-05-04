@@ -9,7 +9,7 @@ import 'package:profanity_filter/profanity_filter.dart';
 
 class RenderTags extends StatefulWidget {
   RenderTags(
-      {Key? key, required this.addedChips, this.chipColor, this.textStyle})
+      {Key? key, required this.addedChips, this.chipColor, this.textStyle, this.nChips})
       : super(key: key);
 
   ///List of added tags
@@ -21,6 +21,9 @@ class RenderTags extends StatefulWidget {
   ///Chip inner text color
   TextStyle? textStyle;
 
+  ///Number of chips to be loaded
+  int? nChips;
+
   @override
   State<RenderTags> createState() => _RenderTagsState();
 }
@@ -28,11 +31,17 @@ class RenderTags extends StatefulWidget {
 class _RenderTagsState extends State<RenderTags> {
   ///Getter for top fun
   getChipList() {
+    int ChipLimit = widget.addedChips.length;
+
+    if(widget.nChips!=null && widget.addedChips.length>widget.nChips!){
+      ChipLimit = widget.nChips!;
+    }
+
     List<Widget> chipList = <Widget>[];
-    for (var i = 0; i < widget.addedChips.length; i++) {
+    for (var i = 0; i < ChipLimit; i++) {
       chipList.add(
         Padding(
-          padding: EdgeInsets.fromLTRB(0, 2, 7, 2),
+          padding: EdgeInsets.fromLTRB(0, 0, 7, 0),
           child: Chip(
             label: Text(
               widget.addedChips[i].toString(),
@@ -43,6 +52,21 @@ class _RenderTagsState extends State<RenderTags> {
         ),
       );
     }
+    if(widget.nChips!=null && widget.addedChips.length>widget.nChips!){
+      chipList.add(
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 2, 7, 2),
+          child: Chip(
+            label: Text(
+              "+${widget.addedChips.length-widget.nChips!}",
+              style: widget.textStyle,
+            ),
+            backgroundColor: widget.chipColor,
+          ),
+        ),
+      );
+    }
+
     return chipList;
   }
 
