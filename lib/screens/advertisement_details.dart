@@ -91,6 +91,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
               'No, I want to keep this post',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
+                color: Colors.black
               ),
             ),
           ),
@@ -112,42 +113,46 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                 onPressed: () {
                   showDialog<String>(
                     context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: const Text(
-                          'Are you sure you want to edit this post?'),
-                      content: const Text(
-                          'Once you edit your post, you cannot revert your changes!'),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        updateAdvertisementForm(
-                                            data: widget.data)));
-                          },
-                          child: const Text(
-                            'I understand, I want to edit this post',
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold,
+                    builder: (BuildContext context) =>
+                        AlertDialog(
+                          title: const Text(
+                              'Are you sure you want to edit this post?'),
+                          content: const Text(
+                              'Once you edit your post, you cannot revert your changes!'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            updateAdvertisementForm(
+                                                data: widget.data)));
+                              },
+                              child: const Text(
+                                'I understand, I want to edit this post',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(
-                              context, 'No, I don\'t want to edit this post'),
-                          child: const Text(
-                            'No, I don\'t want to edit this post',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(
+                                      context,
+                                      'No, I don\'t want to edit this post'),
+                              child: const Text(
+                                'No, I don\'t want to edit this post',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
                   );
                 },
                 icon: Icon(Icons.edit_calendar),
@@ -164,6 +169,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
           ),
         ),
       );
+
     } else {
       return BottomAppBar(
         child: Container(
@@ -171,12 +177,15 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              IconButton(
-                onPressed: applyToPost,
-                icon: Icon(Icons.check_circle),
-                color: Colors.red,
-                iconSize: 35.0,
+              MaterialButton(onPressed: applyToPost,
+              color: Colors.red.shade400,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50)
               ),
+              child: Text('Apply',
+                style: TextStyle(
+                  color: Colors.white
+                ) ,),)
               // add additional icons here as needed
             ],
           ),
