@@ -18,8 +18,13 @@ class ViewAdvertisements extends StatefulWidget {
 
 class _ViewAdvertisementsState extends State<ViewAdvertisements> {
   ///Post loading options for volunteers, and first post set
-  final List<bool> selectedLoading = <bool>[true, false, false];
-  List<String> loadingTypes = <String>['By Skills', 'By Category', 'All'];
+  final List<bool> selectedLoading = <bool>[true, false, false, false];
+  List<String> loadingTypes = <String>[
+    'By Skills',
+    'By Category',
+    'All',
+    'Accepted'
+  ];
 
   ///Function that returns toggle buttons if volunteer is logged in.
   loadToggleButtons() {
@@ -30,14 +35,14 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
             height: 8,
           ),
           Ink(
-            width: 300,
+            width: 350,
             height: 30,
             color: Colors.transparent,
             child: GridView.count(
               primary: true,
-              crossAxisCount: 3,
+              crossAxisCount: 4,
               //set the number of buttons in a row
-              crossAxisSpacing: 20,
+              crossAxisSpacing: 5,
               //set the spacing between the buttons
               childAspectRatio: 3,
               //set the width-to-height ratio of the button,
@@ -116,6 +121,12 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
       } else if (selectedLoading[2] == true) {
         _postsStream =
             FirebaseFirestore.instance.collection('Posts').snapshots();
+      } else if (selectedLoading[3] == true) {
+        print(widget.userData['userID']);
+        _postsStream = FirebaseFirestore.instance
+            .collection('Posts')
+            .where('applicationSubmitted', arrayContainsAny: [widget.userData['userID'].toString()])
+            .snapshots();
       }
     } else
 
@@ -158,7 +169,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
                       document.data()! as Map<String, dynamic>;
                   data["postID"] = document.id;
                   if (widget.userData['type'] == 2 &&
-                      data['applicationSubmitted'] != null) {
+                      data['applicationSubmitted'] != null && selectedLoading[3] == false) {
                     bool toggle = false;
                     for (var i = 0;
                         i < data['applicationSubmitted'].length;
