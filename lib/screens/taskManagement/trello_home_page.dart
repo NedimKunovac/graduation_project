@@ -11,7 +11,9 @@ class TrelloHomePage extends StatelessWidget {
     return  Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-
+        iconTheme: IconThemeData(
+          color: Colors.black
+        ),
         backgroundColor: Colors.white,
         elevation: 0,
         title: Padding(
