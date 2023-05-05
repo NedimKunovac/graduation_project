@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:graduation_project/screens/applicants.dart';
 import 'package:graduation_project/widgets/tag_field.dart';
 import 'package:graduation_project/screens/advertisement_form_update.dart';
 import '../utilities/flash_bar.dart';
@@ -923,7 +924,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
         ):SizedBox.shrink(),
 
 
-        selectedLoading[1]?  Center(child: Text('Applicatins should go instead of this widget')):SizedBox.shrink(),
+        selectedLoading[1]?  Center(child: AcceptedApplicants()):SizedBox.shrink(),
         selectedLoading[0]?  Center(child: Text('Trello should go instead of this widget')):SizedBox.shrink(),
 
       ],
