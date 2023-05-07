@@ -2,44 +2,49 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/screens/taskManagement/task_form_page.dart';
 import 'package:graduation_project/screens/taskManagement/go_premium.dart';
 import 'package:graduation_project/screens/taskManagement/tasks.dart';
+import 'package:graduation_project/widgets/view_advertisements.dart';
 
 class TrelloHomePage extends StatelessWidget {
   const TrelloHomePage({Key? key}) : super(key: key);
 
   @override
+
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: Colors.black
+            color: Colors.black
         ),
         backgroundColor: Colors.white,
         elevation: 0,
         title: Padding(
-      padding: EdgeInsets.only(left: 0),
-      child: Row(
-        children: [
-          Container(
-            height: 45,
-            width: 45,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network('https://static.vecteezy.com/system/resources/previews/000/439/863/original/vector-users-icon.jpg'),
-            ),
+          padding: EdgeInsets.only(left: 0),
+          child: Row(
+            children: [
+              Container(
+                height: 45,
+                width: 45,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network('https://static.vecteezy.com/system/resources/previews/000/439/863/original/vector-users-icon.jpg'),
+                ),
+              ),
+              SizedBox(width: 10),
+              Text(
+                'Hi,user',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+            ],
+
           ),
-          SizedBox(width: 10),
-          Text(
-            'Hi, name of the user',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    ),
+
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,4 +130,17 @@ class TrelloHomePage extends StatelessWidget {
     );
   }
 
+}
+class PageOne extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Page One'),
+      ),
+      body: Center(
+        child: Text('This is page one'),
+      ),
+    );
+  }
 }
