@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/screens/taskManagement/task.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:graduation_project/screens/taskManagement/details.dart';
+import 'package:graduation_project/screens/taskManagement/task_form_page.dart';
 
 class Tasks extends StatelessWidget {
   final tasksList = Task.generatedTasks();
@@ -18,24 +19,32 @@ class Tasks extends StatelessWidget {
           mainAxisSpacing: 10,
         ),
         itemBuilder: (context, index) => tasksList[index].isLast ?? false
-            ? _buildAddTask()
+            ? _buildAddTask(context)
             : _buildTask(context, tasksList[index]),
       ),
     );
   }
 }
 
-Widget _buildAddTask() {
-  return DottedBorder(
-    borderType: BorderType.RRect,
-    radius: Radius.circular(20),
-    dashPattern: [10, 10],
-    color: Colors.grey,
-    strokeWidth: 2,
-    child: Center(
-      child: Text(
-        '+ Add',
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+Widget _buildAddTask(context) {
+  return GestureDetector(
+    onTap: (){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => TaskFormPage()),
+      );
+    },
+    child: DottedBorder(
+      borderType: BorderType.RRect,
+      radius: Radius.circular(20),
+      dashPattern: [10, 10],
+      color: Colors.grey,
+      strokeWidth: 2,
+      child: Center(
+        child: Text(
+          '+ Add',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
       ),
     ),
   );
@@ -44,9 +53,7 @@ Widget _buildAddTask() {
 Widget _buildTask(BuildContext context, Task task) {
   return GestureDetector(
     onTap: () {
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => DetailPage(task)),
-      );
+
     },
     child: Container(
       padding: EdgeInsets.all(15),

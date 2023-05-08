@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:graduation_project/screens/applicants.dart';
+import 'package:graduation_project/screens/taskManagement/colors.dart';
+import 'package:graduation_project/screens/taskManagement/details.dart';
 import 'package:graduation_project/screens/taskManagement/trello_home_page.dart';
 import 'package:graduation_project/widgets/tag_field.dart';
 import 'package:graduation_project/screens/advertisement_form_update.dart';
 import '../utilities/flash_bar.dart';
+import 'taskManagement/task.dart';
 
 ///Page that displays detailed information about post
 
@@ -99,10 +102,8 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                 Navigator.pop(context, 'No, I want to keep this post'),
             child: const Text(
               'No, I want to keep this post',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black
-              ),
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
             ),
           ),
         ],
@@ -113,111 +114,109 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
   bottomAppBarGenerator() {
     if (widget.data['authorID'] == FirebaseAuth.instance.currentUser?.uid ||
         widget.userType == 0) {
-      if(selectedLoading[2])
-      return BottomAppBar(
-        child: Container(
-          height: 50.0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IconButton(
-                onPressed: () {
-                  showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        AlertDialog(
-                          title: const Text(
-                              'Are you sure you want to edit this post?'),
-                          content: const Text(
-                              'Once you edit your post, you cannot revert your changes!'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            updateAdvertisementForm(
-                                                data: widget.data)));
-                              },
-                              child: const Text(
-                                'I understand, I want to edit this post',
-                                style: TextStyle(
-                                  color: Colors.black,
+      if (selectedLoading[2])
+        return BottomAppBar(
+          child: Container(
+            height: 50.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text(
+                            'Are you sure you want to edit this post?'),
+                        content: const Text(
+                            'Once you edit your post, you cannot revert your changes!'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          updateAdvertisementForm(
+                                              data: widget.data)));
+                            },
+                            child: const Text(
+                              'I understand, I want to edit this post',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(
+                                context, 'No, I don\'t want to edit this post'),
+                            child: const Text(
+                              'No, I don\'t want to edit this post',
+                              style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                                  color: Colors.red),
                             ),
-                            TextButton(
-                              onPressed: () =>
-                                  Navigator.pop(
-                                      context,
-                                      'No, I don\'t want to edit this post'),
-                              child: const Text(
-                                'No, I don\'t want to edit this post',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                  );
-                },
-                icon: Icon(Icons.edit_calendar),
-                color: Colors.red,
-                iconSize: 35.0,
-              ),
-              IconButton(
-                onPressed: deletePost,
-                icon: Icon(Icons.delete_forever),
-                color: Colors.red,
-                iconSize: 35.0,
-              ),
-            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.edit_calendar),
+                  color: Colors.red,
+                  iconSize: 35.0,
+                ),
+                IconButton(
+                  onPressed: deletePost,
+                  icon: Icon(Icons.delete_forever),
+                  color: Colors.red,
+                  iconSize: 35.0,
+                ),
+              ],
+            ),
           ),
-        ),
-      );
-
-    } else if (widget.data['applicationSubmitted']==null){
+        );
+    } else if (widget.data['applicationSubmitted'] == null) {
       return BottomAppBar(
         child: Container(
           height: 50.0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              MaterialButton(onPressed: applyToPost,
-              color: Colors.red.shade400,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50)
-              ),
-              child: Text('Apply',
-                style: TextStyle(
-                  color: Colors.white
-                ) ,),)
+              MaterialButton(
+                onPressed: applyToPost,
+                color: Colors.red.shade400,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50)),
+                child: Text(
+                  'Apply',
+                  style: TextStyle(color: Colors.white),
+                ),
+              )
               // add additional icons here as needed
             ],
           ),
         ),
       );
-    } else if(!widget.data['applicationSubmitted'].contains(FirebaseAuth.instance.currentUser?.uid)){
+    } else if (!widget.data['applicationSubmitted']
+        .contains(FirebaseAuth.instance.currentUser?.uid)) {
       return BottomAppBar(
         child: Container(
           height: 50.0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              MaterialButton(onPressed: applyToPost,
+              MaterialButton(
+                onPressed: applyToPost,
                 color: Colors.red.shade400,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50)
+                    borderRadius: BorderRadius.circular(50)),
+                child: Text(
+                  'Apply',
+                  style: TextStyle(color: Colors.white),
                 ),
-                child: Text('Apply',
-                  style: TextStyle(
-                      color: Colors.white
-                  ) ,),)
+              )
               // add additional icons here as needed
             ],
           ),
@@ -226,8 +225,11 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
     }
   }
 
-  getAppBar(){
-    return AppBar(
+  getAppBar() {
+    if (widget.userType == 2 && widget.data['applicationSubmitted']
+        .contains(FirebaseAuth.instance.currentUser?.uid))
+          return null;
+          else return AppBar(
       elevation: 0,
       backgroundColor: Colors.white,
       title: Text(
@@ -248,693 +250,765 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
     );
   }
 
-
-  pagePicker(){
-      if (widget.data['authorID'] == FirebaseAuth.instance.currentUser?.uid) {
-        return Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 2,
-              ),
-              Ink(
-                width: 350,
-                height: 37,
-                color: Colors.transparent,
-                child: GridView.count(
-                  primary: true,
-                  crossAxisCount: 3,
-                  //set the number of buttons in a row
-                  crossAxisSpacing: 20,
-                  //set the spacing between the buttons
-                  childAspectRatio: 3,
-                  //set the width-to-height ratio of the button,
-                  //>1 is a horizontal rectangle
-                  children: List.generate(selectedLoading.length, (index) {
-                    //using Inkwell widget to create a button
-                    return InkWell(
-                        splashColor: Colors.yellow,
-                        //the default splashColor is grey
-                        onTap: () {
-                          //set the toggle logic
-                          setState(() {
-                            for (int indexBtn = 0;
-                            indexBtn < selectedLoading.length;
-                            indexBtn++) {
-                              if (indexBtn == index) {
-                                selectedLoading[indexBtn] = true;
-                              } else {
-                                selectedLoading[indexBtn] = false;
-                              }
+  pagePicker() {
+    if (widget.data['authorID'] == FirebaseAuth.instance.currentUser?.uid) {
+      return Center(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 2,
+            ),
+            Ink(
+              width: 350,
+              height: 37,
+              color: Colors.transparent,
+              child: GridView.count(
+                primary: true,
+                crossAxisCount: 3,
+                //set the number of buttons in a row
+                crossAxisSpacing: 20,
+                //set the spacing between the buttons
+                childAspectRatio: 3,
+                //set the width-to-height ratio of the button,
+                //>1 is a horizontal rectangle
+                children: List.generate(selectedLoading.length, (index) {
+                  //using Inkwell widget to create a button
+                  return InkWell(
+                      splashColor: Colors.yellow,
+                      //the default splashColor is grey
+                      onTap: () {
+                        //set the toggle logic
+                        setState(() {
+                          for (int indexBtn = 0;
+                              indexBtn < selectedLoading.length;
+                              indexBtn++) {
+                            if (indexBtn == index) {
+                              selectedLoading[indexBtn] = true;
+                            } else {
+                              selectedLoading[indexBtn] = false;
                             }
-                          });
-                        },
-                        child: Ink(
-                          decoration: BoxDecoration(
-                            //set the background color of the button when it is selected/ not selected
-                            color: selectedLoading[index]
-                                ? Colors.red.shade400
-                                : Colors.white,
-                            // here is where we set the rounded corner
-                            borderRadius: BorderRadius.circular(8),
-                            //don't forget to set the border,
-                            //otherwise there will be no rounded corner
-                            border: Border.all(color: Colors.red),
+                          }
+                        });
+                      },
+                      child: Ink(
+                        decoration: BoxDecoration(
+                          //set the background color of the button when it is selected/ not selected
+                          color: selectedLoading[index]
+                              ? Colors.red.shade400
+                              : Colors.white,
+                          // here is where we set the rounded corner
+                          borderRadius: BorderRadius.circular(8),
+                          //don't forget to set the border,
+                          //otherwise there will be no rounded corner
+                          border: Border.all(color: Colors.red),
+                        ),
+                        child: Center(
+                          child: Text(
+                            loadingTypes[index],
+                            style: TextStyle(
+                              color: selectedLoading[index]
+                                  ? Colors.white
+                                  : Colors.red.shade400,
+                            ),
                           ),
-                          child: Center(
+                        ),
+                      ));
+                }),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return SizedBox.shrink();
+    }
+  }
+
+  pageGenerator() {
+    Task something = Task(
+      iconData: Icons.person_rounded,
+      title: 'Task 1',
+      bgColor: Colors.green,
+      iconColor: Colors.blue,
+      btnColor: Colors.red,
+      left: 3,
+      done: 1,
+      desc:[
+        {
+          'time': '9:00 am',
+          'title': 'Go for a walk with dog',
+          'slot': '9:00 - 10:00 am',
+          'tlColor': kRedDark,
+          'bgColor': kRedLight,
+        },
+        {
+          'time': '10:00 am',
+          'title': 'Shot on dribble',
+          'slot': '10:00 - 12:00 am',
+          'tlColor': kBlueDark,
+          'bgColor': kBlueLight,
+        },
+        {
+          'time': '11:00 am',
+          'title': '',
+          'slot': '',
+          'tlColor': kBlueDark,
+        },
+        {
+          'time': '12:00 am',
+          'title': '',
+          'slot': '',
+          'tlColor': Colors.grey.withOpacity(0.3),
+        },
+        {
+          'time': '1:00 pm',
+          'title': 'Call with client',
+          'slot': '1:00 - 2:00 pm',
+          'tlColor': Colors.grey.withOpacity(0.3),
+          'bgColor': kYellowLight,
+        },
+        {
+          'time': '2:00 pm',
+          'title': '',
+          'slot': '',
+          'tlColor': Colors.grey.withOpacity(0.3),
+        },
+        {
+          'time': '3:00 pm',
+          'title': '',
+          'slot': '',
+          'tlColor': Colors.grey.withOpacity(0.3),
+        },
+      ]
+    );
+
+    if (widget.userType == 2) {
+      return !widget.data['applicationSubmitted']
+              .contains(FirebaseAuth.instance.currentUser?.uid)
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(widget.data['profilePhotoUrl']),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      margin: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        widget.data['authorName'],
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.red.shade400,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      ///CATEGORY
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
                             child: Text(
-                              loadingTypes[index],
+                              'Category:',
                               style: TextStyle(
-                                color: selectedLoading[index]
-                                    ? Colors.white
-                                    : Colors.red.shade400,
+                                fontSize: 16,
+                                color: Colors.white,
                               ),
                             ),
                           ),
-                        ));
-                  }),
-                ),
-              ),
-            ],
-          ),
-        );
-      } else {
-        return SizedBox.shrink();
-      }
-  }
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              widget.data['category'][0],
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
 
-  pageGenerator(){
-    if(widget.userType==2){
+                      ///DUE DATE
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Due date:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              "${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).year}",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+
+                      ///START DATE
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Start Date:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              "${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).year}",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+
+                      ///END DATE
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'End date:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              "${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).year}",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+
+                      ///LENGTH OF JOB
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Length of job:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              '${((widget.data['endDate'].seconds - widget.data['startDate'].seconds) / 86400).round()}',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+
+                      ///NUMBER OF APPLICANTS
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Accepted applicants:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              widget.data['applicants'],
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+
+                      ///DESCRIPTION
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Work description:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              widget.data['description'],
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+
+                      ///REQUIREMENTS
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Requirements:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: RenderTags(
+                                addedChips: List<String>.from(
+                                    widget.data['requirements'] as List)),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+
+                      ///OPPORTUNITIES
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Opportunities:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              widget.data['opportunities'],
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )
+          : SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: DetailPage(something),
+      );
+    } else
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.3,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(widget.data['profilePhotoUrl']),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Align(
-              alignment: Alignment.bottomRight,
-              child: Container(
-                margin: EdgeInsets.all(10),
-                padding: EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.8),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  widget.data['authorName'],
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+          ///PHOTO AT TOP + COMPANY NAME
+          selectedLoading[2]
+              ? Container(
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(widget.data['profilePhotoUrl']),
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.all(10),
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.red.shade400,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                ///CATEGORY
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 2,
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      margin: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       child: Text(
-                        'Category:',
+                        widget.data['authorName'],
                         style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        widget.data['category'][0],
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
+                  ),
+                )
+              : SizedBox.shrink(),
 
-                ///DUE DATE
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Due date:',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
+          ///BOX WITH DATA
+          selectedLoading[2]
+              ? Container(
+                  margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.red.shade400,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
                       ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        "${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).year}",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      ///CATEGORY
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Category:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              widget.data['category'][0],
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
+                      SizedBox(height: 10),
 
-                ///START DATE
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Start Date:',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
+                      ///DUE DATE
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Due date:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              "${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).year}",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        "${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).year}",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
+                      SizedBox(height: 10),
 
-                ///END DATE
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'End date:',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
+                      ///START DATE
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Start Date:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              "${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).year}",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        "${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).year}",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
+                      SizedBox(height: 10),
 
-                ///LENGTH OF JOB
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Length of job:',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
+                      ///END DATE
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'End date:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              "${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).year}",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        '${((widget.data['endDate'].seconds - widget.data['startDate'].seconds) / 86400).round()}',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
+                      SizedBox(height: 10),
 
-                ///NUMBER OF APPLICANTS
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Accepted applicants:',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
+                      ///LENGTH OF JOB
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Length of job:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              '${((widget.data['endDate'].seconds - widget.data['startDate'].seconds) / 86400).round()}',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        widget.data['applicants'],
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
+                      SizedBox(height: 10),
 
-                ///DESCRIPTION
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Work description:',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
+                      ///NUMBER OF APPLICANTS
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Accepted applicants:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              widget.data['applicants'],
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        widget.data['description'],
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
+                      SizedBox(height: 10),
 
-                ///REQUIREMENTS
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Requirements:',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
+                      ///DESCRIPTION
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Work description:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              widget.data['description'],
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: RenderTags(
-                          addedChips: List<String>.from(
-                              widget.data['requirements'] as List)),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
+                      SizedBox(height: 10),
 
-                ///OPPORTUNITIES
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Opportunities:',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
+                      ///REQUIREMENTS
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Requirements:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: RenderTags(
+                                addedChips: List<String>.from(
+                                    widget.data['requirements'] as List)),
+                          ),
+                        ],
                       ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        widget.data['opportunities'],
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
+                      SizedBox(height: 10),
+
+                      ///OPPORTUNITIES
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Opportunities:',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              widget.data['opportunities'],
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+                    ],
+                  ),
+                )
+              : SizedBox.shrink(),
+
+          selectedLoading[1]
+              ? Center(child: AcceptedApplicants())
+              : SizedBox.shrink(),
+          selectedLoading[0]
+              ? SizedBox(
+                  height: MediaQuery.of(context).size.height -
+                      80 -
+                      AppBar().preferredSize.height,
+                  child: TrelloHomePage())
+              : SizedBox.shrink(),
+
+          ///Zamotati u scaffold i dodati button
         ],
       );
-    } else return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        ///PHOTO AT TOP + COMPANY NAME
-        selectedLoading[2]?  Container(
-          height: MediaQuery.of(context).size.height * 0.3,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(widget.data['profilePhotoUrl']),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Align(
-            alignment: Alignment.bottomRight,
-            child: Container(
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.8),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text(
-                widget.data['authorName'],
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-        ):SizedBox.shrink(),
-        ///BOX WITH DATA
-        selectedLoading[2]?  Container(
-          margin: EdgeInsets.all(10),
-          padding: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Colors.red.shade400,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: Offset(0, 3),
-              ),
-            ],
-          ),
-          child: Column(
-            children: [
-              ///CATEGORY
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Category:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      widget.data['category'][0],
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-
-              ///DUE DATE
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Due date:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      "${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).year}",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-
-              ///START DATE
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Start Date:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      "${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).year}",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-
-              ///END DATE
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'End date:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      "${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).year}",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-
-              ///LENGTH OF JOB
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Length of job:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      '${((widget.data['endDate'].seconds - widget.data['startDate'].seconds) / 86400).round()}',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-
-              ///NUMBER OF APPLICANTS
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Accepted applicants:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      widget.data['applicants'],
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-
-              ///DESCRIPTION
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Work description:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      widget.data['description'],
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-
-              ///REQUIREMENTS
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Requirements:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: RenderTags(
-                        addedChips: List<String>.from(
-                            widget.data['requirements'] as List)),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-
-              ///OPPORTUNITIES
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Opportunities:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      widget.data['opportunities'],
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ):SizedBox.shrink(),
-
-
-        selectedLoading[1]?  Center(child: AcceptedApplicants()):SizedBox.shrink(),
-        selectedLoading[0]?  Center(child: ElevatedButton(onPressed:(){ Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TrelloHomePage()),
-        );}, child: Text('Trello'))):SizedBox.shrink(),///Zamotati u scaffold i dodati button
-
-      ],
-    );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -945,9 +1019,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
         children: [
           pagePicker(),
           Expanded(
-            child: SingleChildScrollView(
-              child: pageGenerator()
-            ),
+            child: SingleChildScrollView(child: pageGenerator()),
           ),
         ],
       ),

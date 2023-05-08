@@ -2,14 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:graduation_project/screens/dashboard.dart';
-import 'package:graduation_project/screens/taskManagement/task.dart';//task.dart
-import 'package:graduation_project/screens/taskManagement/date_picker.dart';//date_picker.dart
-import 'package:graduation_project/screens/taskManagement/task_timeline.dart';//task_timeline.dart
+import 'package:graduation_project/screens/taskManagement/task.dart'; //task.dart
+import 'package:graduation_project/screens/taskManagement/date_picker.dart'; //date_picker.dart
+import 'package:graduation_project/screens/taskManagement/task_timeline.dart'; //task_timeline.dart
 import 'package:graduation_project/screens/taskManagement/task_title.dart';
 import 'package:graduation_project/screens/taskManagement/trello_home_page.dart';
-import 'package:graduation_project/widgets/view_advertisements.dart';//task_title.dart
-class DetailPage extends StatelessWidget {
+import 'package:graduation_project/widgets/view_advertisements.dart'; //task_title.dart
 
+class DetailPage extends StatelessWidget {
   final Task task;
 
   DetailPage(this.task);
@@ -19,7 +19,6 @@ class DetailPage extends StatelessWidget {
     final detailList = task.desc;
     return Scaffold(
         backgroundColor: Colors.black,
-
         body: CustomScrollView(
           slivers: [
             _buildAppBar(context),
@@ -41,26 +40,22 @@ class DetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            detailList == null ?
-            SliverFillRemaining(
-                child: Container(
-                    color: Colors.white,
-                    child: Center(child: Text('No task today',
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 18
-                      ),)))
-            ) :
-            SliverList(
-              delegate: SliverChildBuilderDelegate((_, index) =>
-                  TaskTimeline(detailList[index]),
-                  childCount: detailList.length
-              ),
-            )
+            detailList == null
+                ? SliverFillRemaining(
+                    child: Container(
+                        color: Colors.white,
+                        child: Center(
+                            child: Text(
+                          'No task today',
+                          style: TextStyle(color: Colors.grey, fontSize: 18),
+                        ))))
+                : SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                        (_, index) => TaskTimeline(detailList[index]),
+                        childCount: detailList.length),
+                  )
           ],
-        )
-
-    );
+        ));
   }
 
   Widget _buildAppBar(BuildContext context) {
@@ -75,8 +70,7 @@ class DetailPage extends StatelessWidget {
       actions: [
         PopupMenuButton(
           icon: Icon(Icons.more_vert),
-          itemBuilder: (context) =>
-          [
+          itemBuilder: (context) => [
             PopupMenuItem(
               child: Text('View post'),
               value: 'View post',
@@ -86,14 +80,13 @@ class DetailPage extends StatelessWidget {
               value: 'Leave',
             ),
           ],
-    onSelected: (value) {
-    if (value == 'View post') {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => PageOne()));
-    } else if (value == 'Leave') {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Dashboard()));
-    }
-    },
+          onSelected: (value) {
+            if (value == 'View post') {
 
+            } else if (value == 'Leave') {
+             Navigator.pop(context);
+            }
+          },
         ),
       ],
       flexibleSpace: FlexibleSpaceBar(
