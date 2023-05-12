@@ -125,7 +125,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
         print(widget.userData['userID']);
         _postsStream = FirebaseFirestore.instance
             .collection('Posts')
-            .where('applicationSubmitted', arrayContainsAny: [widget.userData['userID'].toString()])
+            .where('acceptedApplicants', arrayContainsAny: [widget.userData['userID'].toString()])
             .snapshots();
       }
     } else
@@ -169,12 +169,21 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
                       document.data()! as Map<String, dynamic>;
                   data["postID"] = document.id;
                   if (widget.userData['type'] == 2 &&
-                      data['applicationSubmitted'] != null && selectedLoading[3] == false) {
+                      data['applicationSubmitted'] != null && data['acceptedApplicants'] != null && selectedLoading[3] == false) {
                     bool toggle = false;
                     for (var i = 0;
                         i < data['applicationSubmitted'].length;
                         i++) {
                       if (data['applicationSubmitted'][i] ==
+                          FirebaseAuth.instance.currentUser?.uid) {
+                        toggle = true;
+                        break;
+                      }
+                    }
+                    for (var i = 0;
+                    i < data['acceptedApplicants'].length;
+                    i++) {
+                      if (data['acceptedApplicants'][i] ==
                           FirebaseAuth.instance.currentUser?.uid) {
                         toggle = true;
                         break;

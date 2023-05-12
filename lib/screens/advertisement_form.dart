@@ -94,6 +94,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
         'authorName': widget.userName,
         'profilePhotoUrl': widget.userProfilePhoto,
         'applicationSubmitted': [],
+        'acceptedApplicants':[],
         'dueDate': Timestamp.fromDate(pickedDueDate!),
         'startDate': Timestamp.fromDate(pickedStartDate!),
         'endDate': Timestamp.fromDate(pickedEndDate!),

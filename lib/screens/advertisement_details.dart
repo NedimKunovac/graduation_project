@@ -177,30 +177,11 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
             ),
           ),
         );
-    } else if (widget.data['applicationSubmitted'] == null) {
-      return BottomAppBar(
-        child: Container(
-          height: 50.0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              MaterialButton(
-                onPressed: applyToPost,
-                color: Colors.red.shade400,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50)),
-                child: Text(
-                  'Apply',
-                  style: TextStyle(color: Colors.white),
-                ),
-              )
-              // add additional icons here as needed
-            ],
-          ),
-        ),
-      );
-    } else if (!widget.data['applicationSubmitted']
+    } else if (widget.data['acceptedApplicants']
+        .contains(FirebaseAuth.instance.currentUser?.uid) || widget.data['applicationSubmitted']
         .contains(FirebaseAuth.instance.currentUser?.uid)) {
+      return null;
+    } else {
       return BottomAppBar(
         child: Container(
           height: 50.0,
@@ -226,7 +207,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
   }
 
   getAppBar() {
-    if (widget.userType == 2 && widget.data['applicationSubmitted']
+    if (widget.userType == 2 && widget.data['acceptedApplicants']
         .contains(FirebaseAuth.instance.currentUser?.uid))
           return null;
           else return AppBar(
@@ -383,7 +364,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
     );
 
     if (widget.userType == 2) {
-      return !widget.data['applicationSubmitted']
+      return !widget.data['acceptedApplicants']
               .contains(FirebaseAuth.instance.currentUser?.uid)
           ? Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -995,7 +976,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
               : SizedBox.shrink(),
 
           selectedLoading[1]
-              ? Center(child: AcceptedApplicants())
+              ? Center(child: AcceptedApplicants(data: widget.data))
               : SizedBox.shrink(),
           selectedLoading[0]
               ? SizedBox(
