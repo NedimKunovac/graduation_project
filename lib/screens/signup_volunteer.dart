@@ -36,6 +36,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
   XFile? pickedImage;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   ///Category Field
   var InterestsTiles = null;
@@ -414,6 +415,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           ],
                         ),
 
+                        ///CATEGORY
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -534,6 +536,49 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                                 border: OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.grey.shade400),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            )
+                          ],
+                        ),
+
+                        ///CONFIRM PASSWORD
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Conifrm password:',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            TextFormField(
+                              obscureText: true,
+                              controller: confirmPasswordController,
+                              autovalidateMode: AutovalidateMode.disabled,
+                              validator: (value) =>
+                              value != null && value.length < 6 || value!= passwordController.text
+                                  ? 'Please make sure the passwords match'
+                                  : null,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 10),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.grey.shade400,
+                                  ),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide:
+                                  BorderSide(color: Colors.grey.shade400),
                                 ),
                               ),
                             ),
