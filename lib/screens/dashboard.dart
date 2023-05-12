@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:graduation_project/screens/messagingScreens/Messaging.dart';
 import 'package:graduation_project/screens/profile_page.dart';
+import 'package:graduation_project/widgets/reportIssue.dart';
 import '../widgets/view_advertisements.dart';
 import 'advertisement_form.dart';
 import 'package:graduation_project/screens/edit_profile.dart';
@@ -51,7 +52,14 @@ class _DashboardState extends State<Dashboard> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => EditProfilePage(data: data)));
-            } else if (result == "Logout") {
+            } else if (result == "Report Issue") {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ReportIssue();
+                  });
+
+            }else if (result == "Logout") {
               showDialog<String>(
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
@@ -85,6 +93,13 @@ class _DashboardState extends State<Dashboard> {
               value: "Edit Profile",
               child: Text(
                 "Edit Profile",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            PopupMenuItem(
+              value: "Report Issue",
+              child: Text(
+                "Report Issue",
                 style: TextStyle(color: Colors.white),
               ),
             ),
