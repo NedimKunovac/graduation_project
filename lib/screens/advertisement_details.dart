@@ -178,8 +178,9 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
           ),
         );
     } else if (widget.data['acceptedApplicants']
-        .contains(FirebaseAuth.instance.currentUser?.uid) || widget.data['applicationSubmitted']
-        .contains(FirebaseAuth.instance.currentUser?.uid)) {
+            .contains(FirebaseAuth.instance.currentUser?.uid) ||
+        widget.data['applicationSubmitted']
+            .contains(FirebaseAuth.instance.currentUser?.uid)) {
       return null;
     } else {
       return BottomAppBar(
@@ -207,28 +208,30 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
   }
 
   getAppBar() {
-    if (widget.userType == 2 && widget.data['acceptedApplicants']
-        .contains(FirebaseAuth.instance.currentUser?.uid))
-          return null;
-          else return AppBar(
-      elevation: 0,
-      backgroundColor: Colors.white,
-      title: Text(
-        '${widget.data['title']}',
-        style: TextStyle(
-          color: Colors.red.shade400,
+    if (widget.userType == 2 &&
+        widget.data['acceptedApplicants']
+            .contains(FirebaseAuth.instance.currentUser?.uid))
+      return null;
+    else
+      return AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Text(
+          '${widget.data['title']}',
+          style: TextStyle(
+            color: Colors.red.shade400,
+          ),
         ),
-      ),
-      leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: 20,
-            color: Colors.black,
-          )),
-    );
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: Colors.black,
+            )),
+      );
   }
 
   pagePicker() {
@@ -306,8 +309,6 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
   }
 
   pageGenerator() {
-
-
     if (widget.userType == 2) {
       return !widget.data['acceptedApplicants']
               .contains(FirebaseAuth.instance.currentUser?.uid)
@@ -611,9 +612,9 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
               ],
             )
           : SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: DetailPage(),
-      );
+              height: MediaQuery.of(context).size.height,
+              child: DetailPage(),
+            );
     } else
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,

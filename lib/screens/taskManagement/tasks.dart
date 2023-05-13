@@ -1,26 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/screens/taskManagement/task.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:graduation_project/screens/taskManagement/details.dart';
 import 'package:graduation_project/screens/taskManagement/task_form_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Tasks extends StatelessWidget {
-  final tasksList = Task.generatedTasks();
+class Tasks extends StatefulWidget {
+
+  @override
+  State<Tasks> createState() => _TasksState();
+}
+
+class _TasksState extends State<Tasks> {
+  final list = [
+    {
+      'title': 'Title 1',
+      'description': 'Some description',
+      'date': 'Some date',
+      'startTime': 'some time',
+      'duration': 'some duration',
+      'volunteers': ['a', 'b', 'c']
+    },
+    {
+      'title': 'Title 2',
+      'description': 'Some description',
+      'date': 'Some date',
+      'startTime': 'some time',
+      'duration': 'some duration',
+      'volunteers': ['a', 'b', 'c']
+    },
+    {
+      'title': 'Title 3',
+      'description': 'Some description',
+      'date': 'Some date',
+      'startTime': 'some time',
+      'duration': 'some duration',
+      'volunteers': ['a', 'b', 'c']
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15),
       child: GridView.builder(
-        itemCount: tasksList.length,
+        itemCount: list.length + 1,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
         ),
-        itemBuilder: (context, index) => tasksList[index].isLast ?? false
+        itemBuilder: (context, index) =>
+        index == list.length
             ? _buildAddTask(context)
-            : _buildTask(context, tasksList[index]),
+            : _buildTask(context, list[index]),
       ),
     );
   }
@@ -28,7 +59,7 @@ class Tasks extends StatelessWidget {
 
 Widget _buildAddTask(context) {
   return GestureDetector(
-    onTap: (){
+    onTap: () {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => TaskFormPage()),
@@ -50,57 +81,83 @@ Widget _buildAddTask(context) {
   );
 }
 
-Widget _buildTask(BuildContext context, Task task) {
+Widget _buildTask(BuildContext context, Map assignment) {
   return GestureDetector(
-    onTap: () {
+      onTap: ()
+  =>
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) =>
+            AlertDialog(
+              title: Text(assignment['title']),
+              content: SizedBox(
+                height: 200,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Text(assignment['description']),
+                      Text(assignment['date']),
+                      Text(assignment['startTime']),
+                      Text(assignment['duration']),
+                      Text(assignment['volunteers'].toString()),
+                    ],
+                  ),
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),),
 
-    },
-    child: Container(
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: task.bgColor,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(
-            task.iconData,
-            color: task.iconColor,
-            size: 35,
+        child: Container(
+          padding: EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(20),
           ),
-          SizedBox(height: 30),
-          Text(
-            task.title!,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 20),
-          Row(
-
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildTasksStatus(
-                  task.btnColor!, task.iconColor!, '${task.left} left'),
-              _buildTasksStatus(
-                  Colors.white, task.iconColor!, '${task.done} done'),
+              Icon(
+                Icons.task,
+                color: Colors.white,
+                size: 35,
+              ),
+              SizedBox(height: 30),
+              Text(
+                assignment['title'],
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 20),
+              // Row(
+              //
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     _buildTasksStatus(
+              //         Colors.white, Colors.white, 'Some text'),
+              //     _buildTasksStatus(
+              //         Colors.white, Colors.white, ''),
+              //   ],
+              // ),
             ],
           ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 }
-
-Widget _buildTasksStatus(Color bgColor, Color txColor, String text) {
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-    decoration: BoxDecoration(
-      color: bgColor,
-      borderRadius: BorderRadius.circular(20),
-    ),
-    child: Text(
-      text,
-      style: TextStyle(color: txColor),
-    ),
-  );
-}
+//
+// Widget _buildTasksStatus(Color bgColor, Color txColor, String text) {
+//   return Container(
+//     padding: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+//     decoration: BoxDecoration(
+//       color: bgColor,
+//       borderRadius: BorderRadius.circular(20),
+//     ),
+//     child: Text(
+//       text,
+//       style: TextStyle(color: txColor),
+//     ),
+//   );
+// }
