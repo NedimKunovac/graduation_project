@@ -50,7 +50,7 @@ class _TaskFormPageState extends State<TaskFormPage> {
         'title': _titleController.text.trim(),
         'description': _descriptionController.text.trim(),
         'date': Timestamp.fromDate(pickedDate!),
-        'time': pickedTime.toString(),
+        'time': timeController.text.trim(),
         'duration': _durationController.text.trim(),
         'workers': addedPeopleIDs
       });
