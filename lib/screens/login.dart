@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
             return Center(child: Text('Sum Ting Wong'));
           } else if (snapshot.hasData) {
             ///If user is logged in, goto dashboard
-            return VerifyEmailPage();
+            return Dashboard();
           } else {
             ///Pass given email so it appears in email field
             if (widget.passedEmail != '') {

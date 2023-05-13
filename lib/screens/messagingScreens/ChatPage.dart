@@ -203,6 +203,7 @@ class _ChatPageState extends State<ChatPage> {
                           value.collection('messages').add(data);
                         });
                       }
+                      messageFieldController.text='';
                     }
 
                   },

@@ -1,4 +1,5 @@
 import 'package:easy_search_bar/easy_search_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/screens/messagingScreens/activeChats.dart';
 import 'package:graduation_project/screens/messagingScreens/recentChats.dart';
@@ -30,6 +31,7 @@ class _messagingHPageState extends State<messagingHPage> {
             for (int i = 0; i < documents.length; i++) {
               Map<String, dynamic> userData =
                   documents[i].data() as Map<String, dynamic>;
+              if(documents[i].id!=FirebaseAuth.instance.currentUser!.uid)
               _suggestions.add(userData['name']);
             }
             var SearchBar =  EasySearchBar(
