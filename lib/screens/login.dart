@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:graduation_project/screens/verifyEmailPage.dart';
 
 import 'dashboard.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
             return Center(child: Text('Sum Ting Wong'));
           } else if (snapshot.hasData) {
             ///If user is logged in, goto dashboard
-            return Dashboard();
+            return VerifyEmailPage();
           } else {
             ///Pass given email so it appears in email field
             if (widget.passedEmail != '') {
