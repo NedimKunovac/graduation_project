@@ -7,16 +7,75 @@ import 'package:graduation_project/screens/taskManagement/date_picker.dart'; //d
 import 'package:graduation_project/screens/taskManagement/task_timeline.dart'; //task_timeline.dart
 import 'package:graduation_project/screens/taskManagement/task_title.dart';
 import 'package:graduation_project/screens/taskManagement/trello_home_page.dart';
-import 'package:graduation_project/widgets/view_advertisements.dart'; //task_title.dart
+import 'package:graduation_project/widgets/view_advertisements.dart';
+
+import 'colors.dart'; //task_title.dart
 
 class DetailPage extends StatelessWidget {
-  final Task task;
 
-  DetailPage(this.task);
+  DetailPage();
+
+
 
   @override
   Widget build(BuildContext context) {
-    final detailList = task.desc;
+    Task something = Task(
+        iconData: Icons.person_rounded,
+        title: 'Task 1',
+        bgColor: Colors.green,
+        iconColor: Colors.blue,
+        btnColor: Colors.red,
+        left: 3,
+        done: 1,
+        desc:[
+          {
+            'time': '9:00 am',
+            'title': 'Go for a walk with dog',
+            'slot': '9:00 - 10:00 am',
+            'tlColor': kRedDark,
+            'bgColor': kRedLight,
+          },
+          {
+            'time': '10:00 am',
+            'title': 'Shot on dribble',
+            'slot': '10:00 - 12:00 am',
+            'tlColor': kBlueDark,
+            'bgColor': kBlueLight,
+          },
+          {
+            'time': '11:00 am',
+            'title': '',
+            'slot': '',
+            'tlColor': kBlueDark,
+          },
+          {
+            'time': '12:00 am',
+            'title': '',
+            'slot': '',
+            'tlColor': Colors.grey.withOpacity(0.3),
+          },
+          {
+            'time': '1:00 pm',
+            'title': 'Call with client',
+            'slot': '1:00 - 2:00 pm',
+            'tlColor': Colors.grey.withOpacity(0.3),
+            'bgColor': kYellowLight,
+          },
+          {
+            'time': '2:00 pm',
+            'title': '',
+            'slot': '',
+            'tlColor': Colors.grey.withOpacity(0.3),
+          },
+          {
+            'time': '3:00 pm',
+            'title': '',
+            'slot': '',
+            'tlColor': Colors.grey.withOpacity(0.3),
+          },
+        ]
+    );
+    final detailList = something.desc;
     return Scaffold(
         backgroundColor: Colors.black,
         body: CustomScrollView(
@@ -59,6 +118,62 @@ class DetailPage extends StatelessWidget {
   }
 
   Widget _buildAppBar(BuildContext context) {
+    Task something = Task(
+        iconData: Icons.person_rounded,
+        title: 'Task 1',
+        bgColor: Colors.green,
+        iconColor: Colors.blue,
+        btnColor: Colors.red,
+        left: 3,
+        done: 1,
+        desc:[
+          {
+            'time': '9:00 am',
+            'title': 'Go for a walk with dog',
+            'slot': '9:00 - 10:00 am',
+            'tlColor': kRedDark,
+            'bgColor': kRedLight,
+          },
+          {
+            'time': '10:00 am',
+            'title': 'Shot on dribble',
+            'slot': '10:00 - 12:00 am',
+            'tlColor': kBlueDark,
+            'bgColor': kBlueLight,
+          },
+          {
+            'time': '11:00 am',
+            'title': '',
+            'slot': '',
+            'tlColor': kBlueDark,
+          },
+          {
+            'time': '12:00 am',
+            'title': '',
+            'slot': '',
+            'tlColor': Colors.grey.withOpacity(0.3),
+          },
+          {
+            'time': '1:00 pm',
+            'title': 'Call with client',
+            'slot': '1:00 - 2:00 pm',
+            'tlColor': Colors.grey.withOpacity(0.3),
+            'bgColor': kYellowLight,
+          },
+          {
+            'time': '2:00 pm',
+            'title': '',
+            'slot': '',
+            'tlColor': Colors.grey.withOpacity(0.3),
+          },
+          {
+            'time': '3:00 pm',
+            'title': '',
+            'slot': '',
+            'tlColor': Colors.grey.withOpacity(0.3),
+          },
+        ]
+    );
     return SliverAppBar(
       expandedHeight: 90,
       backgroundColor: Colors.black,
@@ -95,14 +210,14 @@ class DetailPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '${task.title} tasks',
+              '${something.title} tasks',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(height: 5),
             Text(
-              'You have ${task.left} tasks for today!',
+              'You have ${something.left} tasks for today!',
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.grey[700],

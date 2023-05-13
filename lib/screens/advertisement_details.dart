@@ -306,62 +306,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
   }
 
   pageGenerator() {
-    Task something = Task(
-      iconData: Icons.person_rounded,
-      title: 'Task 1',
-      bgColor: Colors.green,
-      iconColor: Colors.blue,
-      btnColor: Colors.red,
-      left: 3,
-      done: 1,
-      desc:[
-        {
-          'time': '9:00 am',
-          'title': 'Go for a walk with dog',
-          'slot': '9:00 - 10:00 am',
-          'tlColor': kRedDark,
-          'bgColor': kRedLight,
-        },
-        {
-          'time': '10:00 am',
-          'title': 'Shot on dribble',
-          'slot': '10:00 - 12:00 am',
-          'tlColor': kBlueDark,
-          'bgColor': kBlueLight,
-        },
-        {
-          'time': '11:00 am',
-          'title': '',
-          'slot': '',
-          'tlColor': kBlueDark,
-        },
-        {
-          'time': '12:00 am',
-          'title': '',
-          'slot': '',
-          'tlColor': Colors.grey.withOpacity(0.3),
-        },
-        {
-          'time': '1:00 pm',
-          'title': 'Call with client',
-          'slot': '1:00 - 2:00 pm',
-          'tlColor': Colors.grey.withOpacity(0.3),
-          'bgColor': kYellowLight,
-        },
-        {
-          'time': '2:00 pm',
-          'title': '',
-          'slot': '',
-          'tlColor': Colors.grey.withOpacity(0.3),
-        },
-        {
-          'time': '3:00 pm',
-          'title': '',
-          'slot': '',
-          'tlColor': Colors.grey.withOpacity(0.3),
-        },
-      ]
-    );
+
 
     if (widget.userType == 2) {
       return !widget.data['acceptedApplicants']
@@ -667,7 +612,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
             )
           : SizedBox(
         height: MediaQuery.of(context).size.height,
-        child: DetailPage(something),
+        child: DetailPage(),
       );
     } else
       return Column(
