@@ -929,7 +929,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                   height: MediaQuery.of(context).size.height -
                       80 -
                       AppBar().preferredSize.height,
-                  child: TrelloHomePage())
+                  child: TrelloHomePage(postID: widget.data['postID'],))
               : SizedBox.shrink(),
 
           ///Zamotati u scaffold i dodati button

@@ -4,6 +4,9 @@ import 'package:graduation_project/screens/taskManagement/task_form_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Tasks extends StatefulWidget {
+  Tasks({Key? key, required this.postID}) : super(key: key);
+
+  String? postID;
 
   @override
   State<Tasks> createState() => _TasksState();
@@ -50,19 +53,19 @@ class _TasksState extends State<Tasks> {
         ),
         itemBuilder: (context, index) =>
         index == list.length
-            ? _buildAddTask(context)
+            ? _buildAddTask(context, widget.postID)
             : _buildTask(context, list[index]),
       ),
     );
   }
 }
 
-Widget _buildAddTask(context) {
+Widget _buildAddTask(context, postID) {
   return GestureDetector(
     onTap: () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => TaskFormPage()),
+        MaterialPageRoute(builder: (context) => TaskFormPage(postID: postID,)),
       );
     },
     child: DottedBorder(

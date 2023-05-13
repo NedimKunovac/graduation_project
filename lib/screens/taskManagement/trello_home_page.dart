@@ -5,8 +5,9 @@ import 'package:graduation_project/screens/taskManagement/tasks.dart';
 import 'package:graduation_project/widgets/view_advertisements.dart';
 
 class TrelloHomePage extends StatelessWidget {
-  const TrelloHomePage({Key? key}) : super(key: key);
+  TrelloHomePage({Key? key, required this.postID}) : super(key: key);
 
+  String? postID;
   @override
 
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class TrelloHomePage extends StatelessWidget {
             ),
           ),
           Expanded(
-            child:Tasks(), )
+            child:Tasks(postID: postID), )
         ],
       ),
     );

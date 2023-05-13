@@ -95,7 +95,8 @@ class TagsField extends StatefulWidget {
       required this.suggestionsList,
       this.chipColor,
       this.textStyle,
-      this.iconColor});
+      this.iconColor,
+      this.plusIcon});
 
   ///Passed suggestions
   List<String> suggestionsList;
@@ -108,6 +109,10 @@ class TagsField extends StatefulWidget {
 
   ///Icon colors
   Color? iconColor;
+
+  ///Is plus icon available
+  bool? plusIcon;
+
 
   ///List of chip data objects so it can be iterated
   List<ChipObjectData> chipDataList = <ChipObjectData>[];
@@ -166,6 +171,8 @@ class _TagsFieldState extends State<TagsField> {
     if (widget.suggestions.isEmpty) {
       widget.suggestions = widget.suggestionsList;
     }
+    if(widget.plusIcon==null) widget.plusIcon=true;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -176,7 +183,7 @@ class _TagsFieldState extends State<TagsField> {
               return const Iterable<String>.empty();
             }
             return widget.suggestions.where((String option) {
-              return option.contains(textEditingValue.text.toLowerCase());
+              return option.contains(textEditingValue.text);
             });
           },
           onSelected: (String selection) {
@@ -210,7 +217,7 @@ class _TagsFieldState extends State<TagsField> {
               controller: fieldTextEditingController,
               focusNode: fieldFocusNode,
               decoration: InputDecoration(
-                suffixIcon: IconButton(
+                suffixIcon: widget.plusIcon! ? IconButton(
                     onPressed: () {
                       if (textEditingController.text != '') if (!filter
                           .hasProfanity(textEditingController.text)) {
@@ -238,7 +245,7 @@ class _TagsFieldState extends State<TagsField> {
                         textEditingController.text = "";
                       }
                     },
-                    icon: Icon(Icons.add)),
+                    icon: Icon(Icons.add)) : SizedBox.shrink(),
               ),
             );
           },
