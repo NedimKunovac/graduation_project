@@ -235,7 +235,7 @@ class _DashboardState extends State<Dashboard> {
           data["userID"] = FirebaseAuth.instance.currentUser?.uid;
           _widgetOptions.add(ViewAdvertisements(userData: data));
           _widgetOptions.add(Messaging());
-          _widgetOptions.add(ProfilePage(data: data));
+          _widgetOptions.add(ProfilePage());
 
           return Scaffold(
             appBar: AppBarBulder(data),

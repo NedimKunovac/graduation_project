@@ -5,11 +5,10 @@ import '../widgets/tag_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProfilePage extends StatefulWidget {
-  Map<String, dynamic> data;
 
   String? userID;
 
-  ProfilePage({Key? key, required this.data, this.userID}) : super(key: key);
+  ProfilePage({Key? key,  this.userID}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -28,7 +27,11 @@ class _ProfilePageState extends State<ProfilePage> {
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
+          return Scaffold(
+            body: Center(
+              child: Text('Loading'),
+            ),
+          );
         }
 
         Map <dynamic,dynamic> loadedData = snapshot.data!.docs.first.data() as Map<dynamic, dynamic>;

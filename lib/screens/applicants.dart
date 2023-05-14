@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:graduation_project/screens/profile_page.dart';
 
 class AcceptedApplicants extends StatefulWidget {
   AcceptedApplicants({Key? key, required this.data}) : super(key: key);
@@ -79,94 +80,102 @@ class _AcceptedApplicantsState extends State<AcceptedApplicants> {
                       if (snapshot.connectionState == ConnectionState.done) {
                         Map<String, dynamic> dataLoaded =
                             snapshot.data!.data() as Map<String, dynamic>;
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          margin:
-                              EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                          width: 370.0,
-                          height: 90.0,
-                          child: Stack(
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: CircleAvatar(
-                                      radius: 30,
-                                      backgroundImage: NetworkImage(
-                                          dataLoaded['profilePhotoUrl']),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      margin: EdgeInsets.only(
-                                          left: 8.0, top: 8.0, right: 8.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            dataLoaded['name'],
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 18),
-                                          ),
-                                          SizedBox(
-                                            height: 4,
-                                          ),
-                                          dataLoaded['profileInfo'] != null
-                                              ? Text(
-                                                  dataLoaded['profileInfo'],
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 14),
-                                                )
-                                              : SizedBox.shrink(),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Positioned(
-                                bottom: 8,
-                                right: 8,
-                                child: Row(
+                        return InkWell(
+                          onTap: (){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProfilePage(userID: firstSnapshot.data!['applicationSubmitted'][index],)));
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(25.0),
+                            ),
+                            margin:
+                                EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                            width: 370.0,
+                            height: 90.0,
+                            child: Stack(
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    InkWell(
-                                      onTap:() => acceptUser(firstSnapshot.data!['applicationSubmitted'][index]),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
                                       child: CircleAvatar(
-                                        backgroundColor: Colors.green,
-                                        child: Icon(
-                                          Icons.check,
-                                          color: Colors.white,
-                                        ),
+                                        radius: 30,
+                                        backgroundImage: NetworkImage(
+                                            dataLoaded['profilePhotoUrl']),
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    InkWell(
-                                      onTap: () => rejectUser(firstSnapshot.data!['applicationSubmitted'][index]),
-                                      child: CircleAvatar(
-                                        backgroundColor: Colors.red,
-                                        child: Icon(
-                                          Icons.close,
-                                          color: Colors.white,
+                                    Expanded(
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            left: 8.0, top: 8.0, right: 8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              dataLoaded['name'],
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18),
+                                            ),
+                                            SizedBox(
+                                              height: 4,
+                                            ),
+                                            dataLoaded['profileInfo'] != null
+                                                ? Text(
+                                                    dataLoaded['profileInfo'],
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 14),
+                                                  )
+                                                : SizedBox.shrink(),
+                                          ],
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
-                              ),
-                            ],
+                                Positioned(
+                                  bottom: 8,
+                                  right: 8,
+                                  child: Row(
+                                    children: [
+                                      InkWell(
+                                        onTap:() => acceptUser(firstSnapshot.data!['applicationSubmitted'][index]),
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.green,
+                                          child: Icon(
+                                            Icons.check,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      InkWell(
+                                        onTap: () => rejectUser(firstSnapshot.data!['applicationSubmitted'][index]),
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.red,
+                                          child: Icon(
+                                            Icons.close,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       }
@@ -201,63 +210,71 @@ class _AcceptedApplicantsState extends State<AcceptedApplicants> {
                       if (snapshot.connectionState == ConnectionState.done) {
                         Map<String, dynamic> dataLoaded =
                         snapshot.data!.data() as Map<String, dynamic>;
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          margin:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                          width: 370.0,
-                          height: 90.0,
-                          child: Stack(
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: CircleAvatar(
-                                      radius: 30,
-                                      backgroundImage: NetworkImage(
-                                          dataLoaded['profilePhotoUrl']),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      margin: EdgeInsets.only(
-                                          left: 8.0, top: 8.0, right: 8.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            dataLoaded['name'],
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 18),
-                                          ),
-                                          SizedBox(
-                                            height: 4,
-                                          ),
-                                          dataLoaded['profileInfo'] != null
-                                              ? Text(
-                                            dataLoaded['profileInfo'],
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14),
-                                          )
-                                              : SizedBox.shrink(),
-                                        ],
+                        return InkWell(
+                          onTap: (){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProfilePage(userID: firstSnapshot.data!['acceptedApplicants'][index],)));
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(25.0),
+                            ),
+                            margin:
+                            EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                            width: 370.0,
+                            height: 90.0,
+                            child: Stack(
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: CircleAvatar(
+                                        radius: 30,
+                                        backgroundImage: NetworkImage(
+                                            dataLoaded['profilePhotoUrl']),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                    Expanded(
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            left: 8.0, top: 8.0, right: 8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              dataLoaded['name'],
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18),
+                                            ),
+                                            SizedBox(
+                                              height: 4,
+                                            ),
+                                            dataLoaded['profileInfo'] != null
+                                                ? Text(
+                                              dataLoaded['profileInfo'],
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14),
+                                            )
+                                                : SizedBox.shrink(),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       }
