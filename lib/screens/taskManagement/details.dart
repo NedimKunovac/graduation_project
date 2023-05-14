@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/screens/taskManagement/task.dart'; //task.dart
-import 'package:graduation_project/screens/taskManagement/date_picker.dart'; //date_picker.dart
-import 'package:graduation_project/screens/taskManagement/task_timeline.dart'; //task_timeline.dart
-import 'package:graduation_project/screens/taskManagement/task_title.dart';
 import 'package:intl/intl.dart';
-import 'colors.dart'; //task_title.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -170,10 +165,50 @@ class _DetailPageState extends State<DetailPage> {
               value: 'Leave',
             ),
           ],
-          onSelected: (value) {
+          onSelected: (value) async{
             if (value == 'View post') {
+
             } else if (value == 'Leave') {
-              Navigator.pop(context);
+              await showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: Text('Are you sure you want to leave this volunteering opportunity?'),
+                  content: Text('If you leave, you can stilll re-apply for this job.'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () async{
+                        var document = await FirebaseFirestore.instance.collection('Posts').doc(widget.data!['postID']).get();
+
+                        print(document['acceptedApplicants']);
+
+                        List<String> myList = List.from(document['acceptedApplicants']);
+                        myList.remove(FirebaseAuth.instance.currentUser?.uid);
+
+                        print(myList.toString());
+
+                        try{
+                          FirebaseFirestore.instance.collection('Posts').doc(widget.data!['postID']).update({
+                            'acceptedApplicants': myList
+                          });
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        }catch(e){
+                          print(e.toString());
+                        }
+
+                      },
+                      child: const Text('Yes',
+                      style: TextStyle(
+                        color: Colors.red
+                      ),),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'No'),
+                      child: const Text('No'),
+                    ),
+                  ],
+                ),
+              );
             }
           },
         ),
