@@ -1,181 +1,158 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:graduation_project/screens/dashboard.dart';
 import 'package:graduation_project/screens/taskManagement/task.dart'; //task.dart
 import 'package:graduation_project/screens/taskManagement/date_picker.dart'; //date_picker.dart
 import 'package:graduation_project/screens/taskManagement/task_timeline.dart'; //task_timeline.dart
 import 'package:graduation_project/screens/taskManagement/task_title.dart';
-import 'package:graduation_project/screens/taskManagement/trello_home_page.dart';
-import 'package:graduation_project/widgets/view_advertisements.dart';
-
+import 'package:intl/intl.dart';
 import 'colors.dart'; //task_title.dart
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class DetailPage extends StatelessWidget {
-
-  DetailPage();
-
-
+class DetailPage extends StatefulWidget {
+  DetailPage({Key? key, required this.data}) : super(key: key);
+  Map? data;
 
   @override
+  State<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  @override
   Widget build(BuildContext context) {
-    Task something = Task(
-        iconData: Icons.person_rounded,
-        title: 'Task 1',
-        bgColor: Colors.green,
-        iconColor: Colors.blue,
-        btnColor: Colors.red,
-        left: 3,
-        done: 1,
-        desc:[
-          {
-            'time': '9:00 am',
-            'title': 'Go for a walk with dog',
-            'slot': '9:00 - 10:00 am',
-            'tlColor': kRedDark,
-            'bgColor': kRedLight,
-          },
-          {
-            'time': '10:00 am',
-            'title': 'Shot on dribble',
-            'slot': '10:00 - 12:00 am',
-            'tlColor': kBlueDark,
-            'bgColor': kBlueLight,
-          },
-          {
-            'time': '11:00 am',
-            'title': '',
-            'slot': '',
-            'tlColor': kBlueDark,
-          },
-          {
-            'time': '12:00 am',
-            'title': '',
-            'slot': '',
-            'tlColor': Colors.grey.withOpacity(0.3),
-          },
-          {
-            'time': '1:00 pm',
-            'title': 'Call with client',
-            'slot': '1:00 - 2:00 pm',
-            'tlColor': Colors.grey.withOpacity(0.3),
-            'bgColor': kYellowLight,
-          },
-          {
-            'time': '2:00 pm',
-            'title': '',
-            'slot': '',
-            'tlColor': Colors.grey.withOpacity(0.3),
-          },
-          {
-            'time': '3:00 pm',
-            'title': '',
-            'slot': '',
-            'tlColor': Colors.grey.withOpacity(0.3),
-          },
-        ]
-    );
-    final detailList = something.desc;
-    return Scaffold(
-        backgroundColor: Colors.black,
-        body: CustomScrollView(
-          slivers: [
-            _buildAppBar(context),
-            SliverToBoxAdapter(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
+    print('Current user UID - ${FirebaseAuth.instance.currentUser?.uid}');
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('Posts')
+          .doc(widget.data!['postID'])
+          .collection('Tasks')
+          .where('workers', arrayContainsAny: [
+        FirebaseAuth.instance.currentUser?.uid
+      ]).snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Scaffold(
+            body: Center(
+              child: Text("Loading"),
+            ),
+          );
+        }
+
+        return Scaffold(
+            backgroundColor: Colors.black,
+            body: CustomScrollView(
+              slivers: [
+                _buildAppBar(context, snapshot.data!.docs.length),
+                SliverToBoxAdapter(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListView(
+                          shrinkWrap:true,
+                          children: snapshot.data!.docs
+                              .map((DocumentSnapshot document) {
+                            Map<String, dynamic> data =
+                                document.data()! as Map<String, dynamic>;
+                            return InkWell(
+                              onTap: ()=>showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: Text(data['title']),
+                                  content: SizedBox(
+                                    width: double.maxFinite,
+                                    height: 200,
+                                    child: Column(
+                                      children: [
+                                        Text(data['description']),
+                                        Text(DateFormat.yMMMMd('en_US')
+                                            .format(data['date'].toDate())
+                                            .toString()),
+                                        Text(data['time']),
+                                        Text(data['duration']),
+                                        StreamBuilder<QuerySnapshot>(
+                                          stream: FirebaseFirestore.instance
+                                              .collection('Users')
+                                              .where(FieldPath.documentId, whereIn: data['workers'])
+                                              .snapshots(),
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot<QuerySnapshot> snapshot) {
+                                            if (snapshot.hasError) {
+                                              return Text('Something went wrong');
+                                            }
+
+                                            if (snapshot.connectionState == ConnectionState.waiting) {
+                                              return Text("Loading");
+                                            }
+
+                                            return Expanded(
+                                                child: ListView(
+                                                  shrinkWrap: true,
+                                                  children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                                                    Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+                                                    return SizedBox(
+                                                      height: 20,
+                                                      child: ListTile(
+                                                        title: Text(data['name']),
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                ));
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context, 'OK'),
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              child: ListTile(
+                                title: Text(data['title']),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(data['description']),
+                                    Text(DateFormat.yMMMMd('en_US')
+                                        .format(data['date'].toDate())
+                                        .toString()),
+                                    Text(data['time']),
+                                    Text(data['duration']),
+
+                                  ],
+                                ),
+
+                              ),
+                            );
+                          }).toList(),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    DatePicker(),
-                    TaskTitle(),
-                  ],
-                ),
-              ),
-            ),
-            detailList == null
-                ? SliverFillRemaining(
-                    child: Container(
-                        color: Colors.white,
-                        child: Center(
-                            child: Text(
-                          'No task today',
-                          style: TextStyle(color: Colors.grey, fontSize: 18),
-                        ))))
-                : SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                        (_, index) => TaskTimeline(detailList[index]),
-                        childCount: detailList.length),
-                  )
-          ],
-        ));
+              ],
+            ));
+      },
+    );
   }
 
-  Widget _buildAppBar(BuildContext context) {
-    Task something = Task(
-        iconData: Icons.person_rounded,
-        title: 'Task 1',
-        bgColor: Colors.green,
-        iconColor: Colors.blue,
-        btnColor: Colors.red,
-        left: 3,
-        done: 1,
-        desc:[
-          {
-            'time': '9:00 am',
-            'title': 'Go for a walk with dog',
-            'slot': '9:00 - 10:00 am',
-            'tlColor': kRedDark,
-            'bgColor': kRedLight,
-          },
-          {
-            'time': '10:00 am',
-            'title': 'Shot on dribble',
-            'slot': '10:00 - 12:00 am',
-            'tlColor': kBlueDark,
-            'bgColor': kBlueLight,
-          },
-          {
-            'time': '11:00 am',
-            'title': '',
-            'slot': '',
-            'tlColor': kBlueDark,
-          },
-          {
-            'time': '12:00 am',
-            'title': '',
-            'slot': '',
-            'tlColor': Colors.grey.withOpacity(0.3),
-          },
-          {
-            'time': '1:00 pm',
-            'title': 'Call with client',
-            'slot': '1:00 - 2:00 pm',
-            'tlColor': Colors.grey.withOpacity(0.3),
-            'bgColor': kYellowLight,
-          },
-          {
-            'time': '2:00 pm',
-            'title': '',
-            'slot': '',
-            'tlColor': Colors.grey.withOpacity(0.3),
-          },
-          {
-            'time': '3:00 pm',
-            'title': '',
-            'slot': '',
-            'tlColor': Colors.grey.withOpacity(0.3),
-          },
-        ]
-    );
+  Widget _buildAppBar(BuildContext context, int noTasks) {
     return SliverAppBar(
-      expandedHeight: 90,
+      expandedHeight: 40,
       backgroundColor: Colors.black,
       leading: IconButton(
         onPressed: () => Navigator.of(context).pop(),
@@ -197,9 +174,8 @@ class DetailPage extends StatelessWidget {
           ],
           onSelected: (value) {
             if (value == 'View post') {
-
             } else if (value == 'Leave') {
-             Navigator.pop(context);
+              Navigator.pop(context);
             }
           },
         ),
@@ -210,14 +186,14 @@ class DetailPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '${something.title} tasks',
+              '${widget.data!['title']}',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(height: 5),
             Text(
-              'You have ${something.left} tasks for today!',
+              'You have ${noTasks} task(s) for today!',
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.grey[700],

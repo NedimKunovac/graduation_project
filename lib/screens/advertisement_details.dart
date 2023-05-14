@@ -613,7 +613,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
             )
           : SizedBox(
               height: MediaQuery.of(context).size.height,
-              child: DetailPage(),
+              child: DetailPage(data: widget.data),
             );
     } else
       return Column(

@@ -118,8 +118,11 @@ Widget _buildTask(
                         shrinkWrap: true,
                       children: snapshot.data!.docs.map((DocumentSnapshot document) {
                     Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-                    return ListTile(
-                      title: Center(child: Text(data['name'])),
+                    return SizedBox(
+                      height: 20,
+                      child: ListTile(
+                        title: Text(data['name']),
+                      ),
                     );
                   }).toList(),
                   ));

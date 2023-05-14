@@ -4,6 +4,8 @@ import 'package:graduation_project/screens/taskManagement/go_premium.dart';
 import 'package:graduation_project/screens/taskManagement/tasks.dart';
 import 'package:graduation_project/widgets/view_advertisements.dart';
 
+import 'colors.dart';
+
 class TrelloHomePage extends StatelessWidget {
   TrelloHomePage({Key? key, required this.postID}) : super(key: key);
 
@@ -11,6 +13,7 @@ class TrelloHomePage extends StatelessWidget {
   @override
 
   Widget build(BuildContext context) {
+
     return  Scaffold(
       backgroundColor: Colors.white,
       body: Column(
