@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/screens/advertisement_details.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -167,6 +168,11 @@ class _DetailPageState extends State<DetailPage> {
           ],
           onSelected: (value) async{
             if (value == 'View post') {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AdvertisementDetailed(data: widget.data as Map<String,dynamic>, userType: 2, viewingPost: true)));
+
 
             } else if (value == 'Leave') {
               await showDialog<String>(
