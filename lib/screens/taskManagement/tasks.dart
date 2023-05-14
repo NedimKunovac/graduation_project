@@ -44,8 +44,7 @@ class _TasksState extends State<Tasks> {
                 ? _buildAddTask(context, widget.postID)
                 : _buildTask(
                     context,
-                    snapshot.data!.docs[index].data() as Map<dynamic, dynamic>,
-                    snapshot.data!.docs[index].data() as Map<dynamic, dynamic>),
+                    snapshot.data!.docs[index].data() as Map<dynamic, dynamic>, widget.postID,snapshot.data!.docs[index].id),
           ),
         );
       },
@@ -81,8 +80,8 @@ Widget _buildAddTask(context, postID) {
 }
 
 Widget _buildTask(
-    BuildContext context, Map assignment, Map<dynamic, dynamic> data) {
-  return GestureDetector(
+    BuildContext context, Map assignment, String? postID, String? assignmentID) {
+  return InkWell(
     onTap: () => showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -101,7 +100,7 @@ Widget _buildTask(
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection('Users')
-                    .where(FieldPath.documentId, whereIn: data['workers'])
+                    .where(FieldPath.documentId, whereIn: assignment['workers'])
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -115,16 +114,18 @@ Widget _buildTask(
 
                   return Expanded(
                       child: ListView(
-                        shrinkWrap: true,
-                      children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                    Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-                    return SizedBox(
-                      height: 20,
-                      child: ListTile(
-                        title: Text(data['name']),
-                      ),
-                    );
-                  }).toList(),
+                    shrinkWrap: true,
+                    children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                      Map<String, dynamic> data =
+                          document.data()! as Map<String, dynamic>;
+                      return SizedBox(
+                        height: 20,
+                        child: ListTile(
+                          title: Text(data['name']),
+                        ),
+                      );
+                    }).toList(),
                   ));
                 },
               ),
@@ -140,7 +141,7 @@ Widget _buildTask(
       ),
     ),
     child: Container(
-      padding: EdgeInsets.all(15),
+      padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.blue,
         borderRadius: BorderRadius.circular(20),
@@ -148,17 +149,100 @@ Widget _buildTask(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            Icons.task,
-            color: Colors.white,
-            size: 35,
+          Row(
+            children: [
+              Icon(
+                Icons.task,
+                color: Colors.white,
+                size: 35,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                assignment['title'],
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          SizedBox(height: 5),
+          Text(
+            '${DateFormat.yMMMMd('en_US').format(assignment['date'].toDate()).toString()} - ${assignment['duration']} mins',
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+          ),
+          SizedBox(height: 3),
+          Text(
+            assignment['description'],
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
           ),
           SizedBox(height: 30),
-          Text(
-            assignment['title'],
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              InkWell(
+                onTap: () {
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: Text('Are you sure you want to edit this task?'),
+                      content: Text(
+                          'Think twice before editing. Editing a task cannot be undone!'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () async {
+                            Navigator.pop(context, 'Yes I want to edit this task');
+                          },
+                          child: const Text('Yes I want to edit this task', style: TextStyle(
+                            color: Colors.red,
+                          ),),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'No'),
+                          child: const Text('No'),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                child: CircleAvatar(
+                  child: Icon(Icons.edit),
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              InkWell(
+                onTap: () {
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: Text('Are you sure you want to delete this task?'),
+                      content: Text(
+                          'Think twice before deleting. Deleting a task cannot be undone!'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () async {
+                            await FirebaseFirestore.instance.collection('Posts').doc(postID).collection('Tasks').doc(assignmentID).delete();
+                            Navigator.pop(context, 'Yes I want to delete this task');
+                          },
+                          child: const Text('Yes I want to delete this task', style: TextStyle(
+                            color: Colors.red,
+                          ),),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'No'),
+                          child: const Text('No'),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                child: CircleAvatar(
+                  child: Icon(Icons.delete),
+                ),
+              )
+            ],
+          )
           // Row(
           //
           //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
