@@ -42,7 +42,7 @@ class _DetailPageState extends State<DetailPage> {
         }
 
         return Scaffold(
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.grey,
             body: CustomScrollView(
               slivers: [
                 _buildAppBar(context, snapshot.data!.docs.length),
@@ -132,10 +132,8 @@ class _DetailPageState extends State<DetailPage> {
                                         .toString()),
                                     Text(data['time']),
                                     Text(data['duration']),
-
                                   ],
                                 ),
-
                               ),
                             );
                           }).toList(),
@@ -152,7 +150,7 @@ class _DetailPageState extends State<DetailPage> {
 
   Widget _buildAppBar(BuildContext context, int noTasks) {
     return SliverAppBar(
-      expandedHeight: 40,
+      expandedHeight: 55,
       backgroundColor: Colors.black,
       leading: IconButton(
         onPressed: () => Navigator.of(context).pop(),
