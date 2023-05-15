@@ -63,10 +63,37 @@ class _ProfilePageState extends State<ProfilePage> {
                   Text(
                     loadedData['name'],
                     style: TextStyle(
-                      fontSize: 24.0,
+                      fontSize: 26.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  loadedData['type'] != null
+                      ? Column(
+                    children: [
+                      SizedBox(height: 8.0),
+                      loadedData['type'] == 0 ? Text(
+                        'ADMIN',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ): SizedBox.shrink(),
+                      loadedData['type'] == 1 ?Text(
+                        'Company',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ): SizedBox.shrink(),
+                      loadedData['type'] == 2 ?Text(
+                        'Volunteer',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ): SizedBox.shrink(),
+                    ],
+                  ) : SizedBox.shrink(),
                   loadedData['dateOfBirth'] != null
                       ? Column(
                     children: [
@@ -80,6 +107,31 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   )
                       : SizedBox.shrink(),
+                  loadedData['rep'] != null
+                      ? Column(
+                    children: [
+                      SizedBox(height: 8.0),
+                      Text(
+                        'Representative: ${loadedData['rep']}',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ],
+                  ) : SizedBox.shrink(),
+                  loadedData['vatNum'] != null
+                      ? Column(
+                    children: [
+                      SizedBox(height: 8.0),
+                      Text(
+                        'VAT Number: ${loadedData['vatNum']}',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ],
+                  ) : SizedBox.shrink(),
+
                   loadedData['dateOfBirth'] != null
                       ? Column(
                     children: [
