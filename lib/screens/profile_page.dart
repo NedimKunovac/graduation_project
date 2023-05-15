@@ -38,8 +38,16 @@ class _ProfilePageState extends State<ProfilePage> {
 
         return Scaffold(
           appBar: widget.userID!=null ? AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            leading: BackButton(
+              color: Colors.black,
+            ),
             title: Text(
-              'User profile page'
+              'User profile page',
+              style: TextStyle(
+                color: Colors.black
+              ),
             ),
           ): null,
             body: SingleChildScrollView(
