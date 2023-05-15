@@ -170,51 +170,51 @@ class _ProfilePageState extends State<ProfilePage> {
                   )
                       : SizedBox.shrink(),
                   SizedBox(height: 16.0),
-                  Text(
-                    'Pending applications:',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          margin: EdgeInsets.only(right: 8.0),
-                          width: 400.0,
-                          height: 80.0,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image(
-                                image: NetworkImage(
-                                    'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
-                                height: 50,
-                                width: 70,
-                              ),
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.only(left: 40.0, right: 8.0),
-                                  child: Text(
-                                    'Name of the company',
-                                    style: TextStyle(color: Colors.white, fontSize: 18),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Text(
+                  //   'Pending applications:',
+                  //   style: TextStyle(
+                  //     fontSize: 18.0,
+                  //     fontWeight: FontWeight.bold,
+                  //   ),
+                  // ),
+                  // SizedBox(height: 16.0),
+                  // SingleChildScrollView(
+                  //   scrollDirection: Axis.vertical,
+                  //   child: Column(
+                  //     children: <Widget>[
+                  //       Container(
+                  //         decoration: BoxDecoration(
+                  //           color: Colors.red,
+                  //           border: Border.all(color: Colors.grey),
+                  //           borderRadius: BorderRadius.circular(10.0),
+                  //         ),
+                  //         margin: EdgeInsets.only(right: 8.0),
+                  //         width: 400.0,
+                  //         height: 80.0,
+                  //         child: Row(
+                  //           crossAxisAlignment: CrossAxisAlignment.center,
+                  //           children: [
+                  //             Image(
+                  //               image: NetworkImage(
+                  //                   'https://cdn-icons-png.flaticon.com/128/4300/4300058.png'),
+                  //               height: 50,
+                  //               width: 70,
+                  //             ),
+                  //             Expanded(
+                  //               child: Container(
+                  //                 margin: EdgeInsets.only(left: 40.0, right: 8.0),
+                  //                 child: Text(
+                  //                   'Name of the company',
+                  //                   style: TextStyle(color: Colors.white, fontSize: 18),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ]),
               ),
             ));
