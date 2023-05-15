@@ -185,6 +185,23 @@ class _DetailPageState extends State<DetailPage> {
                       onPressed: () async{
                         var document = await FirebaseFirestore.instance.collection('Posts').doc(widget.data!['postID']).get();
 
+                        var documents = await FirebaseFirestore.instance.collection('Posts').doc(widget.data!['postID']).collection('Tasks').where('workers', arrayContainsAny: [FirebaseAuth.instance.currentUser?.uid]).get();
+
+                        for(int i =0; i<documents.size; i++) {
+                          Map<String, dynamic> DocumentData = documents.docs[i].data() as Map<String, dynamic>;
+                          List <dynamic> tempList = DocumentData['workers'] ;
+                          tempList.remove(FirebaseAuth.instance.currentUser?.uid);
+                          print(tempList.toString());
+
+                          try{
+                            FirebaseFirestore.instance.collection('Posts').doc(widget.data!['postID']).collection('Tasks').doc(documents.docs[i].id).update({
+                              'workers': tempList
+                            });
+                          }catch(e){
+                            print(e.toString());
+                          }
+                        }
+
                         print(document['acceptedApplicants']);
 
                         List<String> myList = List.from(document['acceptedApplicants']);

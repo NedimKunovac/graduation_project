@@ -97,7 +97,7 @@ Widget _buildTask(
                   .toString()),
               Text(assignment['time']),
               Text(assignment['duration']),
-              StreamBuilder<QuerySnapshot>(
+              assignment['workers']==[] ? StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection('Users')
                     .where(FieldPath.documentId, whereIn: assignment['workers'])
@@ -111,6 +111,7 @@ Widget _buildTask(
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Text("Loading");
                   }
+
 
                   return Expanded(
                       child: ListView(
@@ -127,8 +128,10 @@ Widget _buildTask(
                       );
                     }).toList(),
                   ));
+
+
                 },
-              ),
+              ) : SizedBox.shrink(),
             ],
           ),
         ),
