@@ -190,7 +190,15 @@ Widget _buildTask(
                       actions: <Widget>[
                         TextButton(
                           onPressed: () async {
-                            Navigator.pop(context, 'Yes I want to edit this task');
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => TaskFormPage(
+                                    taskID: assignmentID,
+                                    postID: postID,
+                                    data: assignment,
+                                  )),
+                            );
                           },
                           child: const Text('Yes I want to edit this task', style: TextStyle(
                             color: Colors.red,
