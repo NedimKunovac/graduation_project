@@ -1,6 +1,6 @@
-# Welcome to _The Volunteering Network!_
+<p align="center"> # _Welcome to The Volunteering Network!_ </p>
 
-<p align="center"> <a href="https://github.com/NedimKunovac/graduation_project/blob/main/assets/introduction.png" target="_blank" rel="noreferrer"> <img src="https://github.com/NedimKunovac/graduation_project/blob/main/assets/introduction.png" alt="android" width="200" height="200"/> </a> </p>
+<p align="center"> <a href="https://github.com/NedimKunovac/graduation_project/blob/main/assets/introduction.png" target="_blank" rel="noreferrer"> <img src="https://github.com/NedimKunovac/graduation_project/blob/main/assets/introduction.png" alt="android" width="350" height="350"/> </a> </p>
 
 A Flutter based Android (for now) application made to connect volunteers and companies! Have an opportunity that requires free skilled workforce? Market it as a Volunteering Opportunity! The Volunteering Network has you covered.
 
