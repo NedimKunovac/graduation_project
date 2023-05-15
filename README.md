@@ -1,4 +1,4 @@
-<h1 align="center"><i>Welcome to the Volunteering Network!</i></h1>
+<h1 align="center"><i>Welcome to The Volunteering Network!</i></h1>
 
 <p align="center"> <a href="https://github.com/NedimKunovac/graduation_project/blob/main/assets/introduction.png" target="_blank" rel="noreferrer"> <img src="https://github.com/NedimKunovac/graduation_project/blob/main/assets/introduction.png" alt="android" width="350" height="350"/> </a> </p>
 
