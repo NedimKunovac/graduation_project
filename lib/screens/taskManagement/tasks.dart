@@ -162,9 +162,11 @@ Widget _buildTask(
               SizedBox(
                 width: 10,
               ),
-              Text(
-                assignment['title'],
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Flexible(
+                child: Text(
+                  assignment['title'],
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ),
             ],
           ),
@@ -174,9 +176,11 @@ Widget _buildTask(
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
           ),
           SizedBox(height: 3),
-          Text(
-            assignment['description'],
-            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+          Flexible(
+            child: Text(
+              assignment['description'],
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+            ),
           ),
           SizedBox(height: 30),
           Row(
