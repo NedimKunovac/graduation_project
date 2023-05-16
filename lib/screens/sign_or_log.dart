@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/screens/forgotPasswordPage.dart';
 import 'package:graduation_project/screens/sign_up_pick.dart';
@@ -15,25 +14,8 @@ class SignOrLog extends StatefulWidget {
 }
 
 class _SignOrLogState extends State<SignOrLog> {
-
-
-
-
   @override
   Widget build(BuildContext context) {
-
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if(FirebaseAuth.instance.currentUser?.uid!=null)
-        Navigator.push(
-            context as BuildContext,
-            MaterialPageRoute(
-                builder: (context) => LoginPage(
-                    passedEmail: '', newAccount: false)));
-
-    });
-
-
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
