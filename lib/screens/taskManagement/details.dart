@@ -118,6 +118,41 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                               ),
                               child: ListTile(
+
+                                title: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(data['title']),
+                                    Text(
+                                      DateFormat.yMMMMd('en_US')
+                                          .format(data['date'].toDate())
+                                          .toString(),
+                                    ),
+                                  ],
+                                ),
+
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 5),
+                                    Text(data['description']),
+                                    SizedBox(height: 5),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(data['duration']),
+                                        Text(data['time']),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+
+
+
+
+                              /*child: ListTile(
                                 title: Text(data['title']),
                                 subtitle: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,7 +165,7 @@ class _DetailPageState extends State<DetailPage> {
                                     Text(data['duration']),
                                   ],
                                 ),
-                              ),
+                              ),*/
                             );
                           }).toList(),
                         )
