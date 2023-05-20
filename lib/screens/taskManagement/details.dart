@@ -61,66 +61,79 @@ class _DetailPageState extends State<DetailPage> {
                             Map<String, dynamic> data =
                                 document.data()! as Map<String, dynamic>;
                             return InkWell(
-                              onTap: ()=>showDialog<String>(
+                              onTap: () => showDialog<String>(
                                 context: context,
                                 builder: (BuildContext context) => AlertDialog(
-                                  title: Text(data['title']),
+                                  title: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(data['title']),
+                                        Text(
+                                          DateFormat.yMMMMd('en_US')
+                                              .format(data['date'].toDate())
+                                              .toString(),
+                                          style: TextStyle(fontSize: 14),
+                                        ),
+                                      ]),
                                   content: SizedBox(
                                     width: double.maxFinite,
                                     height: 200,
                                     child: Column(
                                       children: [
-                                        Text(data['description']),
-                                        Text(DateFormat.yMMMMd('en_US')
-                                            .format(data['date'].toDate())
-                                            .toString()),
-                                        Text(data['time']),
-                                        Text(data['duration']),
-                                        StreamBuilder<QuerySnapshot>(
-                                          stream: FirebaseFirestore.instance
-                                              .collection('Users')
-                                              .where(FieldPath.documentId, whereIn: data['workers'])
-                                              .snapshots(),
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot<QuerySnapshot> snapshot) {
-                                            if (snapshot.hasError) {
-                                              return Text('Something went wrong');
-                                            }
+                                        Row(children: [
+                                          Flexible(
+                                            child: Text(
+                                              data['description'],
+                                              style: TextStyle(fontSize: 14),
+                                            ),
+                                          )
+                                        ]),
 
-                                            if (snapshot.connectionState == ConnectionState.waiting) {
-                                              return Text("Loading");
-                                            }
+                                        //data['description']
+                                        SizedBox(height: 10),
+                                        Row(children: [
+                                          Text(
+                                            'Event time:',
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                          SizedBox(
+                                            width: 30,
+                                          ),
+                                          Text(
+                                            data['time'],
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                        ]),
+                                        SizedBox(height: 10),
 
-                                            return Expanded(
-                                                child: ListView(
-                                                  shrinkWrap: true,
-                                                  children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                                                    Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-                                                    return SizedBox(
-                                                      height: 20,
-                                                      child: ListTile(
-                                                        title: Text(data['name']),
-                                                      ),
-                                                    );
-                                                  }).toList(),
-                                                ));
-                                          },
-                                        ),
+                                        Row(children: [
+                                          Text(
+                                            'Event duration:',
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                          SizedBox(width: 20),
+                                          Text(
+                                            data['duration'],
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                        ]),
                                       ],
                                     ),
                                   ),
                                   actions: <Widget>[
                                     TextButton(
-                                      onPressed: () => Navigator.pop(context, 'OK'),
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'OK'),
                                       child: const Text('OK'),
                                     ),
                                   ],
                                 ),
                               ),
                               child: ListTile(
-
                                 title: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(data['title']),
                                     Text(
@@ -130,7 +143,6 @@ class _DetailPageState extends State<DetailPage> {
                                     ),
                                   ],
                                 ),
-
                                 subtitle: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -138,7 +150,8 @@ class _DetailPageState extends State<DetailPage> {
                                     Text(data['description']),
                                     SizedBox(height: 5),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(data['duration']),
                                         Text(data['time']),
@@ -149,23 +162,6 @@ class _DetailPageState extends State<DetailPage> {
                               ),
 
 
-
-
-
-                              /*child: ListTile(
-                                title: Text(data['title']),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(data['description']),
-                                    Text(DateFormat.yMMMMd('en_US')
-                                        .format(data['date'].toDate())
-                                        .toString()),
-                                    Text(data['time']),
-                                    Text(data['duration']),
-                                  ],
-                                ),
-                              ),*/
                             );
                           }).toList(),
                         )
