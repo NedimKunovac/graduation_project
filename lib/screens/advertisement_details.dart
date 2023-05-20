@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:graduation_project/screens/applicants.dart';
-import 'package:graduation_project/screens/taskManagement/colors.dart';
 import 'package:graduation_project/screens/taskManagement/details.dart';
 import 'package:graduation_project/screens/taskManagement/trello_home_page.dart';
 import 'package:graduation_project/widgets/tag_field.dart';
 import 'package:graduation_project/screens/advertisement_form_update.dart';
 import '../utilities/flash_bar.dart';
-import 'taskManagement/task.dart';
 
 ///Page that displays detailed information about post
 
