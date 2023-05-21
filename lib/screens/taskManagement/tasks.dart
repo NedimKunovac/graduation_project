@@ -85,18 +85,47 @@ Widget _buildTask(
     onTap: () => showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text(assignment['title']),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(assignment['title']),
+            Text(DateFormat.yMMMMd('en_US')
+                .format(assignment['date'].toDate())
+                .toString(),style: TextStyle(fontSize: 14),),
+          ],
+        ),
         content: SizedBox(
           width: double.maxFinite,
           height: 200,
           child: Column(
             children: [
-              Text(assignment['description']),
-              Text(DateFormat.yMMMMd('en_US')
-                  .format(assignment['date'].toDate())
-                  .toString()),
-              Text(assignment['time']),
-              Text(assignment['duration']),
+              Row(
+
+                  children:[
+              Flexible(
+                child: Text(assignment['description'],
+                  style: TextStyle(fontSize: 14)
+                ),
+              ),
+
+              ]),
+              SizedBox(height: 10),
+
+              Row(
+                children: [
+                  Text('Event time:',style: TextStyle(fontSize: 14)),
+                  SizedBox(width: 30),
+                  Text(assignment['time'],style: TextStyle(fontSize: 14)),
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Text('Event duration:',style: TextStyle(fontSize: 14)),
+                  SizedBox(width: 20),
+                  Text(assignment['duration'],style: TextStyle(fontSize: 14)),
+                ],
+              ),
               assignment['workers']==[] ? StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection('Users')
