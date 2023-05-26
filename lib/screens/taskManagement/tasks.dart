@@ -148,7 +148,7 @@ Widget _buildTask(
                   }
 
 
-                  return Expanded(
+                  return Flexible(
                       child: ListView(
                     shrinkWrap: true,
                     children:
