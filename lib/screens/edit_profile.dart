@@ -231,10 +231,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.white,
+        elevation: 1,
+        leading: const BackButton(
+          color: Colors.black, // <-- SEE HERE
+        ),
         title: Text(
           'Edit Profile',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
         ),
       ),
       body: Form(
@@ -245,17 +249,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               /// Profile Picture
-              GestureDetector(
-                onTap: () async {
-                  pickedImage = await imagePicker.imgPickDialog(context);
-                  setState(() {});
-                },
-                child: CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    radius: 60,
-                    backgroundImage: pickedImage == null
-                        ? NetworkImage(widget.data['profilePhotoUrl'])
-                        : Image.file(File(pickedImage!.path)).image),
+              Align(
+                alignment: Alignment.center,
+                child: GestureDetector(
+                  onTap: () async {
+                    pickedImage = await imagePicker.imgPickDialog(context);
+                    setState(() {});
+                  },
+                  child: CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      radius: 60,
+                      backgroundImage: pickedImage == null
+                          ? NetworkImage(widget.data['profilePhotoUrl'])
+                          : Image.file(File(pickedImage!.path)).image),
+                ),
               ),
 
               SizedBox(height: 16.0),
