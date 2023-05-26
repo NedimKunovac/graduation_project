@@ -38,19 +38,12 @@ class _DetailPageState extends State<DetailPage> {
         }
 
         return Scaffold(
-            backgroundColor: Colors.grey,
+            backgroundColor: Colors.white,
             body: CustomScrollView(
               slivers: [
                 _buildAppBar(context, snapshot.data!.docs.length),
                 SliverToBoxAdapter(
                   child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
-                      ),
-                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -60,11 +53,85 @@ class _DetailPageState extends State<DetailPage> {
                               .map((DocumentSnapshot document) {
                             Map<String, dynamic> data =
                                 document.data()! as Map<String, dynamic>;
-                            return InkWell(
-                              onTap: () => showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                  title: Row(
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all( color: Colors.blue.shade700),
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: InkWell(
+                                  onTap: () => showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) => AlertDialog(
+                                      title: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(data['title']),
+                                            Text(
+                                              DateFormat.yMMMMd('en_US')
+                                                  .format(data['date'].toDate())
+                                                  .toString(),
+                                              style: TextStyle(fontSize: 14),
+                                            ),
+                                          ]),
+                                      content: SizedBox(
+                                        width: double.maxFinite,
+                                        height: 200,
+                                        child: Column(
+                                          children: [
+                                            Row(children: [
+                                              Flexible(
+                                                child: Text(
+                                                  data['description'],
+                                                  style: TextStyle(fontSize: 14),
+                                                ),
+                                              )
+                                            ]),
+
+                                            //data['description']
+                                            SizedBox(height: 10),
+                                            Row(children: [
+                                              Text(
+                                                'Event time:',
+                                                style: TextStyle(fontSize: 14),
+                                              ),
+                                              SizedBox(
+                                                width: 30,
+                                              ),
+                                              Text(
+                                                data['time'],
+                                                style: TextStyle(fontSize: 14),
+                                              ),
+                                            ]),
+                                            SizedBox(height: 10),
+
+                                            Row(children: [
+                                              Text(
+                                                'Event duration:',
+                                                style: TextStyle(fontSize: 14),
+                                              ),
+                                              SizedBox(width: 20),
+                                              Text(
+                                                data['duration'],
+                                                style: TextStyle(fontSize: 14),
+                                              ),
+                                            ]),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'OK'),
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  child: ListTile(
+                                    title: Row(
                                       mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                       children: [
@@ -73,95 +140,30 @@ class _DetailPageState extends State<DetailPage> {
                                           DateFormat.yMMMMd('en_US')
                                               .format(data['date'].toDate())
                                               .toString(),
-                                          style: TextStyle(fontSize: 14),
                                         ),
-                                      ]),
-                                  content: SizedBox(
-                                    width: double.maxFinite,
-                                    height: 200,
-                                    child: Column(
+                                      ],
+                                    ),
+                                    subtitle: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Row(children: [
-                                          Flexible(
-                                            child: Text(
-                                              data['description'],
-                                              style: TextStyle(fontSize: 14),
-                                            ),
-                                          )
-                                        ]),
-
-                                        //data['description']
-                                        SizedBox(height: 10),
-                                        Row(children: [
-                                          Text(
-                                            'Event time:',
-                                            style: TextStyle(fontSize: 14),
-                                          ),
-                                          SizedBox(
-                                            width: 30,
-                                          ),
-                                          Text(
-                                            data['time'],
-                                            style: TextStyle(fontSize: 14),
-                                          ),
-                                        ]),
-                                        SizedBox(height: 10),
-
-                                        Row(children: [
-                                          Text(
-                                            'Event duration:',
-                                            style: TextStyle(fontSize: 14),
-                                          ),
-                                          SizedBox(width: 20),
-                                          Text(
-                                            data['duration'],
-                                            style: TextStyle(fontSize: 14),
-                                          ),
-                                        ]),
+                                        SizedBox(height: 5),
+                                        Text(data['description']),
+                                        SizedBox(height: 5),
+                                        Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(data['duration']),
+                                            Text(data['time']),
+                                          ],
+                                        ),
                                       ],
                                     ),
                                   ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(context, 'OK'),
-                                      child: const Text('OK'),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              child: ListTile(
-                                title: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(data['title']),
-                                    Text(
-                                      DateFormat.yMMMMd('en_US')
-                                          .format(data['date'].toDate())
-                                          .toString(),
-                                    ),
-                                  ],
-                                ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(height: 5),
-                                    Text(data['description']),
-                                    SizedBox(height: 5),
-                                    Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(data['duration']),
-                                        Text(data['time']),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
 
 
+                                ),
+                              ),
                             );
                           }).toList(),
                         )
@@ -177,16 +179,16 @@ class _DetailPageState extends State<DetailPage> {
 
   Widget _buildAppBar(BuildContext context, int noTasks) {
     return SliverAppBar(
-      expandedHeight: 55,
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       leading: IconButton(
         onPressed: () => Navigator.of(context).pop(),
         icon: Icon(Icons.arrow_back_ios),
         iconSize: 20,
+        color: Colors.black,
       ),
       actions: [
         PopupMenuButton(
-          icon: Icon(Icons.more_vert),
+          icon: Icon(Icons.more_vert,color: Colors.black),
           itemBuilder: (context) => [
             PopupMenuItem(
               child: Text('View post'),
@@ -275,10 +277,10 @@ class _DetailPageState extends State<DetailPage> {
             Text(
               '${widget.data!['title']}',
               style: TextStyle(
+                color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 5),
             Text(
               'You have ${noTasks} task(s) for today!',
               style: TextStyle(
