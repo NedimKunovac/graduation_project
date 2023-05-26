@@ -126,7 +126,13 @@ Widget _buildTask(
                   Text(assignment['duration'],style: TextStyle(fontSize: 14)),
                 ],
               ),
-              assignment['workers']==[] ? StreamBuilder<QuerySnapshot>(
+              SizedBox(height: 12),
+
+
+              assignment['workers']==[] ? SizedBox.shrink() : Align(child: Text('Volunteers assinged:',
+              style: TextStyle(fontSize: 14),), alignment: Alignment.topLeft,),
+
+              assignment['workers']==[] ? SizedBox.shrink() : StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection('Users')
                     .where(FieldPath.documentId, whereIn: assignment['workers'])
@@ -152,7 +158,9 @@ Widget _buildTask(
                       return SizedBox(
                         height: 20,
                         child: ListTile(
-                          title: Text(data['name']),
+                          title: Text(data['name'], style: TextStyle(
+                            fontSize: 14,
+                          ),),
                         ),
                       );
                     }).toList(),
@@ -160,7 +168,7 @@ Widget _buildTask(
 
 
                 },
-              ) : SizedBox.shrink(),
+              ),
             ],
           ),
         ),

@@ -22,16 +22,6 @@ class _SignOrLogState extends State<SignOrLog> {
 
   @override
   Widget build(BuildContext context) {
-
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if(FirebaseAuth.instance.currentUser?.uid!=null){
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => LoginPage(passedEmail: '', newAccount: false)));
-      }
-    });
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(

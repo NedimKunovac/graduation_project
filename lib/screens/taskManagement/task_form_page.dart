@@ -377,10 +377,12 @@ class _TaskFormPageState extends State<TaskFormPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
+
                       onPressed: () {
                         toggle ? updateForm() : submitForm();
                       },
-                      child: Text(toggle ? 'Update' : 'Submit'),
+                      child: Container(child: Align(child: Text(toggle ? 'Update' : 'Submit'), alignment: Alignment.center,),
+                      width: MediaQuery.of(context).size.width-70,),
                     ),
                   ],
                 ),
