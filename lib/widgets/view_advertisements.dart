@@ -20,9 +20,9 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
   ///Post loading options for volunteers, and first post set
   final List<bool> selectedLoading = <bool>[true, false, false, false];
   List<String> loadingTypes = <String>[
+    'All',
     'By Skills',
     'By Category',
-    'All',
     'Accepted'
   ];
 
@@ -109,18 +109,18 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
     ///Volunteer loading
     if (widget.userData['type'] == 2) {
       if (selectedLoading[0] == true) {
+        _postsStream =
+            FirebaseFirestore.instance.collection('Posts').snapshots();
+      } else if (selectedLoading[1] == true) {
         _postsStream = FirebaseFirestore.instance
             .collection('Posts')
             .where('requirements', arrayContainsAny: widget.userData['skills'])
             .snapshots();
-      } else if (selectedLoading[1] == true) {
+      } else if (selectedLoading[2] == true) {
         _postsStream = FirebaseFirestore.instance
             .collection('Posts')
             .where('category', arrayContainsAny: widget.userData['interests'])
             .snapshots();
-      } else if (selectedLoading[2] == true) {
-        _postsStream =
-            FirebaseFirestore.instance.collection('Posts').snapshots();
       } else if (selectedLoading[3] == true) {
         print(widget.userData['userID']);
         _postsStream = FirebaseFirestore.instance

@@ -112,7 +112,6 @@ class _CompanySignupState extends State<CompanySignup> {
       appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
-          brightness: Brightness.light,
           automaticallyImplyLeading: false,
           title: IconButton(
             onPressed: () {
@@ -455,9 +454,10 @@ class _CompanySignupState extends State<CompanySignup> {
                             controller: confirmPasswordController,
                             autovalidateMode: AutovalidateMode.disabled,
                             validator: (value) =>
-                            value != null && value.length < 6 || value!= passwordController.text
-                                ? 'Please make sure the passwords match'
-                                : null,
+                                value != null && value.length < 6 ||
+                                        value != passwordController.text
+                                    ? 'Please make sure the passwords match'
+                                    : null,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: 0, horizontal: 10),
@@ -468,7 +468,7 @@ class _CompanySignupState extends State<CompanySignup> {
                               ),
                               border: OutlineInputBorder(
                                 borderSide:
-                                BorderSide(color: Colors.grey.shade400),
+                                    BorderSide(color: Colors.grey.shade400),
                               ),
                             ),
                           ),

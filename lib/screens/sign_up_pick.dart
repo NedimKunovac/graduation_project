@@ -17,7 +17,6 @@ class SignUpRouter extends StatelessWidget {
       //return button in the app bar
       appBar: AppBar(
         elevation: 0,
-        brightness: Brightness.light,
         backgroundColor: Colors.white,
         leading: IconButton(
             onPressed: () {
