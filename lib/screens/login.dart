@@ -275,7 +275,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: MaterialButton(
                                 minWidth: double.infinity,
                                 height: 60,
-                                color: Colors.red.shade400,
+                                color: Colors.blue.shade500,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50),

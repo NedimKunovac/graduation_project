@@ -71,7 +71,7 @@ class _SignOrLogState extends State<SignOrLog> {
                   SizedBox(height: 10),
                   //Login button
                   MaterialButton(
-                    color: Colors.red.shade400,
+                    color: Colors.blue.shade500,
                     minWidth: double.infinity,
                     height: 60,
                     onPressed: () {
@@ -100,7 +100,7 @@ class _SignOrLogState extends State<SignOrLog> {
                           MaterialPageRoute(
                               builder: (context) => SignUpRouter()));
                     },
-                    color: Colors.red.shade400,
+                    color: Colors.blue.shade500,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)),
                     child: Text(
