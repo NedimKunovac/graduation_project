@@ -52,45 +52,65 @@ class SignUpRouter extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         ///Company button
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CompanySignup()));
-                          },
-                          child: CircleAvatar(
-                              radius: 60.0,
-                              backgroundImage: NetworkImage(
-                                  'https://cdn-icons-png.flaticon.com/512/3061/3061341.png')),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            // set background color to white
-                            // set text color
-                            shape: CircleBorder(),
-                          ),
+                        Column(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => CompanySignup()));
+                              },
+                              child: CircleAvatar(
+                                  radius: 60.0,
+                                  backgroundImage: NetworkImage(
+                                      'https://cdn-icons-png.flaticon.com/512/3061/3061341.png')),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                // set background color to white
+                                // set text color
+                                shape: CircleBorder(),
+                              ),
+                            ),
+                            SizedBox(height:8),
+                            Text('Company',
+                              style:TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20
+                              ),),
+                          ],
                         ),
 
                         ///Volunteer button
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => VolunteerSignup()));
-                          },
-                          child: CircleAvatar(
-                              radius: 60.0,
-                              backgroundImage: NetworkImage(
-                                  'https://cdn-icons-png.flaticon.com/512/3045/3045363.png')),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            // set background color to white
-                            // set text color
-                            shape: CircleBorder(
-                                //Mora ostati da bi buttons sa slikama ostali okrugli
-                                ),
-                          ),
+                        Column(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => VolunteerSignup()));
+                              },
+                              child: CircleAvatar(
+                                  radius: 60.0,
+                                  backgroundImage: NetworkImage(
+                                      'https://cdn-icons-png.flaticon.com/512/3045/3045363.png')),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                // set background color to white
+                                // set text color
+                                shape: CircleBorder(
+                                    //Mora ostati da bi buttons sa slikama ostali okrugli
+                                    ),
+                              ),
+                            ),
+                            SizedBox(height:8),
+                            Text('Volunteer',
+                            style:TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20
+                            ),),
+                          ],
                         ),
                       ],
                     ),

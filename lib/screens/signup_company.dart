@@ -163,7 +163,7 @@ class _CompanySignupState extends State<CompanySignup> {
                             height: 5,
                           ),
                           Text(
-                            'Company title:',
+                            'Company title',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
@@ -209,7 +209,7 @@ class _CompanySignupState extends State<CompanySignup> {
                             height: 5,
                           ),
                           Text(
-                            'Company representative\'s name:',
+                            'Company representative\'s name',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
@@ -252,7 +252,7 @@ class _CompanySignupState extends State<CompanySignup> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'Logo of your company:',
+                            'Logo of your company',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
@@ -309,7 +309,7 @@ class _CompanySignupState extends State<CompanySignup> {
                             height: 5,
                           ),
                           Text(
-                            'Company VAT Number:',
+                            'Company VAT Number',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
@@ -353,7 +353,7 @@ class _CompanySignupState extends State<CompanySignup> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'Email:',
+                            'Email',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
@@ -396,7 +396,7 @@ class _CompanySignupState extends State<CompanySignup> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'Password:',
+                            'Password',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
@@ -439,7 +439,7 @@ class _CompanySignupState extends State<CompanySignup> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'Conifrm password:',
+                            'Conifrm password',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,

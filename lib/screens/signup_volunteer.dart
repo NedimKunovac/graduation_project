@@ -243,7 +243,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Full Name:',
+                              'Full Name',
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
@@ -286,7 +286,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Your profile photo:',
+                              'Your profile photo',
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
@@ -340,7 +340,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Date of Birth:',
+                              'Date of Birth',
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
@@ -419,7 +419,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Please select the category of jobs you would be interested in:',
+                              'Please select the category of jobs you would be interested in',
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
@@ -441,7 +441,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Please enter your skills:',
+                              'Please enter your skills',
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
@@ -463,7 +463,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Email:',
+                              'Email',
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
@@ -506,7 +506,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Password:',
+                              'Password',
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
@@ -549,7 +549,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Conifrm password:',
+                              'Conifrm password',
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,

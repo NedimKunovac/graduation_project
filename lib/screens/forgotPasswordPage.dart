@@ -84,7 +84,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               ElevatedButton.icon(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateColor.resolveWith((states) => Colors.red),
+                      MaterialStateColor.resolveWith((states) => Colors.blue.shade500),
                 ),
                 onPressed: resetPassword,
                 icon: Icon(Icons.email),

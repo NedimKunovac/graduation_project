@@ -281,7 +281,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                 children: List.generate(selectedLoading.length, (index) {
                   //using Inkwell widget to create a button
                   return InkWell(
-                      splashColor: Colors.yellow,
+                      splashColor: Colors.white,
                       //the default splashColor is grey
                       onTap: () {
                         //set the toggle logic
@@ -391,6 +391,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       child: Text(
                         'Category:',
                         style: TextStyle(
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                           color: Colors.black,
                         ),
@@ -419,6 +420,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       child: Text(
                         'Due date:',
                         style: TextStyle(
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                           color: Colors.black,
                         ),
@@ -447,6 +449,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       child: Text(
                         'Start Date:',
                         style: TextStyle(
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                           color: Colors.black,
                         ),
@@ -475,6 +478,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       child: Text(
                         'End date:',
                         style: TextStyle(
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                           color: Colors.black,
                         ),
@@ -503,6 +507,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       child: Text(
                         'Length of job:',
                         style: TextStyle(
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                           color: Colors.black,
                         ),
@@ -531,6 +536,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       child: Text(
                         'Accepted applicants:',
                         style: TextStyle(
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                           color: Colors.black,
                         ),
@@ -559,6 +565,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       child: Text(
                         'Work description:',
                         style: TextStyle(
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                           color: Colors.black,
                         ),
@@ -578,30 +585,6 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                 ),
                 SizedBox(height: 10),
 
-                ///REQUIREMENTS
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Requirements:',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: RenderTags(
-                          addedChips: List<String>.from(
-                              widget.data['requirements'] as List),
-                      chipColor: Colors.blue.shade300),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
 
                 ///OPPORTUNITIES
                 Row(
@@ -612,6 +595,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       child: Text(
                         'Opportunities:',
                         style: TextStyle(
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                           color: Colors.black,
                         ),
@@ -629,6 +613,31 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                     ),
                   ],
                 ),
+                ///REQUIREMENTS
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Requirements:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: RenderTags(
+                          addedChips: List<String>.from(
+                              widget.data['requirements'] as List),
+                          chipColor: Colors.blue.shade300),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
               ],
             ),
           ),
@@ -695,6 +704,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             child: Text(
                               'Category:',
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
@@ -723,6 +733,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             child: Text(
                               'Due date:',
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
@@ -751,6 +762,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             child: Text(
                               'Start Date:',
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
@@ -779,6 +791,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             child: Text(
                               'End date:',
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
@@ -807,6 +820,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             child: Text(
                               'Length of job:',
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
@@ -835,6 +849,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             child: Text(
                               'Accepted applicants:',
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
@@ -863,6 +878,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             child: Text(
                               'Work description:',
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
@@ -882,31 +898,6 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       ),
                       SizedBox(height: 10),
 
-                      ///REQUIREMENTS
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              'Requirements:',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: RenderTags(
-                                addedChips: List<String>.from(
-                                    widget.data['requirements'] as List),
-                                chipColor: Colors.blue.shade300),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-
                       ///OPPORTUNITIES
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -916,6 +907,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             child: Text(
                               'Opportunities:',
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
@@ -933,6 +925,31 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                           ),
                         ],
                       ),
+                      ///REQUIREMENTS
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Requirements:',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: RenderTags(
+                                addedChips: List<String>.from(
+                                    widget.data['requirements'] as List),
+                                chipColor: Colors.blue.shade300),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
                     ],
                   ),
                 ),
@@ -1006,6 +1023,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             child: Text(
                               'Category:',
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
@@ -1034,6 +1052,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             child: Text(
                               'Due date:',
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
@@ -1062,6 +1081,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             child: Text(
                               'Start Date:',
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
@@ -1090,6 +1110,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             child: Text(
                               'End date:',
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
@@ -1118,6 +1139,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             child: Text(
                               'Length of job:',
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
@@ -1146,6 +1168,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             child: Text(
                               'Accepted applicants:',
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
@@ -1174,6 +1197,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             child: Text(
                               'Work description:',
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
@@ -1193,31 +1217,6 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       ),
                       SizedBox(height: 10),
 
-                      ///REQUIREMENTS
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              'Requirements:',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: RenderTags(
-                                addedChips: List<String>.from(
-                                    widget.data['requirements'] as List),
-                                chipColor: Colors.blue.shade300),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-
                       ///OPPORTUNITIES
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1227,6 +1226,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             child: Text(
                               'Opportunities:',
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16,
                                 color: Colors.black,
                               ),
@@ -1244,6 +1244,31 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                           ),
                         ],
                       ),
+                      ///REQUIREMENTS
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Requirements:',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: RenderTags(
+                                addedChips: List<String>.from(
+                                    widget.data['requirements'] as List),
+                                chipColor: Colors.blue.shade300),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
                     ],
                   ),
                 )

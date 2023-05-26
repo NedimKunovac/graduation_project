@@ -50,7 +50,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
               children: List.generate(selectedLoading.length, (index) {
                 //using Inkwell widget to create a button
                 return InkWell(
-                    splashColor: Colors.yellow,
+                    splashColor: Colors.white,
                     //the default splashColor is grey
                     onTap: () {
                       //set the toggle logic

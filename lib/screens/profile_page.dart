@@ -132,19 +132,22 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ) : SizedBox.shrink(),
 
-                  loadedData['dateOfBirth'] != null
-                      ? Column(
-                    children: [
-                      SizedBox(height: 8.0),
-                      Text(
-                        'Date of birth: ${DateFormat.yMMMMd().format(DateTime.fromMillisecondsSinceEpoch(loadedData['dateOfBirth'].seconds * 1000))}',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                        ),
-                      ),
-                    ],
-                  )
-                      : SizedBox.shrink(),
+                  // loadedData['dateOfBirth'] != null
+                  //     ? Column(
+                  //   children: [
+                  //     SizedBox(height: 8.0),
+                  //     Text(
+                  //       'Date of birth: ${DateFormat.yMMMMd().format(DateTime.fromMillisecondsSinceEpoch(loadedData['dateOfBirth'].seconds * 1000))}',
+                  //       style: TextStyle(
+                  //         fontSize: 16.0,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // )
+                  //     : SizedBox.shrink(),
+                  //
+
+
                   loadedData['profileInfo'] != null && loadedData['profileInfo'] != ''
                       ? Column(
                     children: [
@@ -159,16 +162,20 @@ class _ProfilePageState extends State<ProfilePage> {
                       SizedBox(height: 5.0),
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.red,
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10.0),
+                          border: Border.all( color: Colors.grey.shade500),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
+                        // decoration: BoxDecoration(
+                        //   color: Colors.red,
+                        //   border: Border.all(color: Colors.grey),
+                        //   borderRadius: BorderRadius.circular(10.0),
+                        // ),
                         padding: EdgeInsets.all(8.0),
                         child: SingleChildScrollView(
                           child: Text(
                             loadedData['profileInfo'].toString(),
                             textAlign: TextAlign.justify,
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.black),
                           ),
                         ),
                       ),
