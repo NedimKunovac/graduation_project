@@ -164,13 +164,13 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                     );
                   },
                   icon: Icon(Icons.edit_calendar),
-                  color: Colors.red,
+                  color: Colors.blue.shade500,
                   iconSize: 35.0,
                 ),
                 IconButton(
                   onPressed: deletePost,
                   icon: Icon(Icons.delete_forever),
-                  color: Colors.red,
+                  color: Colors.blue.shade500,
                   iconSize: 35.0,
                 ),
               ],
@@ -301,13 +301,13 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         decoration: BoxDecoration(
                           //set the background color of the button when it is selected/ not selected
                           color: selectedLoading[index]
-                              ? Colors.red.shade400
+                              ? Colors.blue.shade500
                               : Colors.white,
                           // here is where we set the rounded corner
                           borderRadius: BorderRadius.circular(8),
                           //don't forget to set the border,
                           //otherwise there will be no rounded corner
-                          border: Border.all(color: Colors.red),
+                          border: Border.all(color: Colors.blue.shade500),
                         ),
                         child: Center(
                           child: Text(
@@ -315,7 +315,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             style: TextStyle(
                               color: selectedLoading[index]
                                   ? Colors.white
-                                  : Colors.red.shade400,
+                                  : Colors.blue.shade500,
                             ),
                           ),
                         ),
@@ -596,7 +596,8 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                       flex: 3,
                       child: RenderTags(
                           addedChips: List<String>.from(
-                              widget.data['requirements'] as List)),
+                              widget.data['requirements'] as List),
+                      chipColor: Colors.blue.shade300),
                     ),
                   ],
                 ),
@@ -899,7 +900,8 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             flex: 3,
                             child: RenderTags(
                                 addedChips: List<String>.from(
-                                    widget.data['requirements'] as List)),
+                                    widget.data['requirements'] as List),
+                                chipColor: Colors.blue.shade300),
                           ),
                         ],
                       ),
@@ -1209,7 +1211,8 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                             flex: 3,
                             child: RenderTags(
                                 addedChips: List<String>.from(
-                                    widget.data['requirements'] as List)),
+                                    widget.data['requirements'] as List),
+                                chipColor: Colors.blue.shade300),
                           ),
                         ],
                       ),
@@ -1271,6 +1274,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
       body: Column(
         children: [
           pagePicker(),
+          SizedBox(height: 7),
           Expanded(
             child: SingleChildScrollView(child: pageGenerator()),
           ),

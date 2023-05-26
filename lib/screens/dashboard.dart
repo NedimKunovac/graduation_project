@@ -171,7 +171,7 @@ class _DashboardState extends State<Dashboard> {
         duration: Duration(milliseconds: 1000),
         curve: Curves.easeIn,
         child: FloatingActionButton(
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.blue.shade500,
           child: Icon(
             Icons.add,
             size: 40,
