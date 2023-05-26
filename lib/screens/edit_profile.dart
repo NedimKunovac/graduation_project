@@ -458,7 +458,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.blue.shade500,
         onPressed: () {
           updateData();
         },

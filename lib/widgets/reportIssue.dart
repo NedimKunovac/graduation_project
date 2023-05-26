@@ -72,18 +72,18 @@ class _ReportIssueState extends State<ReportIssue> {
                 actions: [
                   TextButton(
                       child: const Text(
-                        'Submit',
-                        style: TextStyle(color: Colors.green),
-                      ),
-                      onPressed: () => submitIssue()),
-                  TextButton(
-                      child: const Text(
                         'Cancel',
                         style: TextStyle(color: Colors.red),
                       ),
                       onPressed: () {
                         Navigator.pop(context);
-                      })
+                      }),
+                  ElevatedButton(
+                      child: const Text(
+                        'Submit',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () => submitIssue()),
                 ],
               );
 

@@ -147,8 +147,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
           if (documentSnapshot.exists) {
             CategoryField = DropdownField(
               options: List<String>.from(documentSnapshot['interests'] as List),
-              textColor: Colors.white,
-              dropdownColor: Colors.red.shade400,
+              textColor: Colors.black,
               fontSize: 16,
             );
             setState(() {});
@@ -165,7 +164,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
         title: Text(
           'Create your post!',
           style: TextStyle(
-            color: Colors.red,
+            color: Colors.blue.shade500,
           ),
         ),
         elevation: 0,
@@ -195,11 +194,11 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
             margin: EdgeInsets.all(10),
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.red.shade400,
-              borderRadius: BorderRadius.circular(10),
+              border: Border.all( color: Colors.blue.shade300),
+              borderRadius: BorderRadius.all(Radius.circular(20)),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
+                  color: Colors.white,
                   spreadRadius: 2,
                   blurRadius: 5,
                   offset: Offset(0, 3),
@@ -219,7 +218,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                           'Post Title:',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -234,11 +233,11 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                                   : null,
                           decoration: InputDecoration(
                             errorStyle: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                             hintText: 'Enter post title',
                             hintStyle: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
@@ -249,7 +248,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                           ),
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -265,7 +264,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                           'Post Category:',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -282,7 +281,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                         'Application deadline:',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -330,22 +329,22 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                             : null,
                         decoration: InputDecoration(
                           errorStyle: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                           hintText: 'Enter application deadline',
                           hintStyle: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                           enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                            borderSide: BorderSide(color: Colors.black),
                           ),
                           focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                            borderSide: BorderSide(color: Colors.black),
                           ),
                         ),
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -363,7 +362,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                         'Job start date:',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -412,22 +411,22 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                             : null,
                         decoration: InputDecoration(
                           errorStyle: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                           hintText: 'Enter job start date',
                           hintStyle: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                           enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                            borderSide: BorderSide(color: Colors.black),
                           ),
                           focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                            borderSide: BorderSide(color: Colors.black),
                           ),
                         ),
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -445,7 +444,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                         'Job end date:',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -506,22 +505,22 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                             : null,
                         decoration: InputDecoration(
                           errorStyle: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                           hintText: 'Enter job end date',
                           hintStyle: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                           enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                            borderSide: BorderSide(color: Colors.black),
                           ),
                           focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                            borderSide: BorderSide(color: Colors.black),
                           ),
                         ),
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -539,7 +538,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                           'Accepted applicants:',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -555,22 +554,22 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                                   : null,
                           decoration: InputDecoration(
                             errorStyle: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                             hintText: 'How many will be accepted',
                             hintStyle: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                             ),
                             enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
+                              borderSide: BorderSide(color: Colors.black),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
+                              borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -588,7 +587,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                           'Work description:',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -607,20 +606,20 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                                     : null,
                             maxLines: null,
                             keyboardType: TextInputType.multiline,
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
                               errorStyle: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                               hintText: 'Enter work description',
                               hintStyle: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                               enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
+                                borderSide: BorderSide(color: Colors.black),
                               ),
                               focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
+                                borderSide: BorderSide(color: Colors.black),
                               ),
                             ),
                           ),
@@ -639,7 +638,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                           'Requirements:',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -664,7 +663,7 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                           'Opportunities:',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -682,20 +681,20 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
                             controller: opportunitiesController,
                             maxLines: null,
                             keyboardType: TextInputType.multiline,
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
                               errorStyle: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                               hintText: 'Enter opportunities',
                               hintStyle: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                               enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
+                                borderSide: BorderSide(color: Colors.black),
                               ),
                               focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
+                                borderSide: BorderSide(color: Colors.black),
                               ),
                             ),
                           ),
@@ -707,8 +706,9 @@ class _AdvertisementFormState extends State<AdvertisementForm> {
           ),
         SizedBox(height: 10),
           MaterialButton(
+              minWidth: MediaQuery.of(context).size.width-20,
               height: 60,
-              color: Colors.red.shade400,
+              color: Colors.blue.shade500,
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50),

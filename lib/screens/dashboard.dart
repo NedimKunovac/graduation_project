@@ -184,24 +184,24 @@ class _DashboardState extends State<Dashboard> {
                   'You will be redirected to the post creation page.'),
               actions: <Widget>[
                 TextButton(
-                  onPressed: () => Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AdvertisementForm(
-                                userID: FirebaseAuth.instance.currentUser?.uid,
-                                userName: data['name'],
-                                userProfilePhoto: data['profilePhotoUrl'],
-                              ))),
-                  child: const Text(
-                    'Yes',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                TextButton(
                   onPressed: () => Navigator.pop(context, 'No'),
                   child: const Text(
                     'No',
                     style: TextStyle(color: Colors.red),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AdvertisementForm(
+                            userID: FirebaseAuth.instance.currentUser?.uid,
+                            userName: data['name'],
+                            userProfilePhoto: data['profilePhotoUrl'],
+                          ))),
+                  child: const Text(
+                    'Yes',
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ],
