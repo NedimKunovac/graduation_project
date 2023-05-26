@@ -191,7 +191,8 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
             children: [
               MaterialButton(
                 onPressed: applyToPost,
-                color: Colors.red.shade400,
+                minWidth: MediaQuery.of(context).size.width-20,
+                color: Colors.blue.shade500,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50)),
                 child: Text(
@@ -215,7 +216,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
         title: Text(
           '${widget.data['title']}',
           style: TextStyle(
-            color: Colors.red.shade400,
+            color: Colors.grey.shade800,
           ),
         ),
         leading: IconButton(
@@ -241,7 +242,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
         title: Text(
           '${widget.data['title']}',
           style: TextStyle(
-            color: Colors.red.shade400,
+            color: Colors.black,
           ),
         ),
         leading: IconButton(
@@ -367,17 +368,18 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
             margin: EdgeInsets.all(10),
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.red.shade400,
-              borderRadius: BorderRadius.circular(10),
+              border: Border.all( color: Colors.blue.shade300),
+              borderRadius: BorderRadius.all(Radius.circular(20)),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
+                  color: Colors.transparent,
                   spreadRadius: 2,
                   blurRadius: 5,
                   offset: Offset(0, 3),
                 ),
               ],
             ),
+
             child: Column(
               children: [
                 ///CATEGORY
@@ -390,7 +392,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         'Category:',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -400,7 +402,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         widget.data['category'][0],
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -418,7 +420,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         'Due date:',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -428,7 +430,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         "${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).year}",
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -446,7 +448,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         'Start Date:',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -456,7 +458,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         "${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).year}",
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -474,7 +476,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         'End date:',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -484,7 +486,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         "${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).year}",
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -502,7 +504,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         'Length of job:',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -512,7 +514,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         '${((widget.data['endDate'].seconds - widget.data['startDate'].seconds) / 86400).round()}',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -530,7 +532,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         'Accepted applicants:',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -540,7 +542,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         widget.data['applicants'],
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -558,7 +560,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         'Work description:',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -568,7 +570,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         widget.data['description'],
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -586,7 +588,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         'Requirements:',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -610,7 +612,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         'Opportunities:',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -620,7 +622,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                         widget.data['opportunities'],
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -670,11 +672,11 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                   margin: EdgeInsets.all(10),
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.red.shade400,
-                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all( color: Colors.blue.shade300),
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
+                        color: Colors.transparent,
                         spreadRadius: 2,
                         blurRadius: 5,
                         offset: Offset(0, 3),
@@ -693,7 +695,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'Category:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -703,7 +705,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               widget.data['category'][0],
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -721,7 +723,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'Due date:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -731,7 +733,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               "${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).year}",
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -749,7 +751,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'Start Date:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -759,7 +761,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               "${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).year}",
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -777,7 +779,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'End date:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -787,7 +789,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               "${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).year}",
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -805,7 +807,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'Length of job:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -815,7 +817,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               '${((widget.data['endDate'].seconds - widget.data['startDate'].seconds) / 86400).round()}',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -833,7 +835,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'Accepted applicants:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -843,7 +845,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               widget.data['applicants'],
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -861,7 +863,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'Work description:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -871,7 +873,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               widget.data['description'],
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -889,7 +891,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'Requirements:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -913,7 +915,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'Opportunities:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -923,7 +925,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               widget.data['opportunities'],
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -979,18 +981,18 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
               ? Container(
                   margin: EdgeInsets.all(10),
                   padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.red.shade400,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
+            decoration: BoxDecoration(
+              border: Border.all( color: Colors.blue.shade300),
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.transparent,
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 3),
+                ),
+              ],
+            ),
                   child: Column(
                     children: [
                       ///CATEGORY
@@ -1003,7 +1005,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'Category:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -1013,7 +1015,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               widget.data['category'][0],
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -1031,7 +1033,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'Due date:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -1041,7 +1043,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               "${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['dueDate'].seconds * 1000).year}",
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -1059,7 +1061,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'Start Date:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -1069,7 +1071,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               "${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['startDate'].seconds * 1000).year}",
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -1087,7 +1089,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'End date:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -1097,7 +1099,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               "${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).day}-${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).month}-${DateTime.fromMillisecondsSinceEpoch(widget.data['endDate'].seconds * 1000).year}",
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -1115,7 +1117,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'Length of job:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -1125,7 +1127,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               '${((widget.data['endDate'].seconds - widget.data['startDate'].seconds) / 86400).round()}',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -1143,7 +1145,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'Accepted applicants:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -1153,7 +1155,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               widget.data['applicants'],
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -1171,7 +1173,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'Work description:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -1181,7 +1183,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               widget.data['description'],
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -1199,7 +1201,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'Requirements:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -1223,7 +1225,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               'Opportunities:',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -1233,7 +1235,7 @@ class _AdvertisementDetailedState extends State<AdvertisementDetailed> {
                               widget.data['opportunities'],
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),
