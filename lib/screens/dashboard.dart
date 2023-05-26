@@ -279,7 +279,7 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ],
                 currentIndex: _selectedIndex,
-                selectedItemColor: Colors.red.shade400,
+                selectedItemColor: Colors.blue.shade500,
                 onTap: _onItemTapped,
               ),
             ),
