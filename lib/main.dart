@@ -22,6 +22,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(FirebaseAuth.instance.currentUser?.uid!=null){
+      return LoginPage(passedEmail: '', newAccount: false);
+    }else {
       return SignOrLog();
+    }
   }
 }
