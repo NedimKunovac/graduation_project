@@ -168,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Text(
-                                              'Email:',
+                                              'Email',
                                               style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w400,
@@ -219,7 +219,7 @@ class _LoginPageState extends State<LoginPage> {
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Text(
-                                              'Password:',
+                                              'Password',
                                               style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w400,

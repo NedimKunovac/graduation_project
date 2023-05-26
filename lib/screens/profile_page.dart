@@ -70,25 +70,28 @@ class _ProfilePageState extends State<ProfilePage> {
                   loadedData['type'] != null
                       ? Column(
                     children: [
-                      SizedBox(height: 8.0),
+                      SizedBox(height: 2.0),
                       loadedData['type'] == 0 ? Text(
                         'ADMIN',
                         style: TextStyle(
-                          fontSize: 20.0,
+                          color: Colors.grey.shade600,
+                          fontSize: 15.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ): SizedBox.shrink(),
                       loadedData['type'] == 1 ?Text(
                         'Company',
                         style: TextStyle(
-                          fontSize: 20.0,
+                          color: Colors.grey.shade600,
+                          fontSize: 15.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ): SizedBox.shrink(),
                       loadedData['type'] == 2 ?Text(
                         'Volunteer',
                         style: TextStyle(
-                          fontSize: 20.0,
+                          color: Colors.grey.shade600,
+                          fontSize: 15.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ): SizedBox.shrink(),
@@ -110,7 +113,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   loadedData['rep'] != null
                       ? Column(
                     children: [
-                      SizedBox(height: 8.0),
+                      SizedBox(height: 10.0),
                       Text(
                         'Representative: ${loadedData['rep']}',
                         style: TextStyle(
@@ -122,7 +125,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   loadedData['vatNum'] != null
                       ? Column(
                     children: [
-                      SizedBox(height: 8.0),
+                      SizedBox(height: 2.0),
                       Text(
                         'VAT Number: ${loadedData['vatNum']}',
                         style: TextStyle(
@@ -132,20 +135,20 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ) : SizedBox.shrink(),
 
-                  // loadedData['dateOfBirth'] != null
-                  //     ? Column(
-                  //   children: [
-                  //     SizedBox(height: 8.0),
-                  //     Text(
-                  //       'Date of birth: ${DateFormat.yMMMMd().format(DateTime.fromMillisecondsSinceEpoch(loadedData['dateOfBirth'].seconds * 1000))}',
-                  //       style: TextStyle(
-                  //         fontSize: 16.0,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // )
-                  //     : SizedBox.shrink(),
-                  //
+                  loadedData['dateOfBirth'] != null
+                      ? Column(
+                    children: [
+                      SizedBox(height: 2.0),
+                      Text(
+                        'Date of birth: ${DateFormat.yMMMMd().format(DateTime.fromMillisecondsSinceEpoch(loadedData['dateOfBirth'].seconds * 1000))}',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ],
+                  )
+                      : SizedBox.shrink(),
+
 
 
                   loadedData['profileInfo'] != null && loadedData['profileInfo'] != ''
@@ -159,7 +162,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 5.0),
+                      SizedBox(height: 3.0),
                       Container(
                         decoration: BoxDecoration(
                           border: Border.all( color: Colors.grey.shade500),
@@ -193,7 +196,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 8.0),
                       RenderTags(
                           addedChips:
                           List<String>.from(loadedData['skills'] as List)),
@@ -203,7 +205,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   loadedData['interests'] != null
                       ? Column(
                     children: [
-                      SizedBox(height: 16.0),
+                      SizedBox(height: 18.0),
                       Text(
                         'Interests:',
                         style: TextStyle(
@@ -216,12 +218,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         shrinkWrap: true,
                         itemCount: loadedData['interests'].length,
                         itemBuilder: (context, index) {
-                          return ListTile(
-                            leading: Icon(
-                              Icons.check,
-                              color: Colors.green,
+                          return Container(
+                            height: 28,
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.check,
+                                color: Colors.green,
+                              ),
+                              title: Text(loadedData['interests'][index]),
                             ),
-                            title: Text(loadedData['interests'][index]),
                           );
                         },
                       ),
