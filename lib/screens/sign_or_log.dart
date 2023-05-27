@@ -113,7 +113,7 @@ class _SignOrLogState extends State<SignOrLog> {
                     child: Text('Forgot password?',
                     style: TextStyle(
                       decoration: TextDecoration.underline,
-                      color: Colors.red,
+                      color: Colors.blue.shade500,
                       fontSize: 12
                     ),),
                     onTap: ()=>  Navigator.push(
