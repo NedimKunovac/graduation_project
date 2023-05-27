@@ -35,6 +35,17 @@ class _AcceptedApplicantsState extends State<AcceptedApplicants> {
     );
   }
 
+  descriptionBuilder(String description) {
+    var cutoffLen = 500;
+    if (description.length <= cutoffLen) {
+      return description;
+    } else {
+      return description
+          .replaceRange(cutoffLen, description.length, '...');
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final Stream<DocumentSnapshot> _documentStream = FirebaseFirestore.instance
@@ -129,14 +140,18 @@ class _AcceptedApplicantsState extends State<AcceptedApplicants> {
                                             SizedBox(
                                               height: 4,
                                             ),
-                                            dataLoaded['profileInfo'] != null
-                                                ? Text(
-                                                    dataLoaded['profileInfo'],
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 14),
-                                                  )
-                                                : SizedBox.shrink(),
+                                            SizedBox(
+                                              width: 200,
+                                              child: dataLoaded['profileInfo'] != null
+                                                  ? Text(
+                                                      descriptionBuilder(dataLoaded['profileInfo']),
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 14,
+                                                        overflow: TextOverflow.ellipsis),
+                                                    )
+                                                  : SizedBox.shrink(),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -259,14 +274,17 @@ class _AcceptedApplicantsState extends State<AcceptedApplicants> {
                                             SizedBox(
                                               height: 4,
                                             ),
-                                            dataLoaded['profileInfo'] != null
-                                                ? Text(
-                                              dataLoaded['profileInfo'],
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 14),
-                                            )
-                                                : SizedBox.shrink(),
+                                        SizedBox(
+                                          width: 300,
+                                          child: dataLoaded['profileInfo'] != null
+                                              ? Text(
+                                            descriptionBuilder(dataLoaded['profileInfo']),
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 14,
+                                                overflow: TextOverflow.ellipsis),
+                                          )
+                                              : SizedBox.shrink()),
                                           ],
                                         ),
                                       ),
