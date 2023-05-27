@@ -141,7 +141,7 @@ class _AcceptedApplicantsState extends State<AcceptedApplicants> {
                                               height: 4,
                                             ),
                                             SizedBox(
-                                              width: 200,
+                                              width: MediaQuery.of(context).size.width-200,
                                               child: dataLoaded['profileInfo'] != null
                                                   ? Text(
                                                       descriptionBuilder(dataLoaded['profileInfo']),
@@ -275,7 +275,7 @@ class _AcceptedApplicantsState extends State<AcceptedApplicants> {
                                               height: 4,
                                             ),
                                         SizedBox(
-                                          width: 300,
+                                          width: MediaQuery.of(context).size.width-200,
                                           child: dataLoaded['profileInfo'] != null
                                               ? Text(
                                             descriptionBuilder(dataLoaded['profileInfo']),
