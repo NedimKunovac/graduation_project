@@ -4,7 +4,7 @@
 
 A Flutter based Android (for now) application made to connect volunteers and companies! Have an opportunity that requires free skilled workforce? Market it as a Volunteering Opportunity! The Volunteering Network has you covered.
 
-This project was the Graduation Project for three Software Engineering Studets, and was done in collaboration with ***Ant Colony Sarajevo, B&H***.
+This project was the Graduation Project for three Software Engineering Students, and was done in collaboration with ***Ant Colony Sarajevo, B&H***.
 
 ## Created using:
 <p align="center"> 
@@ -63,4 +63,4 @@ flutter run main.dart
 This code is open source as of the _1st of July 2023._ All contrubtions after that date are welcome. For major changes, please open an issue first to discuss what you would like to change. All design feedback is also welcome.
 
 ### Property and license
- - ***TBA***
+ - _All intelectucal property behind this application belongs to **Alen Šerifović** and subsequently to **Ant Colony Sarajevo**, as the idea was created and proposed by him. The original design, code, feature set and its interpretation are the work of **Nedim Kunovac**, **Mirza Redžepović** and **Edin Žiga**, with some parts of design being proposed by **Halid Kasapović**. Any distribution and use of this property is strictly prohibitied without the knowledge of the authors. This is someone's hard work, respect it._
