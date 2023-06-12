@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project/login.dart';
-import 'signorlog.dart';
+import 'package:graduation_project/screens/login.dart';
+import 'screens/sign_or_log.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 ///This file serves to route user to dash if he is already logged in upon startup
@@ -22,17 +22,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ///Streambuilder routes user to dashboard if he is already logged in
-    return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          ///Login page has routing to dashboard if user is already logged in
-          return LoginPage(passedEmail: '', newAccount: false);
-        } else
-          ///Routes to first page
-          return SignOrLog();
-      },
-    );
+    if(FirebaseAuth.instance.currentUser?.uid!=null){
+      return LoginPage(passedEmail: '', newAccount: false);
+    }else {
+      return SignOrLog();
+    }
   }
 }
