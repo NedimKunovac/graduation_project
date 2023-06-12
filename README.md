@@ -1,10 +1,10 @@
 <h1 align="center"><i>Welcome to The Volunteering Network!</i></h1>
 
-<p align="center"> <a href="https://github.com/NedimKunovac/graduation_project/blob/main/assets/introduction.png" target="_blank" rel="noreferrer"> <img src="https://github.com/NedimKunovac/graduation_project/blob/main/assets/introduction.png" alt="android" width="350" height="350"/> </a> </p>
+<p align="center"> <a href="https://github.com/NedimKunovac/graduation_project/blob/main/assets/images/introduction.png" target="_blank" rel="noreferrer"> <img src="https://github.com/NedimKunovac/graduation_project/blob/main/assets/images/introduction.png" alt="android" width="350" height="350"/> </a> </p>
 
 A Flutter based Android (for now) application made to connect volunteers and companies! Have an opportunity that requires free skilled workforce? Market it as a Volunteering Opportunity! The Volunteering Network has you covered.
 
-This project was the Graduation Project for three Software Engineering Studets, and was done in collaboration with ***Ant Colony Sarajevo, B&H***.
+This project was the Graduation Project for three Software Engineering Students, and was done in collaboration with ***Ant Colony Sarajevo, B&H***.
 
 ## Created using:
 <p align="center"> 
@@ -14,9 +14,6 @@ This project was the Graduation Project for three Software Engineering Studets, 
  <a href="https://firebase.google.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="firebase" width="100" height="100"/> </a> 
  <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="100" height="100"/> </a> 
 </p>
-
-## Overview
- - ***Coming soon!***
 
 ## Core features
  - ***Register as a Company or a Volunteer!***
@@ -63,4 +60,4 @@ flutter run main.dart
 This code is open source as of the _1st of July 2023._ All contrubtions after that date are welcome. For major changes, please open an issue first to discuss what you would like to change. All design feedback is also welcome.
 
 ### Property and license
- - ***TBA***
+_All intelectucal property behind this application belongs to **Alen Šerifović** and subsequently to **Ant Colony Sarajevo**, as the idea was created and proposed by him. The original design, code, feature set and its interpretation are the work of **Nedim Kunovac**, **Mirza Redžepović** and **Edin Žiga**, with some parts of the design being proposed by **Halid Kasapović**. Any distribution and use of this property is strictly prohibitied without the knowledge of the authors. This is someone's hard work, respect it._
