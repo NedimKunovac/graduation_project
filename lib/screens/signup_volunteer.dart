@@ -36,6 +36,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
   XFile? pickedImage;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   ///Category Field
   var InterestsTiles = null;
@@ -192,7 +193,6 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
       appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
-          brightness: Brightness.light,
           automaticallyImplyLeading: false,
           title: IconButton(
             onPressed: () {
@@ -243,7 +243,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Full Name:',
+                              'Full Name',
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
@@ -286,7 +286,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Your profile photo:',
+                              'Your profile photo',
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
@@ -340,7 +340,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Date of Birth:',
+                              'Date of Birth',
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
@@ -414,11 +414,12 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           ],
                         ),
 
+                        ///CATEGORY
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Please select the category of jobs you would be interested in:',
+                              'Please select the category of jobs you would be interested in',
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
@@ -440,7 +441,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Please enter your skills:',
+                              'Please enter your skills',
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
@@ -462,7 +463,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Email:',
+                              'Email',
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
@@ -505,7 +506,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              'Password:',
+                              'Password',
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
@@ -542,6 +543,50 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                             )
                           ],
                         ),
+
+                        ///CONFIRM PASSWORD
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Conifrm password',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            TextFormField(
+                              obscureText: true,
+                              controller: confirmPasswordController,
+                              autovalidateMode: AutovalidateMode.disabled,
+                              validator: (value) =>
+                                  value != null && value.length < 6 ||
+                                          value != passwordController.text
+                                      ? 'Please make sure the passwords match'
+                                      : null,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 10),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.grey.shade400,
+                                  ),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade400),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            )
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -558,7 +603,7 @@ class _VolunteerSignupState extends State<VolunteerSignup> {
                     child: MaterialButton(
                         minWidth: double.infinity,
                         height: 60,
-                        color: Colors.red.shade400,
+                        color: Colors.blue.shade500,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),

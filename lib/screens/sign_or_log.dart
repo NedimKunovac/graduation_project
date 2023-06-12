@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project/screens/forgotPasswordPage.dart';
 import 'package:graduation_project/screens/sign_up_pick.dart';
 import 'login.dart';
 
@@ -13,6 +15,11 @@ class SignOrLog extends StatefulWidget {
 }
 
 class _SignOrLogState extends State<SignOrLog> {
+  // ignore: must_call_super
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,9 +68,10 @@ class _SignOrLogState extends State<SignOrLog> {
               //Buttons that route to login or sign up
               Column(
                 children: <Widget>[
+                  SizedBox(height: 10),
                   //Login button
                   MaterialButton(
-                    color: Colors.red.shade400,
+                    color: Colors.blue.shade500,
                     minWidth: double.infinity,
                     height: 60,
                     onPressed: () {
@@ -92,13 +100,26 @@ class _SignOrLogState extends State<SignOrLog> {
                           MaterialPageRoute(
                               builder: (context) => SignUpRouter()));
                     },
-                    color: Colors.red.shade400,
+                    color: Colors.blue.shade500,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)),
                     child: Text(
                       'Sign up',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
+                  ),
+                  SizedBox(height: 20),
+                  GestureDetector(
+                    child: Text('Forgot password?',
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: Colors.blue.shade500,
+                      fontSize: 12
+                    ),),
+                    onTap: ()=>  Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ForgotPasswordPage())),
                   )
                 ],
               )

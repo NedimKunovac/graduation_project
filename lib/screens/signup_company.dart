@@ -32,6 +32,7 @@ class _CompanySignupState extends State<CompanySignup> {
   final vatNumController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   ///Clear controllers
   void clearControllers() {
@@ -111,7 +112,6 @@ class _CompanySignupState extends State<CompanySignup> {
       appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
-          brightness: Brightness.light,
           automaticallyImplyLeading: false,
           title: IconButton(
             onPressed: () {
@@ -163,7 +163,7 @@ class _CompanySignupState extends State<CompanySignup> {
                             height: 5,
                           ),
                           Text(
-                            'Company title:',
+                            'Company title',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
@@ -209,7 +209,7 @@ class _CompanySignupState extends State<CompanySignup> {
                             height: 5,
                           ),
                           Text(
-                            'Company representative\'s name:',
+                            'Company representative\'s name',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
@@ -252,7 +252,7 @@ class _CompanySignupState extends State<CompanySignup> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'Logo of your company:',
+                            'Logo of your company',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
@@ -309,7 +309,7 @@ class _CompanySignupState extends State<CompanySignup> {
                             height: 5,
                           ),
                           Text(
-                            'Company VAT Number:',
+                            'Company VAT Number',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
@@ -353,7 +353,7 @@ class _CompanySignupState extends State<CompanySignup> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'Email:',
+                            'Email',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
@@ -396,7 +396,7 @@ class _CompanySignupState extends State<CompanySignup> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'Password:',
+                            'Password',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
@@ -433,6 +433,50 @@ class _CompanySignupState extends State<CompanySignup> {
                           )
                         ],
                       ),
+
+                      ///CONFIRM PASSWORD
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'Conifrm password',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          TextFormField(
+                            obscureText: true,
+                            controller: confirmPasswordController,
+                            autovalidateMode: AutovalidateMode.disabled,
+                            validator: (value) =>
+                                value != null && value.length < 6 ||
+                                        value != passwordController.text
+                                    ? 'Please make sure the passwords match'
+                                    : null,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 10),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.grey.shade400,
+                                ),
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.grey.shade400),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          )
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -449,7 +493,7 @@ class _CompanySignupState extends State<CompanySignup> {
                   child: MaterialButton(
                       minWidth: double.infinity,
                       height: 60,
-                      color: Colors.red.shade400,
+                      color: Colors.blue.shade500,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),

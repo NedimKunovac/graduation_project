@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:graduation_project/screens/verifyEmailPage.dart';
 
 import 'dashboard.dart';
 import 'package:flutter/material.dart';
@@ -167,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Text(
-                                              'Email:',
+                                              'Email',
                                               style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w400,
@@ -218,7 +219,7 @@ class _LoginPageState extends State<LoginPage> {
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Text(
-                                              'Password:',
+                                              'Password',
                                               style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w400,
@@ -274,7 +275,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: MaterialButton(
                                 minWidth: double.infinity,
                                 height: 60,
-                                color: Colors.red.shade400,
+                                color: Colors.blue.shade500,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50),

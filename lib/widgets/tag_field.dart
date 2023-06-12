@@ -9,7 +9,7 @@ import 'package:profanity_filter/profanity_filter.dart';
 
 class RenderTags extends StatefulWidget {
   RenderTags(
-      {Key? key, required this.addedChips, this.chipColor, this.textStyle})
+      {Key? key, required this.addedChips, this.chipColor, this.textStyle, this.nChips})
       : super(key: key);
 
   ///List of added tags
@@ -21,6 +21,9 @@ class RenderTags extends StatefulWidget {
   ///Chip inner text color
   TextStyle? textStyle;
 
+  ///Number of chips to be loaded
+  int? nChips;
+
   @override
   State<RenderTags> createState() => _RenderTagsState();
 }
@@ -28,14 +31,20 @@ class RenderTags extends StatefulWidget {
 class _RenderTagsState extends State<RenderTags> {
   ///Getter for top fun
   getChipList() {
+    int ChipLimit = widget.addedChips.length;
+
+    if(widget.nChips!=null && widget.addedChips.length>widget.nChips!){
+      ChipLimit = widget.nChips!;
+    }
+
     List<Widget> chipList = <Widget>[];
-    for (var i = 0; i < widget.addedChips.length; i++) {
+    for (var i = 0; i < ChipLimit; i++) {
       chipList.add(
         Padding(
-          padding: EdgeInsets.fromLTRB(0, 2, 7, 2),
+          padding: EdgeInsets.fromLTRB(0, 0, 7, 0),
           child: Chip(
             label: Text(
-              widget.addedChips[i].toString(),
+              widget.addedChips[i].length<20? widget.addedChips[i].toString() : widget.addedChips[i].replaceRange(20, widget.addedChips[i].length, '...'),
               style: widget.textStyle,
             ),
             backgroundColor: widget.chipColor,
@@ -43,6 +52,21 @@ class _RenderTagsState extends State<RenderTags> {
         ),
       );
     }
+    if(widget.nChips!=null && widget.addedChips.length>widget.nChips!){
+      chipList.add(
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 2, 7, 2),
+          child: Chip(
+            label: Text(
+              "+${widget.addedChips.length-widget.nChips!}",
+              style: widget.textStyle,
+            ),
+            backgroundColor: widget.chipColor,
+          ),
+        ),
+      );
+    }
+
     return chipList;
   }
 
@@ -71,7 +95,8 @@ class TagsField extends StatefulWidget {
       required this.suggestionsList,
       this.chipColor,
       this.textStyle,
-      this.iconColor});
+      this.iconColor,
+      this.plusIcon});
 
   ///Passed suggestions
   List<String> suggestionsList;
@@ -84,6 +109,10 @@ class TagsField extends StatefulWidget {
 
   ///Icon colors
   Color? iconColor;
+
+  ///Is plus icon available
+  bool? plusIcon;
+
 
   ///List of chip data objects so it can be iterated
   List<ChipObjectData> chipDataList = <ChipObjectData>[];
@@ -142,6 +171,8 @@ class _TagsFieldState extends State<TagsField> {
     if (widget.suggestions.isEmpty) {
       widget.suggestions = widget.suggestionsList;
     }
+    if(widget.plusIcon==null) widget.plusIcon=true;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -152,7 +183,7 @@ class _TagsFieldState extends State<TagsField> {
               return const Iterable<String>.empty();
             }
             return widget.suggestions.where((String option) {
-              return option.contains(textEditingValue.text.toLowerCase());
+              return option.contains(textEditingValue.text);
             });
           },
           onSelected: (String selection) {
@@ -186,7 +217,7 @@ class _TagsFieldState extends State<TagsField> {
               controller: fieldTextEditingController,
               focusNode: fieldFocusNode,
               decoration: InputDecoration(
-                suffixIcon: IconButton(
+                suffixIcon: widget.plusIcon! ? IconButton(
                     onPressed: () {
                       if (textEditingController.text != '') if (!filter
                           .hasProfanity(textEditingController.text)) {
@@ -214,7 +245,7 @@ class _TagsFieldState extends State<TagsField> {
                         textEditingController.text = "";
                       }
                     },
-                    icon: Icon(Icons.add)),
+                    icon: Icon(Icons.add)) : SizedBox.shrink(),
               ),
             );
           },

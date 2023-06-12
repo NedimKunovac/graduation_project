@@ -45,7 +45,7 @@ class flashBar {
       duration: duration,
       builder: (context, controller) {
         return Flash(
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.blue.shade500,
           controller: controller,
           behavior: flashStyle,
           position: FlashPosition.top,

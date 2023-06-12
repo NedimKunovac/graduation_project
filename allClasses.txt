@@ -1,0 +1,612 @@
+@startuml
+set namespaceSeparator ::
+
+class "graduation_project::main.dart::MyApp" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "graduation_project::main.dart::MyApp"
+
+class "graduation_project::screens::advertisement_details.dart::AdvertisementDetailed" {
+  +Map<String, dynamic> data
+  +dynamic userType
+  +bool? viewingPost
+  +State<AdvertisementDetailed> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::advertisement_details.dart::AdvertisementDetailed"
+
+class "graduation_project::screens::advertisement_details.dart::_AdvertisementDetailedState" {
+  +List<bool> selectedLoading
+  +List<String> loadingTypes
+  +dynamic applyToPost()
+  +dynamic deletePost()
+  +dynamic bottomAppBarGenerator()
+  +dynamic getAppBar()
+  +dynamic pagePicker()
+  +dynamic pageGenerator()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::advertisement_details.dart::_AdvertisementDetailedState"
+
+class "graduation_project::screens::advertisement_form.dart::AdvertisementForm" {
+  +String? userID
+  +String? userName
+  +String? userProfilePhoto
+  +State<AdvertisementForm> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::advertisement_form.dart::AdvertisementForm"
+
+class "graduation_project::screens::advertisement_form.dart::_AdvertisementFormState" {
+  +GlobalKey<FormState> formKey
+  +TextEditingController postTitleController
+  +TextEditingController dueDateController
+  +DateTime? pickedDueDate
+  +TextEditingController startDateController
+  +DateTime? pickedStartDate
+  +TextEditingController endDateController
+  +DateTime? pickedEndDate
+  +TextEditingController numberOfPeopleController
+  +TextEditingController workDescriptionController
+  +TextEditingController requirementsController
+  +TextEditingController opportunitiesController
+  +dynamic CategoryField
+  +dynamic SkillsField
+  +dynamic getCategoryField()
+  +dynamic getSkillsField()
+  +void clearControllers()
+  +Future<dynamic> submitForm()
+  +Widget build()
+}
+
+"graduation_project::screens::advertisement_form.dart::_AdvertisementFormState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"graduation_project::screens::advertisement_form.dart::_AdvertisementFormState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::advertisement_form.dart::_AdvertisementFormState"
+
+class "graduation_project::screens::advertisement_form_update.dart::updateAdvertisementForm" {
+  +Map<String, dynamic> data
+  +State<updateAdvertisementForm> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::advertisement_form_update.dart::updateAdvertisementForm"
+
+class "graduation_project::screens::advertisement_form_update.dart::_updateAdvertisementFormState" {
+  +GlobalKey<FormState> formKey
+  +TextEditingController postTitleController
+  +TextEditingController dueDateController
+  +DateTime? pickedDueDate
+  +TextEditingController startDateController
+  +DateTime? pickedStartDate
+  +TextEditingController endDateController
+  +DateTime? pickedEndDate
+  +TextEditingController numberOfPeopleController
+  +TextEditingController workDescriptionController
+  +TextEditingController opportunitiesController
+  +dynamic CategoryField
+  +dynamic SkillsField
+  +bool toggle
+  +dynamic getCategoryField()
+  +dynamic getSkillsField()
+  +void clearControllers()
+  +Future<dynamic> updateForm()
+  +Widget build()
+}
+
+"graduation_project::screens::advertisement_form_update.dart::_updateAdvertisementFormState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"graduation_project::screens::advertisement_form_update.dart::_updateAdvertisementFormState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::advertisement_form_update.dart::_updateAdvertisementFormState"
+
+class "graduation_project::screens::applicants.dart::AcceptedApplicants" {
+  +Map<String, dynamic> data
+  +State<AcceptedApplicants> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::applicants.dart::AcceptedApplicants"
+
+class "graduation_project::screens::applicants.dart::_AcceptedApplicantsState" {
+  +dynamic acceptUser()
+  +dynamic rejectUser()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::applicants.dart::_AcceptedApplicantsState"
+
+class "graduation_project::screens::dashboard.dart::Dashboard" {
+  +State<Dashboard> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::dashboard.dart::Dashboard"
+
+class "graduation_project::screens::dashboard.dart::_DashboardState" {
+  -List<Widget> _widgetOptions
+  -int _selectedIndex
+  -void _onItemTapped()
+  +dynamic AppBarBulder()
+  +dynamic AppBarTitleBulder()
+  +dynamic FloatingActionButtonBuilder()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::dashboard.dart::_DashboardState"
+
+class "graduation_project::screens::edit_profile.dart::EditProfilePage" {
+  +Map<String, dynamic> data
+  +_EditProfilePageState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::edit_profile.dart::EditProfilePage"
+
+class "graduation_project::screens::edit_profile.dart::_EditProfilePageState" {
+  -TextEditingController _nameController
+  -TextEditingController _repController
+  -TextEditingController _dobController
+  -TextEditingController _infoController
+  -TextEditingController _VATController
+  +GlobalKey<FormState> formKey
+  +XFile? pickedImage
+  +DateTime? pickedDate
+  +dynamic SkillsField
+  +dynamic InterestsTiles
+  +dynamic getSkillsField()
+  +dynamic getCategoryField()
+  +Future<dynamic> updateData()
+  +void initState()
+  +Widget build()
+}
+
+"graduation_project::screens::edit_profile.dart::_EditProfilePageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"graduation_project::screens::edit_profile.dart::_EditProfilePageState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"graduation_project::screens::edit_profile.dart::_EditProfilePageState" o-- "cross_file::src::types::interface.dart::XFile"
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::edit_profile.dart::_EditProfilePageState"
+
+class "graduation_project::screens::forgotPasswordPage.dart::ForgotPasswordPage" {
+  +State<ForgotPasswordPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::forgotPasswordPage.dart::ForgotPasswordPage"
+
+class "graduation_project::screens::forgotPasswordPage.dart::_ForgotPasswordPageState" {
+  +GlobalKey<FormState> formkey
+  +TextEditingController emailController
+  +void dispose()
+  +Future<dynamic> resetPassword()
+  +Widget build()
+}
+
+"graduation_project::screens::forgotPasswordPage.dart::_ForgotPasswordPageState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"graduation_project::screens::forgotPasswordPage.dart::_ForgotPasswordPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::forgotPasswordPage.dart::_ForgotPasswordPageState"
+
+class "graduation_project::screens::login.dart::LoginPage" {
+  +String passedEmail
+  +bool newAccount
+  +State<LoginPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::login.dart::LoginPage"
+
+class "graduation_project::screens::login.dart::_LoginPageState" {
+  +GlobalKey<FormState> formKey
+  +TextEditingController emailController
+  +TextEditingController passwordController
+  +void initState()
+  +void clearControllers()
+  +Future<dynamic> signIn()
+  +Widget build()
+}
+
+"graduation_project::screens::login.dart::_LoginPageState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"graduation_project::screens::login.dart::_LoginPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::login.dart::_LoginPageState"
+
+class "graduation_project::screens::messagingScreens::activeChats.dart::ActiveChats" {
+  +State<ActiveChats> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::messagingScreens::activeChats.dart::ActiveChats"
+
+class "graduation_project::screens::messagingScreens::activeChats.dart::_ActiveChatsState" {
+  +FirebaseFirestore firestore
+  +Widget build()
+}
+
+"graduation_project::screens::messagingScreens::activeChats.dart::_ActiveChatsState" o-- "cloud_firestore::cloud_firestore.dart::FirebaseFirestore"
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::messagingScreens::activeChats.dart::_ActiveChatsState"
+
+class "graduation_project::screens::messagingScreens::ChatPage.dart::ChatPage" {
+  +String id
+  +State<ChatPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::messagingScreens::ChatPage.dart::ChatPage"
+
+class "graduation_project::screens::messagingScreens::ChatPage.dart::_ChatPageState" {
+  +TextEditingController messageFieldController
+  +dynamic roomId
+  +Widget build()
+}
+
+"graduation_project::screens::messagingScreens::ChatPage.dart::_ChatPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::messagingScreens::ChatPage.dart::_ChatPageState"
+
+class "graduation_project::screens::messagingScreens::chatSample.dart::ChatSample" {
+  +String messageText
+  +String author
+  +Timestamp time
+  +Widget build()
+}
+
+"graduation_project::screens::messagingScreens::chatSample.dart::ChatSample" o-- "cloud_firestore_platform_interface::src::timestamp.dart::Timestamp"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "graduation_project::screens::messagingScreens::chatSample.dart::ChatSample"
+
+class "graduation_project::screens::messagingScreens::Messaging.dart::Messaging" {
+  +State<Messaging> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::messagingScreens::Messaging.dart::Messaging"
+
+class "graduation_project::screens::messagingScreens::Messaging.dart::_MessagingState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::messagingScreens::Messaging.dart::_MessagingState"
+
+class "graduation_project::screens::messagingScreens::messagingHPage.dart::messagingHPage" {
+  +State<messagingHPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::messagingScreens::messagingHPage.dart::messagingHPage"
+
+class "graduation_project::screens::messagingScreens::messagingHPage.dart::_messagingHPageState" {
+  +FirebaseFirestore firestore
+  +String searchValue
+  +Widget build()
+}
+
+"graduation_project::screens::messagingScreens::messagingHPage.dart::_messagingHPageState" o-- "cloud_firestore::cloud_firestore.dart::FirebaseFirestore"
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::messagingScreens::messagingHPage.dart::_messagingHPageState"
+
+class "graduation_project::screens::messagingScreens::recentChats.dart::RecentChats" {
+  +State<RecentChats> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::messagingScreens::recentChats.dart::RecentChats"
+
+class "graduation_project::screens::messagingScreens::recentChats.dart::_RecentChatsState" {
+  +FirebaseFirestore firestore
+  +Widget build()
+}
+
+"graduation_project::screens::messagingScreens::recentChats.dart::_RecentChatsState" o-- "cloud_firestore::cloud_firestore.dart::FirebaseFirestore"
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::messagingScreens::recentChats.dart::_RecentChatsState"
+
+class "graduation_project::screens::profile_page.dart::ProfilePage" {
+  +String? userID
+  +State<ProfilePage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::profile_page.dart::ProfilePage"
+
+class "graduation_project::screens::profile_page.dart::_ProfilePageState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::profile_page.dart::_ProfilePageState"
+
+class "graduation_project::screens::signup_company.dart::CompanySignup" {
+  +State<CompanySignup> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::signup_company.dart::CompanySignup"
+
+class "graduation_project::screens::signup_company.dart::_CompanySignupState" {
+  +GlobalKey<FormState> formKey
+  +TextEditingController compNameController
+  +TextEditingController repNameController
+  +TextEditingController imageController
+  +XFile? pickedImage
+  +TextEditingController vatNumController
+  +TextEditingController emailController
+  +TextEditingController passwordController
+  +TextEditingController confirmPasswordController
+  +void clearControllers()
+  +dynamic addLoginInfo()
+  +Future<dynamic> createAccount()
+  +Widget build()
+}
+
+"graduation_project::screens::signup_company.dart::_CompanySignupState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"graduation_project::screens::signup_company.dart::_CompanySignupState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"graduation_project::screens::signup_company.dart::_CompanySignupState" o-- "cross_file::src::types::interface.dart::XFile"
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::signup_company.dart::_CompanySignupState"
+
+class "graduation_project::screens::signup_volunteer.dart::VolunteerSignup" {
+  +State<VolunteerSignup> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::signup_volunteer.dart::VolunteerSignup"
+
+class "graduation_project::screens::signup_volunteer.dart::_VolunteerSignupState" {
+  +GlobalKey<FormState> formKey
+  +TextEditingController fullNameController
+  +TextEditingController dateinputController
+  +DateTime? pickedDate
+  +TextEditingController imageController
+  +XFile? pickedImage
+  +TextEditingController emailController
+  +TextEditingController passwordController
+  +TextEditingController confirmPasswordController
+  +dynamic InterestsTiles
+  +dynamic SkillsField
+  +dynamic getCategoryField()
+  +dynamic getSkillsField()
+  +void clearControllers()
+  +dynamic addLoginInfo()
+  +Future<dynamic> createAccount()
+  +Widget build()
+}
+
+"graduation_project::screens::signup_volunteer.dart::_VolunteerSignupState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"graduation_project::screens::signup_volunteer.dart::_VolunteerSignupState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"graduation_project::screens::signup_volunteer.dart::_VolunteerSignupState" o-- "cross_file::src::types::interface.dart::XFile"
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::signup_volunteer.dart::_VolunteerSignupState"
+
+class "graduation_project::screens::sign_or_log.dart::SignOrLog" {
+  +State<SignOrLog> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::sign_or_log.dart::SignOrLog"
+
+class "graduation_project::screens::sign_or_log.dart::_SignOrLogState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::sign_or_log.dart::_SignOrLogState"
+
+class "graduation_project::screens::sign_up_pick.dart::SignUpRouter" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "graduation_project::screens::sign_up_pick.dart::SignUpRouter"
+
+class "graduation_project::screens::taskManagement::details.dart::DetailPage" {
+  +Map<dynamic, dynamic>? data
+  +State<DetailPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::taskManagement::details.dart::DetailPage"
+
+class "graduation_project::screens::taskManagement::details.dart::_DetailPageState" {
+  +Widget build()
+  -Widget _buildAppBar()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::taskManagement::details.dart::_DetailPageState"
+
+class "graduation_project::screens::taskManagement::tasks.dart::Tasks" {
+  +String? postID
+  +State<Tasks> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::taskManagement::tasks.dart::Tasks"
+
+class "graduation_project::screens::taskManagement::tasks.dart::_TasksState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::taskManagement::tasks.dart::_TasksState"
+
+class "graduation_project::screens::taskManagement::task_form_page.dart::TaskFormPage" {
+  +String? postID
+  +String? taskID
+  +Map<dynamic, dynamic>? data
+  +_TaskFormPageState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::taskManagement::task_form_page.dart::TaskFormPage"
+
+class "graduation_project::screens::taskManagement::task_form_page.dart::_TaskFormPageState" {
+  -GlobalKey<FormState> _formKey
+  -TextEditingController _titleController
+  -TextEditingController _descriptionController
+  +TextEditingController dateController
+  +DateTime? pickedDate
+  +TextEditingController timeController
+  +TimeOfDay? pickedTime
+  -TextEditingController _durationController
+  +List<String> volunteerNames
+  +List<String> volunteerIDs
+  +List<String> preAddedIDs
+  +bool toggle
+  +dynamic PeopleField
+  +dynamic updateForm()
+  +dynamic submitForm()
+  +dynamic getPeopleField()
+  +Widget build()
+}
+
+"graduation_project::screens::taskManagement::task_form_page.dart::_TaskFormPageState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"graduation_project::screens::taskManagement::task_form_page.dart::_TaskFormPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"graduation_project::screens::taskManagement::task_form_page.dart::_TaskFormPageState" o-- "flutter::src::material::time.dart::TimeOfDay"
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::taskManagement::task_form_page.dart::_TaskFormPageState"
+
+class "graduation_project::screens::taskManagement::trello_home_page.dart::TrelloHomePage" {
+  +String? postID
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "graduation_project::screens::taskManagement::trello_home_page.dart::TrelloHomePage"
+
+class "graduation_project::screens::verifyEmailPage.dart::VerifyEmailPage" {
+  +State<VerifyEmailPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::screens::verifyEmailPage.dart::VerifyEmailPage"
+
+class "graduation_project::screens::verifyEmailPage.dart::_VerifyEmailPageState" {
+  +bool isEmailVerified
+  +Timer? timer
+  +bool canResendEmail
+  +void initState()
+  +void dispose()
+  +Future<dynamic> checkEmailVerified()
+  +Future<dynamic> sendVerificationEmail()
+  +Widget build()
+}
+
+"graduation_project::screens::verifyEmailPage.dart::_VerifyEmailPageState" o-- "dart::async::Timer"
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::screens::verifyEmailPage.dart::_VerifyEmailPageState"
+
+class "graduation_project::utilities::flash_bar.dart::flashBar" {
+  {static} +dynamic showBasicsFlashFailed()
+  {static} +dynamic showBasicsFlashSuccessful()
+}
+
+class "graduation_project::utilities::image_picker_custom.dart::imagePicker" {
+  {static} +dynamic imgPickDialog()
+}
+
+class "graduation_project::utilities::update_dictionary.dart::UpdateDictionary" {
+  +dynamic updateSkills()
+  +dynamic updateInterests()
+}
+
+class "graduation_project::widgets::advertisement_widget.dart::Advertisement" {
+  +Map<String, dynamic> data
+  +bool accepted
+  +dynamic userType
+  +State<Advertisement> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::widgets::advertisement_widget.dart::Advertisement"
+
+class "graduation_project::widgets::advertisement_widget.dart::_AdvertisementState" {
+  +dynamic descriptionBuilder()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::widgets::advertisement_widget.dart::_AdvertisementState"
+
+class "graduation_project::widgets::checkbox_tiles.dart::CheckboxTiles" {
+  +List<String>? tileValues
+  +List<String>? added
+  +State<CheckboxTiles> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::widgets::checkbox_tiles.dart::CheckboxTiles"
+
+class "graduation_project::widgets::checkbox_tiles.dart::_CheckboxTilesState" {
+  +List<bool> checked
+  +dynamic genTiles()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::widgets::checkbox_tiles.dart::_CheckboxTilesState"
+
+class "graduation_project::widgets::dropdown_field.dart::DropdownField" {
+  +List<String> options
+  +Color? textColor
+  +double? fontSize
+  +Color? dropdownColor
+  +String? dropdownValue
+  +State<DropdownField> createState()
+}
+
+"graduation_project::widgets::dropdown_field.dart::DropdownField" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::widgets::dropdown_field.dart::DropdownField"
+
+class "graduation_project::widgets::dropdown_field.dart::_DropdownFieldState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::widgets::dropdown_field.dart::_DropdownFieldState"
+
+class "graduation_project::widgets::reportIssue.dart::ReportIssue" {
+  +State<ReportIssue> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::widgets::reportIssue.dart::ReportIssue"
+
+class "graduation_project::widgets::reportIssue.dart::_ReportIssueState" {
+  +TextEditingController titleController
+  +TextEditingController descriptionController
+  +GlobalKey<FormState> formKey
+  +dynamic submitIssue()
+  +Widget build()
+}
+
+"graduation_project::widgets::reportIssue.dart::_ReportIssueState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"graduation_project::widgets::reportIssue.dart::_ReportIssueState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::widgets::reportIssue.dart::_ReportIssueState"
+
+class "graduation_project::widgets::tag_field.dart::RenderTags" {
+  +List<String> addedChips
+  +Color? chipColor
+  +TextStyle? textStyle
+  +int? nChips
+  +State<RenderTags> createState()
+}
+
+"graduation_project::widgets::tag_field.dart::RenderTags" o-- "dart::ui::Color"
+"graduation_project::widgets::tag_field.dart::RenderTags" o-- "flutter::src::painting::text_style.dart::TextStyle"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::widgets::tag_field.dart::RenderTags"
+
+class "graduation_project::widgets::tag_field.dart::_RenderTagsState" {
+  +dynamic getChipList()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::widgets::tag_field.dart::_RenderTagsState"
+
+class "graduation_project::widgets::tag_field.dart::ChipObjectData" {
+  +String value
+}
+
+class "graduation_project::widgets::tag_field.dart::TagsField" {
+  +List<String> suggestionsList
+  +Color? chipColor
+  +TextStyle? textStyle
+  +Color? iconColor
+  +bool? plusIcon
+  +List<ChipObjectData> chipDataList
+  +List<String> addedChips
+  +List<String> suggestions
+  +State<TagsField> createState()
+}
+
+"graduation_project::widgets::tag_field.dart::TagsField" o-- "dart::ui::Color"
+"graduation_project::widgets::tag_field.dart::TagsField" o-- "flutter::src::painting::text_style.dart::TextStyle"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::widgets::tag_field.dart::TagsField"
+
+class "graduation_project::widgets::tag_field.dart::_TagsFieldState" {
+  +ProfanityFilter filter
+  +TextEditingController textEditingController
+  +Iterable<Widget> actorWidgets
+  +dynamic getActorWidget()
+  +Widget build()
+}
+
+"graduation_project::widgets::tag_field.dart::_TagsFieldState" o-- "profanity_filter::profanity_filter.dart::ProfanityFilter"
+"graduation_project::widgets::tag_field.dart::_TagsFieldState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::widgets::tag_field.dart::_TagsFieldState"
+
+class "graduation_project::widgets::view_advertisements.dart::ViewAdvertisements" {
+  +Map<String, dynamic> userData
+  +State<ViewAdvertisements> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "graduation_project::widgets::view_advertisements.dart::ViewAdvertisements"
+
+class "graduation_project::widgets::view_advertisements.dart::_ViewAdvertisementsState" {
+  +List<bool> selectedLoading
+  +List<String> loadingTypes
+  +dynamic loadToggleButtons()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "graduation_project::widgets::view_advertisements.dart::_ViewAdvertisementsState"
+
+
+@enduml

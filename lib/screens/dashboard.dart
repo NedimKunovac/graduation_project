@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:graduation_project/screens/messagingScreens/Messaging.dart';
 import 'package:graduation_project/screens/profile_page.dart';
+import 'package:graduation_project/widgets/reportIssue.dart';
 import '../widgets/view_advertisements.dart';
 import 'advertisement_form.dart';
 import 'package:graduation_project/screens/edit_profile.dart';
@@ -51,7 +52,14 @@ class _DashboardState extends State<Dashboard> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => EditProfilePage(data: data)));
-            } else if (result == "Logout") {
+            } else if (result == "Report Issue") {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ReportIssue();
+                  });
+
+            }else if (result == "Logout") {
               showDialog<String>(
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
@@ -85,6 +93,13 @@ class _DashboardState extends State<Dashboard> {
               value: "Edit Profile",
               child: Text(
                 "Edit Profile",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            PopupMenuItem(
+              value: "Report Issue",
+              child: Text(
+                "Report Issue",
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -156,7 +171,7 @@ class _DashboardState extends State<Dashboard> {
         duration: Duration(milliseconds: 1000),
         curve: Curves.easeIn,
         child: FloatingActionButton(
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.blue.shade500,
           child: Icon(
             Icons.add,
             size: 40,
@@ -169,24 +184,24 @@ class _DashboardState extends State<Dashboard> {
                   'You will be redirected to the post creation page.'),
               actions: <Widget>[
                 TextButton(
-                  onPressed: () => Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AdvertisementForm(
-                                userID: FirebaseAuth.instance.currentUser?.uid,
-                                userName: data['name'],
-                                userProfilePhoto: data['profilePhotoUrl'],
-                              ))),
-                  child: const Text(
-                    'Yes',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                TextButton(
                   onPressed: () => Navigator.pop(context, 'No'),
                   child: const Text(
                     'No',
                     style: TextStyle(color: Colors.red),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AdvertisementForm(
+                            userID: FirebaseAuth.instance.currentUser?.uid,
+                            userName: data['name'],
+                            userProfilePhoto: data['profilePhotoUrl'],
+                          ))),
+                  child: const Text(
+                    'Yes',
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ],
@@ -220,7 +235,7 @@ class _DashboardState extends State<Dashboard> {
           data["userID"] = FirebaseAuth.instance.currentUser?.uid;
           _widgetOptions.add(ViewAdvertisements(userData: data));
           _widgetOptions.add(Messaging());
-          _widgetOptions.add(ProfilePage(data: data));
+          _widgetOptions.add(ProfilePage());
 
           return Scaffold(
             appBar: AppBarBulder(data),
@@ -264,7 +279,7 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ],
                 currentIndex: _selectedIndex,
-                selectedItemColor: Colors.red.shade400,
+                selectedItemColor: Colors.blue.shade500,
                 onTap: _onItemTapped,
               ),
             ),
