@@ -15,9 +15,6 @@ This project was the Graduation Project for three Software Engineering Students,
  <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="100" height="100"/> </a> 
 </p>
 
-## Overview
- - ***Coming soon!***
-
 ## Core features
  - ***Register as a Company or a Volunteer!***
  - ***Volunteers can:***
@@ -63,4 +60,4 @@ flutter run main.dart
 This code is open source as of the _1st of July 2023._ All contrubtions after that date are welcome. For major changes, please open an issue first to discuss what you would like to change. All design feedback is also welcome.
 
 ### Property and license
-_All intelectucal property behind this application belongs to **Alen Šerifović** and subsequently to **Ant Colony Sarajevo**, as the idea was created and proposed by him. The original design, code, feature set and its interpretation are the work of **Nedim Kunovac**, **Mirza Redžepović** and **Edin Žiga**, with some parts of design being proposed by **Halid Kasapović**. Any distribution and use of this property is strictly prohibitied without the knowledge of the authors. This is someone's hard work, respect it._
+_All intelectucal property behind this application belongs to **Alen Šerifović** and subsequently to **Ant Colony Sarajevo**, as the idea was created and proposed by him. The original design, code, feature set and its interpretation are the work of **Nedim Kunovac**, **Mirza Redžepović** and **Edin Žiga**, with some parts of the design being proposed by **Halid Kasapović**. Any distribution and use of this property is strictly prohibitied without the knowledge of the authors. This is someone's hard work, respect it._
